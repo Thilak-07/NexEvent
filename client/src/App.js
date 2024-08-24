@@ -1,12 +1,8 @@
-import "./App.css";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import NavbarComponent from "./components/NavbarComponent";
+import RegistrationForm from "./components/RegistrationForm";
+import LoginForm from "./components/LoginForm";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -17,7 +13,7 @@ const client = axios.create({
 });
 
 function App() {
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState(false);
   const [registrationToggle, setRegistrationToggle] = useState(false);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -26,15 +22,11 @@ function App() {
   useEffect(() => {
     client
       .get("auth/user/")
-      .then(function (res) {
-        setCurrentUser(true);
-      })
-      .catch(function (error) {
-        setCurrentUser(false);
-      });
+      .then(() => setCurrentUser(true))
+      .catch(() => setCurrentUser(false));
   }, []);
 
-  function update_form_btn() {
+  const updateFormBtn = () => {
     if (registrationToggle) {
       document.getElementById("form_btn").innerHTML = "Register";
       setRegistrationToggle(false);
@@ -42,153 +34,59 @@ function App() {
       document.getElementById("form_btn").innerHTML = "Log in";
       setRegistrationToggle(true);
     }
-  }
+  };
 
-  function submitRegistration(e) {
+  const submitRegistration = (e) => {
     e.preventDefault();
     client
-      .post("auth/register/", {
-        email: email,
-        username: username,
-        password: password,
-      })
-      .then(function (res) {
-        client
-          .post("auth/login/", {
-            email: email,
-            password: password,
-          })
-          .then(function (res) {
-            setCurrentUser(true);
-          });
-      });
-  }
+      .post("auth/register/", { email, username, password })
+      .then(updateFormBtn);
+  };
 
-  function submitLogin(e) {
+  const submitLogin = (e) => {
     e.preventDefault();
     client
-      .post("auth/login/", {
-        email: email,
-        password: password,
-      })
-      .then(function (res) {
-        setCurrentUser(true);
-      });
-  }
+      .post("auth/login/", { email, password })
+      .then(() => setCurrentUser(true));
+  };
 
-  function submitLogout(e) {
+  const submitLogout = (e) => {
     e.preventDefault();
-    client.post("auth/logout/", { withCredentials: true }).then(function (res) {
-      setCurrentUser(false);
-    });
-  }
+    client.post("auth/logout/").then(() => setCurrentUser(false));
+  };
 
-  if (currentUser) {
-    return (
-      <div>
-        <Navbar bg="dark" variant="dark">
-          <Container>
-            <Navbar.Brand>Authentication App</Navbar.Brand>
-            <Navbar.Toggle />
-            <Navbar.Collapse className="justify-content-end">
-              <Navbar.Text>
-                <form onSubmit={(e) => submitLogout(e)}>
-                  <Button type="submit" variant="light">
-                    Log out
-                  </Button>
-                </form>
-              </Navbar.Text>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
+  const handleChange = (field, value) => {
+    if (field === "email") setEmail(value);
+    if (field === "username") setUsername(value);
+    if (field === "password") setPassword(value);
+  };
+
+  return (
+    <div>
+      <NavbarComponent
+        currentUser={currentUser}
+        onLogout={submitLogout}
+        onToggleForm={updateFormBtn}
+      />
+      {currentUser ? (
         <div className="center">
           <h2>You're logged in!</h2>
         </div>
-      </div>
-    );
-  }
-  return (
-    <div>
-      <Navbar bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand>Authentication App</Navbar.Brand>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text>
-              <Button id="form_btn" onClick={update_form_btn} variant="light">
-                Register
-              </Button>
-            </Navbar.Text>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      {registrationToggle ? (
-        <div className="center">
-          <Form onSubmit={(e) => submitRegistration(e)}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicUsername">
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form>
-        </div>
+      ) : registrationToggle ? (
+        <RegistrationForm
+          email={email}
+          username={username}
+          password={password}
+          onChange={handleChange}
+          onSubmit={submitRegistration}
+        />
       ) : (
-        <div className="center">
-          <Form onSubmit={(e) => submitLogin(e)}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form>
-        </div>
+        <LoginForm
+          email={email}
+          password={password}
+          onChange={handleChange}
+          onSubmit={submitLogin}
+        />
       )}
     </div>
   );
