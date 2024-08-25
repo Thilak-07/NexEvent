@@ -48,16 +48,13 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route
               path="/login"
-              element={
-                <LoginForm
-                  loggedIn={loggedIn}
-                  handleLogin={handleLogin}
-                  client={client}
-                />
-              }
+              element={<LoginForm handleLogin={handleLogin} client={client} />}
             />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/signup" element={<SignupForm />} />
+            <Route
+              path="/signup"
+              element={<SignupForm handleLogin={handleLogin} client={client} />}
+            />
             <Route path="/explore" element={<ExplorePage />} />
           </Routes>
         </main>

@@ -1,31 +1,43 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom"; // Assuming you're using React Router for navigation
+import { Link, useNavigate } from "react-router-dom";
+import CustomAlert from "./CustomAlert";
 
-const SignupForm = () => {
+const SignupForm = ({ handleLogin, client }) => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [showAlert, toggleAlert] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!username || !email || !password || !confirmPassword) {
-      setError("Please fill out all fields.");
-    } else if (password !== confirmPassword) {
+    if (password !== confirmPassword) {
       setError("Passwords do not match.");
     } else {
-      setError("");
-      // Perform signup logic here
+      client
+        .post("auth/register/", { email, username, password })
+        .then(() => {
+          toggleAlert(!showAlert);
+        })
+        .catch((err) => {
+          setError(
+            "This email is already registered. Please use a different email."
+          );
+        });
     }
   };
 
   return (
     <Container className="py-5">
       <h2 className="mb-4 text-center">Sign Up</h2>
-      <Form onSubmit={handleSubmit} className="mx-auto" style={{ maxWidth: "400px" }}>
+      <Form
+        onSubmit={handleSubmit}
+        className="mx-auto"
+        style={{ maxWidth: "400px" }}
+      >
         {error && <Alert variant="danger">{error}</Alert>}
         <Form.Group controlId="formUsername" className="mb-3">
           <Form.Label>Username</Form.Label>
@@ -76,6 +88,13 @@ const SignupForm = () => {
           </Link>
         </div>
       </Form>
+
+      <CustomAlert
+        show={showAlert}
+        handleClose={() => navigate("/login")}
+        title="Registration Successful"
+        message="Please sign in to continue."
+      />
     </Container>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
-const LoginForm = ({ loggedIn, client, handleLogin }) => {
+const LoginForm = ({ client, handleLogin }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
