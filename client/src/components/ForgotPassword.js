@@ -18,8 +18,6 @@ const ForgotPassword = () => {
       setMessage(
         "If an account with that email exists, a password reset link will be sent."
       );
-      // Here you would typically send a request to your API to handle the password reset process
-      // Example: axios.post('/api/forgot-password', { email })
     }
   };
 

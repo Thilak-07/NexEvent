@@ -4,26 +4,25 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 const HomePage = () => {
   return (
     <div>
-      {/* Hero Section */}
       <div className="bg-dark text-light text-center py-5">
         <Container>
           <h1>Welcome to NexEvent</h1>
           <p>Discover and explore events happening around you and beyond.</p>
           <Button variant="light" href="/explore">
-            Get Started
+            Explore Events
           </Button>
         </Container>
       </div>
 
-      {/* Features Section */}
       <Container className="py-5">
         <Row>
           <Col md={4}>
             <Card className="text-center mb-4">
               <Card.Body>
-                <Card.Title>Easy Event Discovery</Card.Title>
+                <Card.Title>Track RSVPs</Card.Title>
                 <Card.Text>
-                  Find events near you with our user-friendly search and filter features.
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Atque, consequuntur!
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -31,9 +30,10 @@ const HomePage = () => {
           <Col md={4}>
             <Card className="text-center mb-4">
               <Card.Body>
-                <Card.Title>Personalized Dashboard</Card.Title>
+                <Card.Title>Manage Events</Card.Title>
                 <Card.Text>
-                  Keep track of your favorite events and get personalized recommendations.
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Voluptate, expedita.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -41,9 +41,10 @@ const HomePage = () => {
           <Col md={4}>
             <Card className="text-center mb-4">
               <Card.Body>
-                <Card.Title>Seamless Booking</Card.Title>
+                <Card.Title>Send Reminders</Card.Title>
                 <Card.Text>
-                  Book tickets effortlessly and get instant confirmation for all your events.
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Soluta, facere?
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -51,17 +52,17 @@ const HomePage = () => {
         </Row>
       </Container>
 
-      {/* Popular Events Section */}
       <Container className="py-5">
         <h2 className="text-center mb-4">Popular Events</h2>
         <Row>
           <Col md={4}>
             <Card className="mb-4">
-              <Card.Img variant="top" src="https://via.placeholder.com/150" />
+              <Card.Img variant="top" src="https://placehold.co/150x150" />
               <Card.Body>
                 <Card.Title>Music Concert</Card.Title>
                 <Card.Text>
-                  Enjoy a night of live music featuring top artists from around the world.
+                  Enjoy a night of live music featuring top artists from around
+                  the world.
                 </Card.Text>
                 <Button variant="dark" href="/explore">
                   Learn More
@@ -71,11 +72,12 @@ const HomePage = () => {
           </Col>
           <Col md={4}>
             <Card className="mb-4">
-              <Card.Img variant="top" src="https://via.placeholder.com/150" />
+              <Card.Img variant="top" src="https://placehold.co/150x150" />
               <Card.Body>
                 <Card.Title>Art Exhibition</Card.Title>
                 <Card.Text>
-                  Explore contemporary art pieces and meet the artists behind them.
+                  Explore contemporary art pieces and meet the artists behind
+                  them.
                 </Card.Text>
                 <Button variant="dark" href="/explore">
                   Learn More
@@ -85,11 +87,12 @@ const HomePage = () => {
           </Col>
           <Col md={4}>
             <Card className="mb-4">
-              <Card.Img variant="top" src="https://via.placeholder.com/150" />
+              <Card.Img variant="top" src="https://placehold.co/150x150" />
               <Card.Body>
                 <Card.Title>Tech Conference</Card.Title>
                 <Card.Text>
-                  Stay ahead of the curve with insights from industry leaders at this tech conference.
+                  Stay ahead of the curve with insights from industry leaders at
+                  this tech conference.
                 </Card.Text>
                 <Button variant="dark" href="/explore">
                   Learn More

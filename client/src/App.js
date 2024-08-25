@@ -7,6 +7,7 @@ import LoginForm from "./components/LoginForm";
 import ForgotPassword from "./components/ForgotPassword";
 import SignupForm from "./components/SignupForm";
 import ExplorePage from "./components/ExplorePage";
+import Dashboard from "./components/Dashboard";
 import FooterComponent from "./components/FooterComponent";
 
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -56,6 +57,7 @@ function App() {
               element={<SignupForm handleLogin={handleLogin} client={client} />}
             />
             <Route path="/explore" element={<ExplorePage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </main>
         <FooterComponent />
