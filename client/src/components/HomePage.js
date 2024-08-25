@@ -6,7 +6,7 @@ const HomePage = () => {
     <div>
       <div className="bg-dark text-light text-center py-5">
         <Container>
-          <h1>Welcome to NexEvent</h1>
+          <h1 className="display-3">Welcome to NexEvent</h1>
           <p>Discover and explore events happening around you and beyond.</p>
           <Button variant="light" href="/explore">
             Explore Events
