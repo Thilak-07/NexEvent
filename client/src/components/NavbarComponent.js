@@ -1,21 +1,21 @@
-import React, { useState } from "react";
 import { Container, Navbar, Button, Nav } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-const NavbarComponent = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    setLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setLoggedIn(false);
+  const onLogoutClick = (e) => {
+    e.preventDefault();
+    client.post("auth/logout/").then(handleLogout);
+    navigate("/login");
   };
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg" className="py-3">
       <Container>
-        <Navbar.Brand href="/">NexEvent</Navbar.Brand>
+        <Navbar.Brand href="/">
+          <strong>NexEvent</strong>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -23,13 +23,11 @@ const NavbarComponent = () => {
             <Nav.Link href="/explore">Explore</Nav.Link>
             {loggedIn && <Nav.Link href="/dashboard">Dashboard</Nav.Link>}
           </Nav>
-          <Nav>
+          <Nav className="ms-auto">
             {loggedIn ? (
-              <>
-                <Button variant="light" className="me-2" onClick={handleLogout}>
-                  Logout
-                </Button>
-              </>
+              <Button variant="light" onClick={onLogoutClick}>
+                Logout
+              </Button>
             ) : (
               <>
                 <Button
@@ -40,16 +38,7 @@ const NavbarComponent = () => {
                 >
                   Login
                 </Button>
-                <Button
-                  variant="light"
-                  href="/signup"
-                  style={{
-                    backgroundColor: "#f8f9fa",
-                    borderColor: "#f8f9fa",
-                    color: "#000",
-                    transition: "background-color 0.3s",
-                  }}
-                >
+                <Button variant="light" href="/signup">
                   Signup
                 </Button>
               </>

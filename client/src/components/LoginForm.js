@@ -1,27 +1,37 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom"; // Assuming you're using React Router for navigation
+import { Link, useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm = ({ loggedIn, client, handleLogin }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here, e.g., API call to login
-    if (!email || !password) {
-      setError("Please enter both email and password.");
-    } else {
-      setError("");
-      // Perform login logic here
-    }
+    client
+      .post("auth/login/", {
+        email: email,
+        password: password,
+      })
+      .then(() => {
+        handleLogin();
+        navigate("/explore");
+      })
+      .catch((err) => {
+        setError("Invalid Credentials");
+      });
   };
 
   return (
     <Container className="py-5">
       <h2 className="mb-4 text-center">Login</h2>
-      <Form onSubmit={handleSubmit} className="mx-auto" style={{ maxWidth: "400px" }}>
+      <Form
+        onSubmit={onSubmit}
+        className="mx-auto"
+        style={{ maxWidth: "400px" }}
+      >
         {error && <Alert variant="danger">{error}</Alert>}
         <Form.Group controlId="formBasicEmail" className="mb-3">
           <Form.Label>Email address</Form.Label>
