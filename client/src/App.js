@@ -1,94 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavbarComponent from "./components/NavbarComponent";
-import RegistrationForm from "./components/RegistrationForm";
+import HomePage from "./components/HomePage";
 import LoginForm from "./components/LoginForm";
+import ForgotPassword from "./components/ForgotPassword";
+import SignupForm from "./components/SignupForm";
+import ExplorePage from "./components/ExplorePage";
+import FooterComponent from "./components/FooterComponent";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.withCredentials = true;
 
-const client = axios.create({
+/* const client = axios.create({
   baseURL: "http://127.0.0.1:8000",
-});
+}); */
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(false);
-  const [registrationToggle, setRegistrationToggle] = useState(false);
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  useEffect(() => {
-    client
-      .get("auth/user/")
-      .then(() => setCurrentUser(true))
-      .catch(() => setCurrentUser(false));
-  }, []);
-
-  const updateFormBtn = () => {
-    if (registrationToggle) {
-      document.getElementById("form_btn").innerHTML = "Register";
-      setRegistrationToggle(false);
-    } else {
-      document.getElementById("form_btn").innerHTML = "Log in";
-      setRegistrationToggle(true);
-    }
-  };
-
-  const submitRegistration = (e) => {
-    e.preventDefault();
-    client
-      .post("auth/register/", { email, username, password })
-      .then(updateFormBtn);
-  };
-
-  const submitLogin = (e) => {
-    e.preventDefault();
-    client
-      .post("auth/login/", { email, password })
-      .then(() => setCurrentUser(true));
-  };
-
-  const submitLogout = (e) => {
-    e.preventDefault();
-    client.post("auth/logout/").then(() => setCurrentUser(false));
-  };
-
-  const handleChange = (field, value) => {
-    if (field === "email") setEmail(value);
-    if (field === "username") setUsername(value);
-    if (field === "password") setPassword(value);
-  };
-
   return (
-    <div>
-      <NavbarComponent
-        currentUser={currentUser}
-        onLogout={submitLogout}
-        onToggleForm={updateFormBtn}
-      />
-      {currentUser ? (
-        <div className="center">
-          <h2>You're logged in!</h2>
-        </div>
-      ) : registrationToggle ? (
-        <RegistrationForm
-          email={email}
-          username={username}
-          password={password}
-          onChange={handleChange}
-          onSubmit={submitRegistration}
-        />
-      ) : (
-        <LoginForm
-          email={email}
-          password={password}
-          onChange={handleChange}
-          onSubmit={submitLogin}
-        />
-      )}
-    </div>
+    <Router>
+      <div className="d-flex flex-column min-vh-100">
+        <NavbarComponent />
+        <main className="flex-fill">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/signup" element={<SignupForm />} />
+            <Route path="/explore" element={<ExplorePage />} />
+          </Routes>
+        </main>
+        <FooterComponent />
+      </div>
+    </Router>
   );
 }
 
