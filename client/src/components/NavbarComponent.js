@@ -1,5 +1,5 @@
 import { Container, Navbar, Button, Nav } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
   const navigate = useNavigate();
@@ -13,15 +13,23 @@ const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="py-3">
       <Container>
-        <Navbar.Brand href="/">
+        <Navbar.Brand as={Link} to="/">
           <strong>NexEvent</strong>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/explore">Explore</Nav.Link>
-            {loggedIn && <Nav.Link href="/dashboard">Dashboard</Nav.Link>}
+            <Nav.Link as={Link} to="/">
+              Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/explore">
+              Explore
+            </Nav.Link>
+            {loggedIn && (
+              <Nav.Link as={Link} to="/dashboard">
+                Dashboard
+              </Nav.Link>
+            )}
           </Nav>
           <Nav className="ms-auto">
             {loggedIn ? (
@@ -33,12 +41,13 @@ const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
                 <Button
                   variant="outline-light"
                   className="me-2"
-                  href="/login"
+                  as={Link}
+                  to="/login"
                   style={{ transition: "background-color 0.3s" }}
                 >
                   Login
                 </Button>
-                <Button variant="light" href="/signup">
+                <Button variant="light" as={Link} to="/signup">
                   Signup
                 </Button>
               </>

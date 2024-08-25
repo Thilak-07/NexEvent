@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -8,7 +9,7 @@ const HomePage = () => {
         <Container>
           <h1 className="display-3">Welcome to NexEvent</h1>
           <p>Discover and explore events happening around you and beyond.</p>
-          <Button variant="light" href="/explore">
+          <Button variant="light" as={Link} to="/explore">
             Explore Events
           </Button>
         </Container>
@@ -64,7 +65,7 @@ const HomePage = () => {
                   Enjoy a night of live music featuring top artists from around
                   the world.
                 </Card.Text>
-                <Button variant="dark" href="/explore">
+                <Button variant="dark" as={Link} to="/explore">
                   Learn More
                 </Button>
               </Card.Body>
@@ -79,7 +80,7 @@ const HomePage = () => {
                   Explore contemporary art pieces and meet the artists behind
                   them.
                 </Card.Text>
-                <Button variant="dark" href="/explore">
+                <Button variant="dark" as={Link} to="/explore">
                   Learn More
                 </Button>
               </Card.Body>
@@ -94,7 +95,7 @@ const HomePage = () => {
                   Stay ahead of the curve with insights from industry leaders at
                   this tech conference.
                 </Card.Text>
-                <Button variant="dark" href="/explore">
+                <Button variant="dark" as={Link} to="/explore">
                   Learn More
                 </Button>
               </Card.Body>
