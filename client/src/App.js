@@ -51,7 +51,10 @@ function App() {
               path="/login"
               element={<LoginForm handleLogin={handleLogin} client={client} />}
             />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route
+              path="/forgot-password"
+              element={<ForgotPassword client={client} />}
+            />
             <Route
               path="/signup"
               element={<SignupForm handleLogin={handleLogin} client={client} />}

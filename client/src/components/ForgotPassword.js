@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const ForgotPassword = () => {
+const ForgotPassword = ({ client }) => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -18,6 +18,8 @@ const ForgotPassword = () => {
       setMessage(
         "If an account with that email exists, a password reset link will be sent."
       );
+
+      client.post("auth/request-reset/", { email });
     }
   };
 
