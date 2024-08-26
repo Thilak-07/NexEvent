@@ -8,6 +8,7 @@ from rest_framework import permissions, status
 from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, ResetPasswordRequestSerializer
 from .validations import custom_validation, validate_email, validate_password
 from accounts.models import PasswordReset
+from accounts.utils.email_utils import send_password_reset_email
 
 UserModel = get_user_model()
 
@@ -73,9 +74,9 @@ class RequestPasswordReset(generics.GenericAPIView):
             reset = PasswordReset(email=email, token=token)
             reset.save()
 
-            # reset_url = f"{os.environ['PASSWORD_RESET_BASE_URL']}/{token}"
-            # Sending reset link via email (commented out for clarity)
-            # ... (email sending code)
+            reset_url = f"http://localhost:8000/reset-password/{token}"
+
+            send_password_reset_email(email, reset_url)
 
             return Response({'success': 'We have sent you a link to reset your password'}, status=status.HTTP_200_OK)
         else:
