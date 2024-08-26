@@ -38,3 +38,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ResetPasswordRequestSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    password = serializers.CharField()
