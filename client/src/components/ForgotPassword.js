@@ -7,7 +7,7 @@ const ForgotPassword = ({ client }) => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email) {
@@ -19,7 +19,9 @@ const ForgotPassword = ({ client }) => {
         "If an account with that email exists, a password reset link will be sent."
       );
 
-      client.post("auth/request-reset/", { email });
+      try {
+        await client.post("auth/request-reset/", { email });
+      } catch (err) {}
     }
   };
 

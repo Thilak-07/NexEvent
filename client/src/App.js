@@ -9,6 +9,7 @@ import SignupForm from "./components/SignupForm";
 import ExplorePage from "./components/ExplorePage";
 import Dashboard from "./components/Dashboard";
 import FooterComponent from "./components/FooterComponent";
+import PasswordResetComponent from "./components/PasswordResetComponent";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -61,6 +62,10 @@ function App() {
             />
             <Route path="/explore" element={<ExplorePage />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route
+              path="/reset-password/:token"
+              element={<PasswordResetComponent client={client} />}
+            />
           </Routes>
         </main>
         <FooterComponent />
