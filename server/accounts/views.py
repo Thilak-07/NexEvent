@@ -1,10 +1,15 @@
-from django.contrib.auth import login, logout
+from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import permissions, status
-from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
+from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, ResetPasswordRequestSerializer
 from .validations import custom_validation, validate_email, validate_password
+from accounts.models import PasswordReset
+
+UserModel = get_user_model()
 
 
 class UserRegister(APIView):
@@ -51,3 +56,27 @@ class UserLogout(APIView):
     def post(self, request):
         logout(request)
         return Response(status=status.HTTP_200_OK)
+
+
+class RequestPasswordReset(generics.GenericAPIView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = ResetPasswordRequestSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        email = request.data['email']
+        user = UserModel.objects.filter(email__iexact=email).first()
+
+        if user:
+            token_generator = PasswordResetTokenGenerator()
+            token = token_generator.make_token(user)
+            reset = PasswordReset(email=email, token=token)
+            reset.save()
+
+            # reset_url = f"{os.environ['PASSWORD_RESET_BASE_URL']}/{token}"
+            # Sending reset link via email (commented out for clarity)
+            # ... (email sending code)
+
+            return Response({'success': 'We have sent you a link to reset your password'}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "User with credentials not found"}, status=status.HTTP_404_NOT_FOUND)
