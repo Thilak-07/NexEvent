@@ -39,6 +39,8 @@ class UserSerializer(serializers.ModelSerializer):
 class ResetPasswordRequestSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
 
+class TokenValiditySerializer(serializers.Serializer):
+    token = serializers.CharField(required=True)
 
 class ResetPasswordSerializer(serializers.Serializer):
     password = serializers.CharField()

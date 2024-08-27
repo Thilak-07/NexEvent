@@ -6,7 +6,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, ResetPasswordRequestSerializer, ResetPasswordSerializer
+from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, ResetPasswordRequestSerializer, TokenValiditySerializer, ResetPasswordSerializer
 from .validations import custom_validation, validate_email, validate_password
 from accounts.models import PasswordReset
 from accounts.utils.email_utils import send_password_reset_email
@@ -83,6 +83,23 @@ class RequestPasswordReset(generics.GenericAPIView):
             return Response({'success': 'We have sent you a link to reset your password'}, status=status.HTTP_200_OK)
         else:
             return Response({"error": "User with credentials not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class TokenValidity(generics.GenericAPIView):
+    serializer_class = TokenValiditySerializer
+    permission_classes = []
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            token = serializer.data['token']
+            reset_obj = PasswordReset.objects.filter(token=token).first()
+            if not reset_obj:
+                return Response({'error': 'Invalid token'}, status=status.HTTP_404_NOT_FOUND)
+
+            return Response({'success': 'Valid token'}, status=status.HTTP_200_OK)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class ResetPassword(generics.GenericAPIView):
