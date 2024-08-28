@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import BackBtn from "./BackBtn";
 
 const ForgotPassword = ({ client }) => {
   const [email, setEmail] = useState("");
@@ -26,7 +27,10 @@ const ForgotPassword = ({ client }) => {
   };
 
   return (
-    <Container className="py-5">
+    <Container className="py-5 position-relative">
+      {/* Go Back Button */}
+      <BackBtn to={"/auth/login"} />
+
       <h2 className="mb-4 text-center">Forgot Password</h2>
       <Form
         onSubmit={handleSubmit}

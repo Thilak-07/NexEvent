@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import BackBtn from "./BackBtn";
 
 const LoginForm = ({ client, handleLogin }) => {
   const navigate = useNavigate();
@@ -25,7 +26,20 @@ const LoginForm = ({ client, handleLogin }) => {
   };
 
   return (
-    <Container className="py-5">
+    <Container className="py-5 position-relative">
+      {/* Go Back Button */}
+      <BackBtn to={"/"} />
+
+      {/* Signup Button */}
+      <Button
+        variant="primary"
+        className="position-absolute top-0 end-0 mt-3 me-3"
+        onClick={() => navigate("/auth/signup")}
+        style={{ borderRadius: "5px", fontWeight: "bold" }}
+      >
+        Signup
+      </Button>
+
       <h2 className="mb-4 text-center">Login</h2>
       <Form
         onSubmit={onSubmit}

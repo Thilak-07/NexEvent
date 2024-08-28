@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import CustomAlert from "./CustomAlert";
+import BackBtn from "./BackBtn";
 
 const SignupForm = ({ handleLogin, client }) => {
   const navigate = useNavigate();
@@ -31,7 +32,20 @@ const SignupForm = ({ handleLogin, client }) => {
   };
 
   return (
-    <Container className="py-5">
+    <Container className="py-5 position-relative">
+      {/* Go Back Button */}
+      <BackBtn to={"/"} />
+
+      {/* Login Button */}
+      <Button
+        variant="primary"
+        className="position-absolute top-0 end-0 mt-3 me-3"
+        onClick={() => navigate("/auth/login")}
+        style={{ borderRadius: "5px", fontWeight: "bold" }}
+      >
+        Login
+      </Button>
+
       <h2 className="mb-4 text-center">Sign Up</h2>
       <Form
         onSubmit={handleSubmit}
