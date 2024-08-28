@@ -57,7 +57,7 @@ const LoginForm = ({ client, handleLogin }) => {
           Login
         </Button>
         <div className="text-center mt-3">
-          <Link to="/forgot-password" className="text-decoration-none">
+          <Link to="/auth/forgot-password" className="text-decoration-none">
             Forgot Password?
           </Link>
         </div>

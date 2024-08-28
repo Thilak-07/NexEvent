@@ -7,7 +7,7 @@ const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
   const onLogoutClick = (e) => {
     e.preventDefault();
     client.post("auth/logout/").then(handleLogout);
-    navigate("/login");
+    navigate("/auth/login");
   };
 
   return (
@@ -42,12 +42,12 @@ const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
                   variant="outline-light"
                   className="me-2"
                   as={Link}
-                  to="/login"
+                  to="/auth/login"
                   style={{ transition: "background-color 0.3s" }}
                 >
                   Login
                 </Button>
-                <Button variant="light" as={Link} to="/signup">
+                <Button variant="light" as={Link} to="/auth/signup">
                   Signup
                 </Button>
               </>

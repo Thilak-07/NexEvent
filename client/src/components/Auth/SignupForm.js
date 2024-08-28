@@ -83,7 +83,7 @@ const SignupForm = ({ handleLogin, client }) => {
           Sign Up
         </Button>
         <div className="text-center mt-3">
-          <Link to="/login" className="text-decoration-none">
+          <Link to="/auth/login" className="text-decoration-none">
             Already have an account? Login
           </Link>
         </div>
@@ -91,7 +91,7 @@ const SignupForm = ({ handleLogin, client }) => {
 
       <CustomAlert
         show={showAlert}
-        handleClose={() => navigate("/login")}
+        handleClose={() => navigate("/auth/login")}
         title="Registration Successful"
         message="Please sign in to continue."
       />
