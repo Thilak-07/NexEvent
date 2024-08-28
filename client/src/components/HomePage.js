@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <div>
-      <div className="bg-dark text-light text-center py-5">
+      <div className="bg-black text-light text-center py-5">
         <Container>
           <h1 className="display-3">Welcome to NexEvent</h1>
           <p>Discover and explore events happening around you and beyond.</p>

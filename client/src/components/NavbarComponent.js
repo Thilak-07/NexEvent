@@ -11,10 +11,19 @@ const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
   };
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" className="py-3">
+    <Navbar bg="black" variant="dark" expand="lg" className="py-3">
       <Container>
-        <Navbar.Brand as={Link} to="/">
-          <strong>NexEvent</strong>
+        <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
+          <>
+          <img
+              src="favicon.svg"
+              alt="Brand Logo"
+              width="55"
+              height="55"
+              className="position-absolute"
+            />
+            <strong style={{ marginInlineStart: '55px' }}>NexEvent</strong>
+          </>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
