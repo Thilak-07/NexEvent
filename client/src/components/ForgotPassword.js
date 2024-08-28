@@ -28,7 +28,7 @@ const ForgotPassword = ({ client }) => {
 
   return (
     <main className="flex-fill">
-      <Navbar bg="black" variant="dark" expand="lg" className="py-3">
+      <Navbar variant="dark" expand="lg" className="py-3">
         <Container>
           {/* Go Back Button */}
           <Nav className="me-auto">

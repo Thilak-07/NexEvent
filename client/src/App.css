@@ -1,5 +1,6 @@
 /* Ensure the body and html elements take full height */
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
@@ -25,4 +26,8 @@ html, body {
 footer {
   background-color: #343a40; /* Adjust as needed */
   color: #f8f9fa; /* Adjust as needed */
+}
+
+.bg-dark {
+  background-color: #0d1111 !important;
 }

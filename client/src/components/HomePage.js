@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <div>
-      <div className="bg-black text-light text-center py-5">
+      <div
+        className="bg-dark text-light text-center py-5"
+      >
         <Container>
           <h1 className="display-3">Welcome to NexEvent</h1>
           <p>Discover and explore events happening around you and beyond.</p>
@@ -22,8 +24,7 @@ const HomePage = () => {
               <Card.Body>
                 <Card.Title>Track RSVPs</Card.Title>
                 <Card.Text>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Atque, consequuntur!
+                  Keep tabs on your guest list effortlessly and accurately.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -33,8 +34,8 @@ const HomePage = () => {
               <Card.Body>
                 <Card.Title>Manage Events</Card.Title>
                 <Card.Text>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptate, expedita.
+                  Plan, coordinate, and execute your events with ease and
+                  precision.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -44,8 +45,7 @@ const HomePage = () => {
               <Card.Body>
                 <Card.Title>Send Reminders</Card.Title>
                 <Card.Text>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Soluta, facere?
+                  Ensure no one forgets with timely and personalized reminders.
                 </Card.Text>
               </Card.Body>
             </Card>

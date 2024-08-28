@@ -11,7 +11,7 @@ const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
   };
 
   return (
-    <Navbar bg="black" variant="dark" expand="lg" className="py-3">
+    <Navbar variant="dark" expand="lg" className="bg-dark py-3">
       <Container>
         <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
           <>

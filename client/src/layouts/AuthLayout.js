@@ -6,7 +6,7 @@ import PasswordResetComponent from "../components/PasswordResetComponent";
 
 const AuthLayout = ({ handleLogin, client }) => {
   return (
-    <div className="d-flex flex-column min-vh-100 bg-black text-light">
+    <div className="d-flex flex-column min-vh-100 bg-dark text-light">
       <Routes>
         <Route
           path="/auth/login"
