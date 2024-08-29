@@ -48,7 +48,7 @@ const eventData = [
 
 const ExplorePage = () => {
   return (
-    <Container className="py-5">
+    <Container className="py-5 mt-5">
       <h2 className="mb-4 text-center">Explore Events</h2>
       <Row>
         {eventData.map((event) => (

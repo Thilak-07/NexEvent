@@ -60,7 +60,7 @@ const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
           </Nav>
           <Nav className="ms-auto">
             {loggedIn ? (
-              <Button variant="light" onClick={onLogoutClick}>
+              <Button as={Nav.Link} onClick={onLogoutClick}>
                 Logout
               </Button>
             ) : (

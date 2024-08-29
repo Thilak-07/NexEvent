@@ -31,6 +31,7 @@ const PasswordResetComponent = ({ client }) => {
         password: password,
       })
       .then(() => {
+        setError("");
         setSuccess(`Password successfully updated! Redirecting to homepage...`);
         setTimeout(() => {
           navigate("/");
