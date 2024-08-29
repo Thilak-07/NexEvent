@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import { Container, Form, Button, Alert, Navbar, Nav } from "react-bootstrap";
+import {
+  Container,
+  Form,
+  Button,
+  Alert,
+  Navbar,
+  Nav,
+  InputGroup,
+} from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import CustomAlert from "./CustomAlert";
+import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import BackBtn from "./BackBtn";
+import CustomAlert from "./CustomAlert";
 
-const SignupForm = ({ handleLogin, client }) => {
+const SignupForm = ({ client }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -21,7 +30,7 @@ const SignupForm = ({ handleLogin, client }) => {
       client
         .post("auth/register/", { email, username, password })
         .then(() => {
-          toggleAlert(!showAlert);
+          toggleAlert(true);
         })
         .catch((err) => {
           setError(
@@ -33,7 +42,7 @@ const SignupForm = ({ handleLogin, client }) => {
 
   return (
     <main className="flex-fill">
-      <Navbar variant="dark" expand="lg" className="py-3">
+      <Navbar variant="dark" expand="lg" className="pt-3">
         <Container>
           {/* Go Back Button */}
           <Nav className="me-auto">
@@ -50,52 +59,90 @@ const SignupForm = ({ handleLogin, client }) => {
           style={{ maxWidth: "400px" }}
         >
           {error && <Alert variant="danger">{error}</Alert>}
-          <Form.Group controlId="formUsername" className="mb-3">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail" className="mb-3">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword" className="mb-3">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formConfirmPassword" className="mb-3">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Confirm password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit" className="w-100">
-            Sign Up
-          </Button>
+          {/* Glowy Box */}
+          <div
+            className="my-4"
+            style={{
+              borderRadius: "10px",
+              padding: "20px",
+              boxShadow: "0 0 20px rgba(0, 123, 255, 0.8)",
+              border: "1px solid rgba(0, 123, 255, 0.5)",
+              backdropFilter: "blur(10px)",
+            }}
+          >
+            <Form.Group controlId="formUsername" className="mb-3">
+              <Form.Label>
+                Username<span style={{ color: "red" }}>&nbsp;*</span>
+              </Form.Label>
+              <InputGroup>
+                <InputGroup.Text>
+                  <FaUser />
+                </InputGroup.Text>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </InputGroup>
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail" className="mb-3">
+              <Form.Label>
+                Email address<span style={{ color: "red" }}>&nbsp;*</span>
+              </Form.Label>
+              <InputGroup>
+                <InputGroup.Text>
+                  <FaEnvelope />
+                </InputGroup.Text>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </InputGroup>
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword" className="mb-3">
+              <div className="d-flex justify-content-between align-items-center">
+                <Form.Label>
+                  Password<span style={{ color: "red" }}>&nbsp;*</span>
+                </Form.Label>
+              </div>
+              <InputGroup>
+                <InputGroup.Text>
+                  <FaLock />
+                </InputGroup.Text>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </InputGroup>
+            </Form.Group>
+            <Form.Group controlId="formConfirmPassword" className="mb-3">
+              <Form.Label>
+                Confirm Password<span style={{ color: "red" }}>&nbsp;*</span>
+              </Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Confirm password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Button variant="success" type="submit" className="w-100">
+              Sign Up
+            </Button>
+          </div>
           <div className="text-center mt-3">
+            Already have an account?&nbsp;
             <Link to="/auth/login" className="text-decoration-none">
-              Already have an account? Login
+              Login
             </Link>
           </div>
         </Form>

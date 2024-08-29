@@ -15,14 +15,14 @@ const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
       <Container>
         <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
           <>
-          <img
+            <img
               src="favicon.svg"
               alt="Brand Logo"
               width="55"
               height="55"
               className="position-absolute"
             />
-            <strong style={{ marginInlineStart: '55px' }}>NexEvent</strong>
+            <strong style={{ marginInlineStart: "55px" }}>NexEvent</strong>
           </>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Container, Form, Button, Alert, Navbar, Nav } from "react-bootstrap";
+import {
+  Container,
+  Form,
+  Button,
+  Alert,
+  Navbar,
+  Nav,
+  InputGroup,
+} from "react-bootstrap";
+import { FaEnvelope } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import BackBtn from "./BackBtn";
 
@@ -48,12 +57,17 @@ const ForgotPassword = ({ client }) => {
           {message && <Alert variant="info">{message}</Alert>}
           <Form.Group controlId="formBasicEmail" className="mb-3">
             <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <InputGroup>
+              <InputGroup.Text>
+                <FaEnvelope />
+              </InputGroup.Text>
+              <Form.Control
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </InputGroup>
           </Form.Group>
           <Button variant="primary" type="submit" className="w-100">
             Send Reset Link

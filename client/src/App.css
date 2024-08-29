@@ -31,3 +31,96 @@ footer {
 .bg-dark {
   background-color: #0d1111 !important;
 }
+
+/*-----------------------------------------------------------------------------------*/
+/* CardSwiper */
+
+/* src/App.css */
+
+/* Swiper wrapper styling */
+.swiper-wrapper-container {
+  position: relative;
+  margin: auto;
+}
+
+/* Custom Swiper styles */
+.swiper-custom {
+  position: relative;
+}
+
+/* Styling for each card */
+.card-custom {
+  width: 400px; /* Increased width */
+  height: 250px; /* Increased height */
+  background-color: #1e1e1e; /* Dark card background */
+  color: #e0e0e0; /* Light text color */
+  border: 1px solid #333; /* Card border */
+  border-radius: 10px; /* Rounded corners */
+  display: flex;
+  flex-direction: row; /* Horizontal alignment */
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-custom:hover {
+  transform: translateY(-10px); /* Slight lift on hover */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+}
+
+/* Icon styling */
+.icon-container {
+  font-size: 3rem; /* Larger icon size */
+  color: #f5a623; /* Accent color for icons */
+  margin-right: 20px; /* Space between icon and text */
+}
+
+/* Card body styling */
+.card-body-custom {
+  display: flex;
+  flex-direction: row; /* Align text next to icon */
+  align-items: center;
+  padding: 20px;
+  text-align: left; /* Align text to the left */
+  width: 100%; /* Full width to accommodate content */
+  height: 100%; /* Full height */
+}
+
+.text-content {
+  flex: 1; /* Allow text content to take available space */
+}
+
+/* Card title and text styling */
+.card-title-custom {
+  font-size: 1.25rem; /* Slightly larger title font size */
+  font-weight: bold;
+}
+
+.card-text-custom {
+  font-size: 1rem; /* Adjust text size */
+  color: #b0b0b0; /* Lighter text color */
+}
+
+/* Navigation arrows styling */
+.swiper-button-next-custom,
+.swiper-button-prev-custom {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for centering */
+  color: #f5a623; /* Arrow color */
+  background-color: rgba(0, 0, 0, 0.6); /* Dark background for arrows */
+  border-radius: 50%; /* Circular buttons */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Shadow for arrows */
+}
+
+.swiper-button-prev-custom {
+  left: 10px; /* Position on the left side */
+}
+
+.swiper-button-next-custom {
+  right: 10px; /* Position on the right side */
+}

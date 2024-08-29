@@ -1,13 +1,12 @@
 import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import CardSwiper from "./CardSwiper";
 
 const HomePage = () => {
   return (
     <div>
-      <div
-        className="bg-dark text-light text-center py-5"
-      >
+      <div className="bg-dark text-light text-center py-5">
         <Container>
           <h1 className="display-3">Welcome to NexEvent</h1>
           <p>Discover and explore events happening around you and beyond.</p>
@@ -52,6 +51,8 @@ const HomePage = () => {
           </Col>
         </Row>
       </Container>
+
+      <CardSwiper />
 
       <Container className="py-5">
         <h2 className="text-center mb-4">Popular Events</h2>

@@ -44,10 +44,12 @@ const PasswordResetComponent = ({ client }) => {
   };
 
   return (
-    <Container className="py-5">
+    <Container className="py-5 flex-fill mt-5">
       <h2 className="mb-4 text-center">Reset Your Password</h2>
       {validationErr ? (
-        <Alert variant="danger" className="text-center">{validationErr}</Alert>
+        <Alert variant="danger" className="text-center">
+          {validationErr}
+        </Alert>
       ) : (
         <Form
           onSubmit={handleSubmit}
