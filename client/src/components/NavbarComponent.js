@@ -1,5 +1,5 @@
 import { Container, Navbar, Button, Nav } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 
 const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
   };
 
   return (
-    <Navbar variant="dark" expand="lg" className="bg-dark py-3">
+    <Navbar variant="dark" expand="lg" className="bg-dark py-2 fixed-top">
       <Container>
         <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
           <>
@@ -28,14 +28,32 @@ const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">
+            <Nav.Link
+              as={NavLink}
+              to="/"
+              style={({ isActive }) => ({
+                color: isActive ? "#f5a623" : "grey",
+              })}
+            >
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/explore">
+            <Nav.Link
+              as={NavLink}
+              to="/explore"
+              style={({ isActive }) => ({
+                color: isActive ? "#f5a623" : "grey",
+              })}
+            >
               Explore
             </Nav.Link>
             {loggedIn && (
-              <Nav.Link as={Link} to="/dashboard">
+              <Nav.Link
+                as={NavLink}
+                to="/dashboard"
+                style={({ isActive }) => ({
+                  color: isActive ? "#f5a623" : "grey",
+                })}
+              >
                 Dashboard
               </Nav.Link>
             )}

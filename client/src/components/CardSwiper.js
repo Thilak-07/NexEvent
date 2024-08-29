@@ -62,7 +62,7 @@ const CardSwiper = () => {
     <div className="swiper-wrapper-container mt-4">
       <Swiper
         spaceBetween={30}
-        slidesPerView={3} // Show 3 slides at a time
+        slidesPerView={2} // Show 3 slides at a time
         navigation
         pagination={{ clickable: true }}
         breakpoints={{
