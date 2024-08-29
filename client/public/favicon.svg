@@ -1,6 +1,6 @@
 <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
   <g transform="translate(.722 .64) scale(6.375)">
-    <circle cx="40" cy="40" r="40" fill="#0d1111"/>
+    <circle cx="40" cy="40" r="40" fill="#0d1117"/>
     <path d="M66.448 70.009L30.73 24H24v31.987h5.384v-25.15l32.838 42.427a40.116 40.116 0 004.226-3.255z" fill="url(#prefix___Linear1)" fill-rule="nonzero"/>
     <path fill="url(#prefix___Linear2)" d="M51.111 24h5.333v32h-5.333z"/>
   </g>

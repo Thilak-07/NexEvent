@@ -8,7 +8,7 @@ const HeroSection = () => {
       <Container className="py-4">
         <Row>
           <Col md={6} className="text-left">
-            <h1 className="hero-title">
+            <h1 className="hero-title pb-1">
               Seamless event planning and organization
             </h1>
           </Col>
