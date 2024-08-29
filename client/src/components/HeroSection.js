@@ -9,7 +9,7 @@ const HeroSection = () => {
         <Row>
           <Col md={6} className="text-left">
             <h1 className="hero-title pb-1">
-              Seamless event planning and organization
+              Seamless Event Planning <br /> and Organization
             </h1>
           </Col>
           <Col

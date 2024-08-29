@@ -59,21 +59,27 @@ const data = [
 
 const CardSwiper = () => {
   return (
-    <div className="swiper-wrapper-container mt-4">
+    <div className="swiper-wrapper-container mt-2 py-4 no-select">
       <Swiper
         spaceBetween={30}
         slidesPerView={3.5}
         navigation
         pagination={{ clickable: true }}
+        slidesOffsetBefore={110}
+        slidesOffsetAfter={110}
         breakpoints={{
           640: {
             slidesPerView: 1,
           },
           768: {
-            slidesPerView: 2,
+            slidesPerView: 1.5,
+            slidesOffsetBefore: 50,
+            slidesOffsetAfter: 50,
           },
           1024: {
-            slidesPerView: 3.35,
+            slidesPerView: 3.5,
+            slidesOffsetBefore: 110,
+            slidesOffsetAfter: 110,
           },
         }}
         className="swiper-custom"

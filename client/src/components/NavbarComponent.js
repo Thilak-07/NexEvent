@@ -13,7 +13,7 @@ const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
   return (
     <Navbar variant="dark" expand="lg" className="bg-dark py-2 fixed-top">
       <Container>
-        <Navbar.Brand as={Link} to="/" className="d-flex align-items-center">
+        <Navbar.Brand href="/" className="d-flex align-items-center">
           <>
             <img
               src="favicon.svg"
