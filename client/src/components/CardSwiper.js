@@ -82,7 +82,7 @@ const CardSwiper = () => {
             slidesOffsetAfter: 110,
           },
         }}
-        className="swiper-custom"
+        className="swiper-custom py-3"
       >
         {data.map((item, index) => (
           <SwiperSlide key={index}>

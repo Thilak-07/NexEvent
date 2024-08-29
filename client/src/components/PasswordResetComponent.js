@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Form, Button, Container, Alert } from "react-bootstrap";
+import { Form, Button, Container, Alert, InputGroup } from "react-bootstrap";
+import { FaLock } from "react-icons/fa";
 
 const PasswordResetComponent = ({ client }) => {
   const navigate = useNavigate();
@@ -61,23 +62,33 @@ const PasswordResetComponent = ({ client }) => {
           {success && <Alert variant="success">{success}</Alert>}
           <Form.Group controlId="formPassword" className="mb-3">
             <Form.Label>New Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Enter new password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <InputGroup>
+              <InputGroup.Text>
+                <FaLock />
+              </InputGroup.Text>
+              <Form.Control
+                type="password"
+                placeholder="Enter new password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </InputGroup>
           </Form.Group>
           <Form.Group controlId="formConfirmPassword" className="mb-3">
             <Form.Label>Confirm New Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Confirm new password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
+            <InputGroup>
+              <InputGroup.Text>
+                <FaLock />
+              </InputGroup.Text>
+              <Form.Control
+                type="password"
+                placeholder="Confirm new password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </InputGroup>
           </Form.Group>
           <Button variant="primary" type="submit" className="w-100">
             Reset Password

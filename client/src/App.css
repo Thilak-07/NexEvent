@@ -44,7 +44,7 @@ body {
 
 .hero-description {
   font-size: 1rem;
-  color: #ffffff;
+  color: #b2c2da;
 }
 
 /*--------------CardSwiper---------------------------------------------------------------------------------------------------*/
@@ -63,7 +63,7 @@ body {
 /* Styling for each card */
 .card-custom {
   width: 400px; /* Increased width */
-  height: 250px; /* Increased height */
+  height: 280px; /* Increased height */
   background-color: #ffffff; /* Dark card background */
   color: #000000; /* Light text color */
   border: 1px solid #333; /* Card border */
@@ -82,15 +82,16 @@ body {
 /* Icon styling */
 .icon-container {
   font-size: 3rem; /* Larger icon size */
-  color: #e1900c; /* Accent color for icons */
-  margin-right: 20px; /* Space between icon and text */
+  color: #000000; /* Accent color for icons */
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 /* Card body styling */
 .card-body-custom {
   display: flex;
-  flex-direction: row; /* Align text next to icon */
-  align-items: center;
+  flex-direction: column; /* Align text next to icon */
   padding: 20px;
   text-align: left; /* Align text to the left */
   width: 100%; /* Full width to accommodate content */
@@ -104,12 +105,12 @@ body {
 /* Card title and text styling */
 .card-title-custom {
   font-size: 1.25rem; /* Slightly larger title font size */
-  font-weight: bold;
+  font-weight: 800;
 }
 
 .card-text-custom {
   font-size: 1rem; /* Adjust text size */
-  color: #000000; /* Lighter text color */
+  color: #475569; /* Lighter text color */
 }
 
 /* Navigation arrows styling */
@@ -214,4 +215,15 @@ body {
 .custom-card:hover {
   box-shadow: 0 0 10px 4px rgba(0, 123, 255, 0.9);
   border-color: rgba(0, 123, 255, 0.8);
+}
+
+/*--------------BestEvents---------------------------------------------------------------------------------------------------*/
+
+.glowy-box {
+  background-color: rgba(39, 39, 39, 0.3);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+  border: 1px solid rgba(0, 123, 255, 0.5);
+  backdrop-filter: blur(10px);
 }

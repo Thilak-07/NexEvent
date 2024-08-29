@@ -19,73 +19,40 @@ const HomePage = () => {
             Explore Events
           </Button>
           {/* <ScrollArrow /> */}
-          <svg className="arrows">
-            <path className="a1" d="M0 0 L30 32 L60 0"></path>
-            <path className="a2" d="M0 20 L30 52 L60 20"></path>
-            <path className="a3" d="M0 40 L30 72 L60 40"></path>
-          </svg>
+          <a href="#home">
+            <svg className="arrows">
+              <path className="a1" d="M0 0 L30 32 L60 0"></path>
+              <path className="a2" d="M0 20 L30 52 L60 20"></path>
+              <path className="a3" d="M0 40 L30 72 L60 40"></path>
+            </svg>
+          </a>
         </Container>
       </div>
-
-      {/* <Container className="py-5 min-vh-100">
-        <Row>
-          <Col md={4}>
-            <Card className="text-center mb-4">
-              <Card.Body>
-                <Card.Title>Track RSVPs</Card.Title>
-                <Card.Text>
-                  Keep tabs on your guest list effortlessly and accurately.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={4}>
-            <Card className="text-center mb-4">
-              <Card.Body>
-                <Card.Title>Manage Events</Card.Title>
-                <Card.Text>
-                  Plan, coordinate, and execute your events with ease and
-                  precision.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col md={4}>
-            <Card className="text-center mb-4">
-              <Card.Body>
-                <Card.Title>Send Reminders</Card.Title>
-                <Card.Text>
-                  Ensure no one forgets with timely and personalized reminders.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container> */}
-
-      <Container className="py-5 d-flex align-items-center">
-        <Row className="w-100">
-          <Col xs={12} md={6}>
-            <Image src="./landing_imgs/vector.jpg" fluid />
-          </Col>
-          <Col xs={12} md={6} className="d-flex flex-row align-items-center">
-            <div>
-              <h1 style={{ fontSize: "3rem", fontWeight: "bold" }}>
-                Unlock Your Creative Potential
-              </h1>
-              <hr />
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-                quae quasi nostrum ab dolor, pariatur voluptatum iste voluptates
-                dolorum aspernatur voluptatem cum commodi vero deserunt. Iure
-                laudantium quos libero adipisci repellat hic rem quasi accusamus
-                dolores placeat esse minus deserunt sunt amet excepturi
-                voluptatibus natus velit, odio facilis consectetur! Recusandae?
-              </p>
-            </div>
-          </Col>
-        </Row>
-      </Container>
+      <section id="home">
+        <Container className="py-5 d-flex align-items-center">
+          <Row className="w-100">
+            <Col xs={12} md={6}>
+              <Image src="./landing_imgs/vector.jpg" fluid />
+            </Col>
+            <Col xs={12} md={6} className="d-flex flex-row align-items-center">
+              <div>
+                <h1 style={{ fontSize: "3rem", fontWeight: "bold" }}>
+                  Unlock Your Creative Potential
+                </h1>
+                <hr />
+                <p>
+                  Our app empowers individual contributors and artists like you
+                  to unleash your creativity and organize remarkable events.
+                  Whether you're planning a solo exhibition, a live performance,
+                  or a collaborative workshop, our platform provides the tools
+                  and features you need to make your events a resounding
+                  success.
+                </p>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
 
       <HeroSection />
 

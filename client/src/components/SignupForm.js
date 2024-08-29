@@ -60,16 +60,7 @@ const SignupForm = ({ client }) => {
         >
           {error && <Alert variant="danger">{error}</Alert>}
           {/* Glowy Box */}
-          <div
-            className="my-4"
-            style={{
-              borderRadius: "10px",
-              padding: "20px",
-              boxShadow: "0 0 20px rgba(0, 123, 255, 0.8)",
-              border: "1px solid rgba(0, 123, 255, 0.5)",
-              backdropFilter: "blur(10px)",
-            }}
-          >
+          <div className="my-4 glowy-box">
             <Form.Group controlId="formUsername" className="mb-3">
               <Form.Label>
                 Username<span style={{ color: "red" }}>&nbsp;*</span>
@@ -105,11 +96,9 @@ const SignupForm = ({ client }) => {
               </InputGroup>
             </Form.Group>
             <Form.Group controlId="formBasicPassword" className="mb-3">
-              <div className="d-flex justify-content-between align-items-center">
-                <Form.Label>
-                  Password<span style={{ color: "red" }}>&nbsp;*</span>
-                </Form.Label>
-              </div>
+              <Form.Label>
+                Password<span style={{ color: "red" }}>&nbsp;*</span>
+              </Form.Label>
               <InputGroup>
                 <InputGroup.Text>
                   <FaLock />
@@ -127,13 +116,18 @@ const SignupForm = ({ client }) => {
               <Form.Label>
                 Confirm Password<span style={{ color: "red" }}>&nbsp;*</span>
               </Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Confirm password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
+              <InputGroup>
+                <InputGroup.Text>
+                  <FaLock />
+                </InputGroup.Text>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </InputGroup>
             </Form.Group>
             <Button variant="success" type="submit" className="w-100">
               Sign Up

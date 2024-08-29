@@ -68,16 +68,7 @@ const LoginForm = ({ client, handleLogin }) => {
         >
           {error && <Alert variant="danger">{error}</Alert>}
           {/* Glowy Box */}
-          <div
-            className="my-4"
-            style={{
-              borderRadius: "10px",
-              padding: "20px",
-              boxShadow: "0 0 20px rgba(0, 123, 255, 0.8)",
-              border: "1px solid rgba(0, 123, 255, 0.5)",
-              backdropFilter: "blur(10px)",
-            }}
-          >
+          <div className="my-4 glowy-box">
             <Form.Group controlId="formBasicEmail" className="mb-3">
               <Form.Label>Email address</Form.Label>
               <InputGroup>

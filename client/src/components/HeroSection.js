@@ -7,22 +7,22 @@ const HeroSection = () => {
     <div className="hero-section">
       <Container className="py-4">
         <Row>
-          <Col md={6} className="text-left">
+          <Col md={5} className="text-left">
             <h1 className="hero-title pb-1">
-              Seamless Event Planning <br /> and Organization
+              Seamless Event Planning and Organization
             </h1>
           </Col>
           <Col
-            md={6}
+            md={7}
             className="d-flex align-items-center justify-content-center"
           >
             <p className="hero-description">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Accusantium doloremque quibusdam consectetur dolore natus fugiat
-              quidem hic omnis. Dolorem molestias dolorum placeat, soluta
-              dignissimos quaerat autem adipisci? Asperiores, est, omnis,
-              doloremque placeat debitis repudiandae obcaecati reprehenderit
-              dicta porro dolorum tempora.
+              Say goodbye to the hassles of event planning. Our user-friendly
+              interface simplifies the process, allowing you to focus on your
+              artistic endeavors. Create and manage events effortlessly, from
+              setting dates and locations to providing event descriptions and
+              ticketing options. Streamline your planning process and bring your
+              vision to reality.
             </p>
           </Col>
         </Row>
