@@ -1,5 +1,6 @@
 import { Container, Navbar, Button, Nav } from "react-bootstrap";
 import { Link, useNavigate, NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
   const navigate = useNavigate();
@@ -7,6 +8,16 @@ const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
   const onLogoutClick = (e) => {
     e.preventDefault();
     client.post("auth/logout/").then(handleLogout);
+    toast.info("Logout successful!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
     navigate("/auth/login");
   };
 

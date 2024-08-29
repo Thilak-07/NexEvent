@@ -3,7 +3,6 @@ import {
   Container,
   Form,
   Button,
-  Alert,
   Navbar,
   Nav,
   InputGroup,
@@ -11,13 +10,13 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import BackBtn from "./BackBtn";
+import { toast } from "react-toastify";
 
 const LoginForm = ({ client, handleLogin }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -32,10 +31,29 @@ const LoginForm = ({ client, handleLogin }) => {
       })
       .then(() => {
         handleLogin();
+        toast.success("Login Successful!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         navigate("/explore");
       })
       .catch((err) => {
-        setError("Invalid Credentials");
+        toast.error("Invalid Credentials", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       });
   };
 
@@ -66,7 +84,6 @@ const LoginForm = ({ client, handleLogin }) => {
           className="flex-fill mx-auto"
           style={{ maxWidth: "400px" }}
         >
-          {error && <Alert variant="danger">{error}</Alert>}
           {/* Glowy Box */}
           <div className="my-4 glowy-box">
             <Form.Group controlId="formBasicEmail" className="mb-3">

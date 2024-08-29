@@ -3,7 +3,6 @@ import {
   Container,
   Form,
   Button,
-  Alert,
   Navbar,
   Nav,
   InputGroup,
@@ -11,7 +10,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import BackBtn from "./BackBtn";
-import CustomAlert from "./CustomAlert";
+import { toast } from "react-toastify";
 
 const SignupForm = ({ client }) => {
   const navigate = useNavigate();
@@ -19,23 +18,47 @@ const SignupForm = ({ client }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-  const [showAlert, toggleAlert] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      toast.error("Passwords do not match.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } else {
       client
         .post("auth/register/", { email, username, password })
         .then(() => {
-          toggleAlert(true);
+          toast.success("Registration Successful!", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          navigate("/auth/login");
         })
         .catch((err) => {
-          setError(
-            "This email is already registered. Please use a different email."
-          );
+          toast.error("Email already exists!", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
         });
     }
   };
@@ -58,7 +81,6 @@ const SignupForm = ({ client }) => {
           className="mx-auto"
           style={{ maxWidth: "400px" }}
         >
-          {error && <Alert variant="danger">{error}</Alert>}
           {/* Glowy Box */}
           <div className="my-4 glowy-box">
             <Form.Group controlId="formUsername" className="mb-3">
@@ -140,13 +162,6 @@ const SignupForm = ({ client }) => {
             </Link>
           </div>
         </Form>
-
-        <CustomAlert
-          show={showAlert}
-          handleClose={() => navigate("/auth/login")}
-          title="Registration Successful"
-          message="Please sign in to continue."
-        />
       </Container>
     </main>
   );

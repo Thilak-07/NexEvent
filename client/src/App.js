@@ -3,6 +3,8 @@ import axios from "axios";
 import { BrowserRouter as Router, useLocation } from "react-router-dom";
 import AuthLayout from "./layouts/AuthLayout";
 import LandingLayout from "./layouts/LandingLayout";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -48,6 +50,7 @@ function AppWrapper() {
   return (
     <Router>
       <App />
+      <ToastContainer />
     </Router>
   );
 }

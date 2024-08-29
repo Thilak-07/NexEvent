@@ -15,24 +15,17 @@ import BackBtn from "./BackBtn";
 const ForgotPassword = ({ client }) => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email) {
-      setError("Please enter your email address.");
-      setMessage("");
-    } else {
-      setError("");
-      setMessage(
-        "If an account with that email exists, a password reset link will be sent."
-      );
+    setMessage(
+      "If an account with this email exists, a password reset link will be sent."
+    );
 
-      try {
-        await client.post("auth/request-reset/", { email });
-      } catch (err) {}
-    }
+    try {
+      await client.post("auth/request-reset/", { email });
+    } catch (err) {}
   };
 
   return (
@@ -53,7 +46,6 @@ const ForgotPassword = ({ client }) => {
           className="mx-auto"
           style={{ maxWidth: "400px" }}
         >
-          {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="info">{message}</Alert>}
           <Form.Group controlId="formBasicEmail" className="mb-3">
             <Form.Label>Email address</Form.Label>
@@ -66,6 +58,7 @@ const ForgotPassword = ({ client }) => {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </InputGroup>
           </Form.Group>
