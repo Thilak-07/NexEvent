@@ -14,6 +14,93 @@ import { toast } from "react-toastify";
 import BackBtn from "./BackBtn";
 import { loginUser } from "../api";
 
+const LogoUnit = () => {
+    return (
+        <div className="text-center mb-2">
+            <img
+                src="/favicon.svg"
+                alt="Company Logo"
+                style={{ maxWidth: "70px" }}
+            />
+        </div>
+    );
+};
+
+const EmailInput = ({ email, setEmail }) => {
+    return (
+        <Form.Group controlId="formBasicEmail" className="mb-3">
+            <Form.Label>Email address</Form.Label>
+            <InputGroup>
+                <InputGroup.Text>
+                    <FaUser />
+                </InputGroup.Text>
+                <Form.Control
+                    type="email"
+                    placeholder="Enter email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
+            </InputGroup>
+        </Form.Group>
+    );
+};
+
+const PasswordInput = ({
+    password,
+    setPassword,
+    showPassword,
+    togglePasswordVisibility,
+}) => {
+    return (
+        <Form.Group controlId="formBasicPassword" className="mb-3">
+            <Form.Label>Password</Form.Label>
+            <InputGroup>
+                <InputGroup.Text>
+                    <FaLock />
+                </InputGroup.Text>
+                <Form.Control
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+                <InputGroup.Text
+                    onClick={togglePasswordVisibility}
+                    style={{ cursor: "pointer" }}
+                >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </InputGroup.Text>
+            </InputGroup>
+        </Form.Group>
+    );
+};
+
+const LoginButton = () => {
+    return (
+        <Button variant="success" type="submit" className="w-100">
+            Login
+        </Button>
+    );
+};
+
+const RedirectionLinks = () => {
+    return (
+        <div className="text-center mt-3">
+            <div>
+                New to NexEvent?&nbsp;
+                <Link to="/auth/signup" className="text-decoration-none">
+                    Create an account
+                </Link>
+            </div>
+            <Link to="/auth/forgot-password" className="text-decoration-none">
+                Forgot Password?
+            </Link>
+        </div>
+    );
+};
+
 const LoginForm = ({ handleLogin }) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
@@ -54,91 +141,6 @@ const LoginForm = ({ handleLogin }) => {
         }
     };
 
-    const LogoUnit = () => {
-        return (
-            <div className="text-center mb-2">
-                <img
-                    src="/favicon.svg"
-                    alt="Company Logo"
-                    style={{ maxWidth: "70px" }}
-                />
-            </div>
-        );
-    };
-
-    const EmailInput = () => {
-        return (
-            <Form.Group controlId="formBasicEmail" className="mb-3">
-                <Form.Label>Email address</Form.Label>
-                <InputGroup>
-                    <InputGroup.Text>
-                        <FaUser />
-                    </InputGroup.Text>
-                    <Form.Control
-                        type="email"
-                        placeholder="Enter email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </InputGroup>
-            </Form.Group>
-        );
-    };
-
-    const PasswordInput = () => {
-        return (
-            <Form.Group controlId="formBasicPassword" className="mb-3">
-                <Form.Label>Password</Form.Label>
-                <InputGroup>
-                    <InputGroup.Text>
-                        <FaLock />
-                    </InputGroup.Text>
-                    <Form.Control
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                    <InputGroup.Text
-                        onClick={togglePasswordVisibility}
-                        style={{ cursor: "pointer" }}
-                    >
-                        {showPassword ? <FaEyeSlash /> : <FaEye />}
-                    </InputGroup.Text>
-                </InputGroup>
-            </Form.Group>
-        );
-    };
-
-    const LoginButton = () => {
-        return (
-            <Button variant="success" type="submit" className="w-100">
-                Login
-            </Button>
-        );
-    };
-
-    const RedirectionLinks = () => {
-        return (
-            <div className="text-center mt-3">
-                <div>
-                    New to NexEvent?&nbsp;
-                    <Link to="/auth/signup" className="text-decoration-none">
-                        Create an account
-                    </Link>
-                </div>
-                <Link
-                    to="/auth/forgot-password"
-                    className="text-decoration-none"
-                >
-                    Forgot Password?
-                </Link>
-            </div>
-        );
-    };
-
     return (
         <main className="flex-fill">
             <Navbar variant="dark" expand="lg" className="pt-3">
@@ -160,8 +162,13 @@ const LoginForm = ({ handleLogin }) => {
                 >
                     {/* Glowy Box */}
                     <div className="my-4 glowy-box">
-                        <EmailInput />
-                        <PasswordInput />
+                        <EmailInput email={email} setEmail={setEmail} />
+                        <PasswordInput
+                            password={password}
+                            setPassword={setPassword}
+                            showPassword={showPassword}
+                            togglePasswordVisibility={togglePasswordVisibility}
+                        />
                         <LoginButton />
                     </div>
 
