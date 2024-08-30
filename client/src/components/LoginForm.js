@@ -102,16 +102,7 @@ const LoginForm = ({ client, handleLogin }) => {
               </InputGroup>
             </Form.Group>
             <Form.Group controlId="formBasicPassword" className="mb-3">
-              <div className="d-flex justify-content-between align-items-center">
-                <Form.Label>Password</Form.Label>
-                <Link
-                  to="/auth/forgot-password"
-                  className="text-decoration-none"
-                  style={{ fontSize: "0.9rem" }}
-                >
-                  Forgot Password?
-                </Link>
-              </div>
+              <Form.Label>Password</Form.Label>
               <InputGroup>
                 <InputGroup.Text>
                   <FaLock />
@@ -135,10 +126,16 @@ const LoginForm = ({ client, handleLogin }) => {
               Login
             </Button>
           </div>
+
           <div className="text-center mt-3">
-            New to NexEvent?&nbsp;
-            <Link to="/auth/signup" className="text-decoration-none">
-              Create an account
+            <div>
+              New to NexEvent?&nbsp;
+              <Link to="/auth/signup" className="text-decoration-none">
+                Create an account
+              </Link>
+            </div>
+            <Link to="/auth/forgot-password" className="text-decoration-none">
+              Forgot Password?
             </Link>
           </div>
         </Form>
