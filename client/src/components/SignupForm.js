@@ -8,7 +8,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
+import { FaUser, FaLock, FaEnvelope, FaEye, FaEyeSlash } from "react-icons/fa";
 import BackBtn from "./BackBtn";
 import { toast } from "react-toastify";
 
@@ -18,6 +18,16 @@ const SignupForm = ({ client }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+
+  const togglePassword1Visibility = () => {
+    setShowPassword1(!showPassword1);
+  };
+
+  const togglePassword2Visibility = () => {
+    setShowPassword2(!showPassword2);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -126,12 +136,18 @@ const SignupForm = ({ client }) => {
                   <FaLock />
                 </InputGroup.Text>
                 <Form.Control
-                  type="password"
+                  type={showPassword1 ? "text" : "password"}
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
+                <InputGroup.Text
+                  onClick={togglePassword1Visibility}
+                  style={{ cursor: "pointer" }}
+                >
+                  {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+                </InputGroup.Text>
               </InputGroup>
             </Form.Group>
             <Form.Group controlId="formConfirmPassword" className="mb-3">
@@ -143,12 +159,18 @@ const SignupForm = ({ client }) => {
                   <FaLock />
                 </InputGroup.Text>
                 <Form.Control
-                  type="password"
+                  type={showPassword2 ? "text" : "password"}
                   placeholder="Confirm password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                 />
+                <InputGroup.Text
+                  onClick={togglePassword2Visibility}
+                  style={{ cursor: "pointer" }}
+                >
+                  {showPassword2 ? <FaEyeSlash /> : <FaEye />}
+                </InputGroup.Text>
               </InputGroup>
             </Form.Group>
             <Button variant="success" type="submit" className="w-100">
