@@ -2,239 +2,239 @@
 
 html,
 body {
-  height: 100%;
-  margin: 0;
-  background-color: #ffffff;
-  font-family: "Lato", sans-serif;
+    height: 100%;
+    margin: 0;
+    background-color: #ffffff;
+    font-family: "Lato", sans-serif;
 }
 
 .d-flex {
-  display: flex;
+    display: flex;
 }
 
 .flex-column {
-  flex-direction: column;
+    flex-direction: column;
 }
 
 .min-vh-100 {
-  min-height: 100vh;
+    min-height: 100vh;
 }
 
 .flex-fill {
-  flex: 1;
+    flex: 1;
 }
 
 .bg-dark {
-  background-color: #0d1117 !important;
+    background-color: #0d1117 !important;
 }
 
 /*--------------Footer---------------------------------------------------------------------------------------------------*/
 
 .footer-custom,
 .social {
-  color: #949ca8; /* Lighter text color */
+    color: #949ca8; /* Lighter text color */
 }
 
 .social:hover {
-  color: #f5a623;
+    color: #f5a623;
 }
 
 /*--------------HeroSection---------------------------------------------------------------------------------------------------*/
 
 .hero-section {
-  background-color: #0d1117;
-  background: linear-gradient(#0d1117 0%, rgb(3, 30, 59) 100%);
-  color: #f5a623;
-  padding: 60px 0;
+    background-color: #0d1117;
+    background: linear-gradient(#0d1117 0%, rgb(3, 30, 59) 100%);
+    color: #f5a623;
+    padding: 60px 0;
 }
 
 .hero-title {
-  font-size: 3rem;
-  font-weight: bold;
+    font-size: 3rem;
+    font-weight: bold;
 }
 
 .hero-description {
-  font-size: 1rem;
-  color: #b2c2da;
+    font-size: 1rem;
+    color: #b2c2da;
 }
 
 /*--------------CardSwiper---------------------------------------------------------------------------------------------------*/
 
 /* Swiper wrapper styling */
 .swiper-wrapper-container {
-  position: relative;
-  margin: auto;
+    position: relative;
+    margin: auto;
 }
 
 /* Custom Swiper styles */
 .swiper-custom {
-  position: relative;
+    position: relative;
 }
 
 /* Styling for each card */
 .card-custom {
-  width: 400px; /* Increased width */
-  height: 280px; /* Increased height */
-  background-color: #ffffff; /* Dark card background */
-  color: #000000; /* Light text color */
-  border: 1px solid #333; /* Card border */
-  border-radius: 10px; /* Rounded corners */
-  display: flex;
-  flex-direction: row; /* Horizontal alignment */
-  align-items: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 400px; /* Increased width */
+    height: 280px; /* Increased height */
+    background-color: #ffffff; /* Dark card background */
+    color: #000000; /* Light text color */
+    border: 1px solid #333; /* Card border */
+    border-radius: 10px; /* Rounded corners */
+    display: flex;
+    flex-direction: row; /* Horizontal alignment */
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card-custom:hover {
-  transform: translateY(-10px); /* Slight lift on hover */
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    transform: translateY(-10px); /* Slight lift on hover */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Subtle shadow */
 }
 
 /* Icon styling */
 .icon-container {
-  font-size: 3rem; /* Larger icon size */
-  color: #000000; /* Accent color for icons */
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+    font-size: 3rem; /* Larger icon size */
+    color: #000000; /* Accent color for icons */
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 /* Card body styling */
 .card-body-custom {
-  display: flex;
-  flex-direction: column; /* Align text next to icon */
-  padding: 20px;
-  text-align: left; /* Align text to the left */
-  width: 100%; /* Full width to accommodate content */
-  height: 100%; /* Full height */
+    display: flex;
+    flex-direction: column; /* Align text next to icon */
+    padding: 20px;
+    text-align: left; /* Align text to the left */
+    width: 100%; /* Full width to accommodate content */
+    height: 100%; /* Full height */
 }
 
 .text-content {
-  flex: 1; /* Allow text content to take available space */
+    flex: 1; /* Allow text content to take available space */
 }
 
 /* Card title and text styling */
 .card-title-custom {
-  font-size: 1.25rem; /* Slightly larger title font size */
-  font-weight: 800;
+    font-size: 1.25rem; /* Slightly larger title font size */
+    font-weight: 800;
 }
 
 .card-text-custom {
-  font-size: 1rem; /* Adjust text size */
-  color: #475569; /* Lighter text color */
+    font-size: 1rem; /* Adjust text size */
+    color: #475569; /* Lighter text color */
 }
 
 /* Navigation arrows styling */
 .swiper-button-next-custom,
 .swiper-button-prev-custom {
-  position: absolute;
-  top: 50%; /* Center vertically */
-  transform: translateY(-50%); /* Adjust for centering */
-  color: #f5a623; /* Arrow color */
-  background-color: transparent; /* Dark background for arrows */
-  border-radius: 50%; /* Circular buttons */
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: none; /* Shadow for arrows */
+    position: absolute;
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for centering */
+    color: #f5a623; /* Arrow color */
+    background-color: transparent; /* Dark background for arrows */
+    border-radius: 50%; /* Circular buttons */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none; /* Shadow for arrows */
 }
 
 .swiper-button-prev-custom {
-  left: 10px; /* Position on the left side */
+    left: 10px; /* Position on the left side */
 }
 
 .swiper-button-next-custom {
-  right: 10px; /* Position on the right side */
+    right: 10px; /* Position on the right side */
 }
 
 .no-select {
-  user-select: none; /* Non-prefixed version, supported by modern browsers */
+    user-select: none; /* Non-prefixed version, supported by modern browsers */
 }
 
 /*--------------ArrowIcon---------------------------------------------------------------------------------------------------*/
 
 .arrows {
-  width: 60px;
-  height: 72px;
-  position: absolute;
-  left: 50%;
-  margin-left: -30px;
-  bottom: 40px;
+    width: 60px;
+    height: 72px;
+    position: absolute;
+    left: 50%;
+    margin-left: -30px;
+    bottom: 40px;
 }
 
 .arrows path {
-  stroke: #ffffff;
-  fill: transparent;
-  stroke-width: 1px;
-  animation: arrow 1s infinite;
-  -webkit-animation: arrow 2s infinite;
+    stroke: #ffffff;
+    fill: transparent;
+    stroke-width: 1px;
+    animation: arrow 1s infinite;
+    -webkit-animation: arrow 2s infinite;
 }
 
 @keyframes arrow {
-  0% {
-    opacity: 0;
-  }
-  40% {
-    opacity: 1;
-  }
-  80% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-  }
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 @-webkit-keyframes arrow {
-  0% {
-    opacity: 0;
-  }
-  40% {
-    opacity: 1;
-  }
-  80% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-  }
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 .arrows path.a1 {
-  animation-delay: -0.5s;
-  -webkit-animation-delay: -0.5s;
+    animation-delay: -0.5s;
+    -webkit-animation-delay: -0.5s;
 }
 
 .arrows path.a2 {
-  animation-delay: -0.25s;
-  -webkit-animation-delay: -0.25s;
+    animation-delay: -0.25s;
+    -webkit-animation-delay: -0.25s;
 }
 
 .arrows path.a3 {
-  animation-delay: 0s;
-  -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+    -webkit-animation-delay: 0s;
 }
 
 /*--------------BestEvents---------------------------------------------------------------------------------------------------*/
 
 .custom-card {
-  transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .custom-card:hover {
-  box-shadow: 0 0 10px 4px rgba(0, 123, 255, 0.9);
-  border-color: rgba(0, 123, 255, 0.8);
+    box-shadow: 0 0 10px 4px rgba(0, 123, 255, 0.9);
+    border-color: rgba(0, 123, 255, 0.8);
 }
 
 /*--------------AuthPages---------------------------------------------------------------------------------------------------*/
 
 .glowy-box {
-  background-color: rgba(39, 39, 39, 0.3);
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
-  border: 1px solid rgba(0, 123, 255, 0.5);
-  backdrop-filter: blur(10px);
+    background-color: rgba(39, 39, 39, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+    border: 1px solid rgba(0, 123, 255, 0.5);
+    backdrop-filter: blur(10px);
 }
