@@ -133,13 +133,13 @@ REST_FRAMEWORK = {
 }
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'Ganit@localhost'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_HOST_USER = 'NexEvent'
 PASSWORD_RESET_BASE_URL = 'http://127.0.0.1:3000/auth/reset-password'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.example.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'your-email@example.com'
-# EMAIL_HOST_PASSWORD = 'your-email-password'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'nexevent.help@gmail.com'
+EMAIL_HOST_PASSWORD = 'lruyzoopkbvjpjlo'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
