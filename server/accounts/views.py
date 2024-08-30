@@ -1,10 +1,17 @@
 from django.conf import settings
+
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from rest_framework import generics, permissions, status
-from rest_framework.authentication import SessionAuthentication
+
+from rest_framework import generics, status
+# from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, ResetPasswordRequestSerializer, TokenValiditySerializer, ResetPasswordSerializer
 from .validations import custom_validation, validate_email, validate_password
@@ -16,7 +23,7 @@ UserModel = get_user_model()
 
 
 class UserRegister(APIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         clean_data = custom_validation(request.data)
@@ -28,8 +35,8 @@ class UserRegister(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserLogin(APIView):
-    permission_classes = (permissions.AllowAny,)
+class UserLogin(TokenObtainPairView):
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         data = request.data
@@ -38,13 +45,19 @@ class UserLogin(APIView):
         serializer = UserLoginSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             user = serializer.check_user(data)
-            login(request, user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            refresh = RefreshToken.for_user(user)
+            # login(request, user)
+            # return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+                # 'user': UserSerializer(user).data
+            }, status=status.HTTP_200_OK)
 
 
 class UserView(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
-    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JWTAuthentication,)
 
     def get(self, request):
         serializer = UserSerializer(request.user)
@@ -52,41 +65,44 @@ class UserView(APIView):
 
 
 class UserLogout(APIView):
-    permission_classes = (permissions.AllowAny,)
-    authentication_classes = ()
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JWTAuthentication,)
 
     def post(self, request):
-        logout(request)
+        # Blacklist the refresh token (if blacklisting is enabled)
+        refresh_token = request.data.get("refresh_token")
+        if refresh_token:
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+        # logout(request)
         return Response(status=status.HTTP_200_OK)
 
 
 class RequestPasswordReset(generics.GenericAPIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (AllowAny,)
     serializer_class = ResetPasswordRequestSerializer
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
-        email = request.data['email']
-        user = UserModel.objects.filter(email__iexact=email).first()
+        if serializer.is_valid(raise_exception=True):
+            email = serializer.data['email']
+            user = UserModel.objects.filter(email__iexact=email).first()
 
-        if user:
-            token_generator = PasswordResetTokenGenerator()
-            token = token_generator.make_token(user)
-            reset = PasswordReset(email=email, token=token)
-            reset.save()
-
-            reset_url = f"{settings.PASSWORD_RESET_BASE_URL}/{token}"
-
-            send_password_reset_email(email, reset_url)
-
-            return Response({'success': 'We have sent you a link to reset your password'}, status=status.HTTP_200_OK)
-        else:
-            return Response({"error": "User with credentials not found"}, status=status.HTTP_404_NOT_FOUND)
+            if user:
+                token_generator = PasswordResetTokenGenerator()
+                token = token_generator.make_token(user)
+                reset = PasswordReset(email=email, token=token)
+                reset.save()
+                reset_url = f"{settings.PASSWORD_RESET_BASE_URL}/{token}"
+                send_password_reset_email(email, reset_url)
+                return Response({'success': 'We have sent you a link to reset your password'}, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "User with credentials not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
 class TokenValidity(generics.GenericAPIView):
     serializer_class = TokenValiditySerializer
-    permission_classes = []
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -118,7 +134,7 @@ class ResetPassword(generics.GenericAPIView):
         user = UserModel.objects.filter(email=reset_obj.email).first()
 
         if user:
-            user.set_password(request.data['password'])
+            user.set_password(serializer.data['password'])
             user.save()
             reset_obj.delete()
             return Response({'success': 'Password updated'}, status=status.HTTP_200_OK)

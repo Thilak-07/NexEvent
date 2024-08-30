@@ -9,10 +9,12 @@ import {
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaLock, FaEnvelope, FaEye, FaEyeSlash } from "react-icons/fa";
-import BackBtn from "./BackBtn";
 import { toast } from "react-toastify";
 
-const SignupForm = ({ client }) => {
+import BackBtn from "./BackBtn";
+import { registerUser } from "../api";
+
+const SignupForm = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -29,7 +31,7 @@ const SignupForm = ({ client }) => {
     setShowPassword2(!showPassword2);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       toast.error("Passwords do not match.", {
@@ -43,33 +45,31 @@ const SignupForm = ({ client }) => {
         theme: "colored",
       });
     } else {
-      client
-        .post("auth/register/", { email, username, password })
-        .then(() => {
-          toast.success("Registration Successful!", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
-          navigate("/auth/login");
-        })
-        .catch((err) => {
-          toast.error("Email already exists!", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
+      try {
+        await registerUser({ email, username, password });
+        toast.success("Registration Successful!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
         });
+        navigate("/auth/login"); // Redirect to login after successful registration
+      } catch (err) {
+        toast.error("Email already exists or registration failed!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
     }
   };
 

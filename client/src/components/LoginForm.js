@@ -9,10 +9,12 @@ import {
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
-import BackBtn from "./BackBtn";
 import { toast } from "react-toastify";
 
-const LoginForm = ({ client, handleLogin }) => {
+import BackBtn from "./BackBtn";
+import { loginUser } from "../api";
+
+const LoginForm = ({ handleLogin }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,39 +24,34 @@ const LoginForm = ({ client, handleLogin }) => {
     setShowPassword(!showPassword);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    client
-      .post("auth/login/", {
-        email: email,
-        password: password,
-      })
-      .then(() => {
-        handleLogin();
-        toast.success("Login Successful!", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-        navigate("/explore");
-      })
-      .catch((err) => {
-        toast.error("Invalid Credentials", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+    try {
+      await loginUser(email, password);
+      handleLogin();
+      toast.success("Login Successful!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
       });
+      navigate("/explore");
+    } catch (err) {
+      toast.error("Invalid Credentials", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
   };
 
   return (

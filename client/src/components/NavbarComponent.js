@@ -2,23 +2,39 @@ import { Container, Navbar, Button, Nav } from "react-bootstrap";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const NavbarComponent = ({ loggedIn, handleLogout, client }) => {
+import { logoutUser } from "../api";
+
+const NavbarComponent = ({ loggedIn, handleLogout }) => {
   const navigate = useNavigate();
 
-  const onLogoutClick = (e) => {
+  const onLogoutClick = async (e) => {
     e.preventDefault();
-    client.post("auth/logout/").then(handleLogout);
-    toast.info("Logout successful!", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-    navigate("/auth/login");
+    try {
+      await logoutUser();
+      handleLogout();
+      toast.info("Logout successful!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      navigate("/auth/login");
+    } catch (err) {
+      toast.error("Logout failed. Please try again.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
   };
 
   return (

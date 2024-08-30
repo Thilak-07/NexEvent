@@ -10,22 +10,25 @@ import {
 } from "react-bootstrap";
 import { FaEnvelope } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import BackBtn from "./BackBtn";
 
-const ForgotPassword = ({ client }) => {
+import BackBtn from "./BackBtn";
+import { requestPasswordReset } from "../api";
+
+const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setMessage(
       "If an account with this email exists, a password reset link will be sent."
     );
 
     try {
-      await client.post("auth/request-reset/", { email });
-    } catch (err) {}
+      await requestPasswordReset(email);
+    } catch (err) {
+      // Optionally, handle the error, e.g., show a toast notification
+    }
   };
 
   return (

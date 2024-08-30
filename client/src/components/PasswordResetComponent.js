@@ -3,7 +3,9 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { Form, Button, Container, InputGroup } from "react-bootstrap";
 import { FaLock } from "react-icons/fa";
 import { toast } from "react-toastify";
+
 import FooterComponent from "./FooterComponent";
+import { checkTokenValidity, resetPassword } from "../api";
 
 const PasswordResetComponent = ({ client }) => {
   const navigate = useNavigate();
@@ -12,20 +14,26 @@ const PasswordResetComponent = ({ client }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
-    client.post("auth/token-validity/", { token }).catch(() => {
-      toast.error("Invalid token.", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      navigate("/");
-    });
-  }, [client, token, navigate]);
+    const verifyToken = async () => {
+      try {
+        await checkTokenValidity(token);
+      } catch {
+        toast.error("Invalid token.", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        navigate("/");
+      }
+    };
+
+    verifyToken();
+  }, [token, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,12 +52,23 @@ const PasswordResetComponent = ({ client }) => {
       return;
     }
 
-    client
-      .post(`auth/reset-password/${token}/`, {
-        password: password,
-      })
-      .then(() => {
-        toast.success("Password successfully updated!", {
+    try {
+      await resetPassword(token, password);
+      toast.success("Password successfully updated!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      navigate("/auth/login");
+    } catch {
+      toast.error(
+        "Failed to reset password. The token may be invalid or expired.",
+        {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -58,24 +77,9 @@ const PasswordResetComponent = ({ client }) => {
           draggable: true,
           progress: undefined,
           theme: "colored",
-        });
-        navigate("/auth/login");
-      })
-      .catch((err) => {
-        toast.error(
-          "Failed to reset password. The token may be invalid or expired.",
-          {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          }
-        );
-      });
+        }
+      );
+    }
   };
 
   return (

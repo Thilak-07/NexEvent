@@ -1,28 +1,27 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { BrowserRouter as Router, useLocation } from "react-router-dom";
-import AuthLayout from "./layouts/AuthLayout";
-import LandingLayout from "./layouts/LandingLayout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-axios.defaults.xsrfCookieName = "csrftoken";
-axios.defaults.xsrfHeaderName = "X-CSRFToken";
-axios.defaults.withCredentials = true;
-
-const client = axios.create({
-  baseURL: "http://127.0.0.1:8000",
-});
+import AuthLayout from "./layouts/AuthLayout";
+import LandingLayout from "./layouts/LandingLayout";
+import { getUserDetails } from "./api";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    client
-      .get("auth/user/")
-      .then(() => setLoggedIn(true))
-      .catch(() => setLoggedIn(false));
+    const checkAuthentication = async () => {
+      try {
+        await getUserDetails();
+        setLoggedIn(true);
+      } catch (err) {
+        setLoggedIn(false);
+      }
+    };
+
+    checkAuthentication();
   }, []);
 
   const handleLogout = () => {
@@ -36,13 +35,9 @@ function App() {
   const isAuthRoute = location.pathname.startsWith("/auth");
 
   return isAuthRoute ? (
-    <AuthLayout handleLogin={handleLogin} client={client} />
+    <AuthLayout handleLogin={handleLogin} />
   ) : (
-    <LandingLayout
-      loggedIn={loggedIn}
-      handleLogout={handleLogout}
-      client={client}
-    />
+    <LandingLayout loggedIn={loggedIn} handleLogout={handleLogout} />
   );
 }
 
