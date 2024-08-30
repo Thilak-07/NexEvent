@@ -4,12 +4,11 @@ from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 from rest_framework import generics, status
-# from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -47,11 +46,10 @@ class UserLogin(TokenObtainPairView):
             user = serializer.check_user(data)
             refresh = RefreshToken.for_user(user)
             # login(request, user)
-            # return Response(serializer.data, status=status.HTTP_200_OK)
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
-                # 'user': UserSerializer(user).data
+                'user': UserSerializer(user).data
             }, status=status.HTTP_200_OK)
 
 
@@ -102,6 +100,7 @@ class RequestPasswordReset(generics.GenericAPIView):
 
 
 class TokenValidity(generics.GenericAPIView):
+    permission_classes = (AllowAny,)
     serializer_class = TokenValiditySerializer
 
     def post(self, request):
@@ -118,8 +117,8 @@ class TokenValidity(generics.GenericAPIView):
 
 
 class ResetPassword(generics.GenericAPIView):
+    permission_classes = (AllowAny,)
     serializer_class = ResetPasswordSerializer
-    permission_classes = []
 
     def post(self, request, token):
         serializer = self.serializer_class(data=request.data)

@@ -3,7 +3,8 @@ import apiClient from "./apiClient";
 // Register a new user
 export const registerUser = async (userData) => {
   try {
-    await apiClient.post("/auth/register/", userData);
+    const response = await apiClient.post("/auth/register/", userData);
+    return response.data;
   } catch (error) {
     throw error;
   }
@@ -13,11 +14,14 @@ export const registerUser = async (userData) => {
 export const loginUser = async (email, password) => {
   try {
     const response = await apiClient.post("/auth/login/", { email, password });
-    const { access, refresh } = response.data;
+    const { access, refresh, user } = response.data;
 
     // Store tokens
     localStorage.setItem("accessToken", access);
     localStorage.setItem("refreshToken", refresh);
+    localStorage.setItem("user", user);
+
+    return user;
   } catch (error) {
     throw error;
   }
@@ -26,11 +30,15 @@ export const loginUser = async (email, password) => {
 // Logout a user
 export const logoutUser = async (refreshToken) => {
   try {
-    await apiClient.post("/auth/logout/", { refresh_token: refreshToken });
+    const response = await apiClient.post("/auth/logout/", {
+      refresh_token: refreshToken,
+    });
 
     // Clear tokens
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+
+    return response.data;
   } catch (error) {
     throw error;
   }
