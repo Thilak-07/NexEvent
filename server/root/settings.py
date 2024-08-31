@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     "corsheaders",
     "accounts",
     "events",
@@ -80,6 +81,7 @@ DATABASES = {
     }
 }
 
+
 # User model
 AUTH_USER_MODEL = 'accounts.AppUser'
 
@@ -107,11 +109,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "UTC"
-
+TIME_ZONE = "Asia/Kolkata"
 USE_I18N = True
-
 USE_TZ = True
 
 
@@ -153,7 +152,7 @@ PASSWORD_RESET_BASE_URL = 'http://127.0.0.1:3000/auth/reset-password'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'nexevent.help@gmail.com'
-EMAIL_HOST_PASSWORD = 'lruyzoopkbvjpjlo'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

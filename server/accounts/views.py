@@ -1,15 +1,14 @@
 from django.conf import settings
-
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, ResetPasswordRequestSerializer, TokenValiditySerializer, ResetPasswordSerializer
@@ -45,12 +44,8 @@ class UserLogin(TokenObtainPairView):
         if serializer.is_valid(raise_exception=True):
             user = serializer.check_user(data)
             refresh = RefreshToken.for_user(user)
-            # login(request, user)
-            return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-                'user': UserSerializer(user).data
-            }, status=status.HTTP_200_OK)
+            login(request, user)
+            return Response({'refresh': str(refresh), 'access': str(refresh.access_token), 'user': UserSerializer(user).data}, status=status.HTTP_200_OK)
 
 
 class UserView(APIView):
@@ -73,7 +68,7 @@ class UserLogout(APIView):
             token = RefreshToken(refresh_token)
             token.blacklist()
 
-        # logout(request)
+        logout(request)
         return Response(status=status.HTTP_200_OK)
 
 
