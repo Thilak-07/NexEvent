@@ -18,7 +18,8 @@
     "react-swiper": "^0.1.5",
     "react-toastify": "^10.0.5",
     "swiper": "^11.1.11",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zxcvbn": "^4.4.2"
   },
   "scripts": {
     "start": "react-scripts start",

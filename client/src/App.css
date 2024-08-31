@@ -234,7 +234,24 @@ body {
     background-color: rgba(39, 39, 39, 0.3);
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
     border: 1px solid rgba(0, 123, 255, 0.5);
     backdrop-filter: blur(10px);
+}
+
+/* Ensure the text color for password strength is visible */
+.password-strength-text {
+    font-size: 0.9rem;
+}
+
+.password-strength-text.weak {
+    color: #ff4d4d !important; /* Bright red */
+}
+
+.password-strength-text.moderate {
+    color: #ffcc00 !important; /* Bright yellow */
+}
+
+.password-strength-text.strong {
+    color: #00cc00 !important; /* Bright green */
 }

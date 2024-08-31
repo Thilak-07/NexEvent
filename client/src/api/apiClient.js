@@ -22,6 +22,7 @@ apiClient.interceptors.request.use(
 
 // Refresh access token
 const refreshAccessToken = async () => {
+    console.log("Refresh refreshAccesToken() Called.");
     const refreshToken = localStorage.getItem("refreshToken");
     try {
         const response = await apiClient.post("/token/refresh/", {
@@ -51,6 +52,7 @@ apiClient.interceptors.response.use(
                 const refreshToken = localStorage.getItem("refreshToken");
                 if (refreshToken) {
                     const newAccessToken = await refreshAccessToken();
+
                     apiClient.defaults.headers.common[
                         "Authorization"
                     ] = `Bearer ${newAccessToken}`;
@@ -58,13 +60,9 @@ apiClient.interceptors.response.use(
                         "Authorization"
                     ] = `Bearer ${newAccessToken}`;
                     return apiClient(originalRequest);
-                } else {
-                    // Handle case where refresh token is not available
-                    return Promise.reject(
-                        new Error("Refresh token is missing")
-                    );
                 }
             } catch (e) {
+                window.location.reload(); // Refresh the page
                 return Promise.reject(e);
             }
         }

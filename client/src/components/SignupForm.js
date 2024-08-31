@@ -10,6 +10,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaLock, FaEnvelope, FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
+import zxcvbn from "zxcvbn";
 
 import BackBtn from "./BackBtn";
 import { registerUser } from "../api";
@@ -66,12 +67,40 @@ const PasswordInput = ({
     showPassword1,
     togglePassword1Visibility,
 }) => {
+    const [strength, setStrength] = useState({ text: "" });
+
+    const strengthLevels = [
+        { text: "Very Weak" }, // Score 0
+        { text: "Weak" }, // Score 1
+        { text: "Moderate" }, // Score 2
+        { text: "Strong" }, // Score 3-4
+    ];
+
+    const handlePasswordChange = (e) => {
+        const newPassword = e.target.value;
+        setPassword(newPassword);
+
+        const result = zxcvbn(newPassword);
+        const score = result.score; // Score ranges from 0 (weak) to 4 (strong)
+
+        const strengthLevel =
+            strengthLevels[Math.min(score, strengthLevels.length - 1)];
+        setStrength(strengthLevel);
+    };
+
     return (
         <Form.Group controlId="formBasicPassword" className="mb-3">
-            <Form.Label>
-                Password
-                <span style={{ color: "red" }}>&nbsp;*</span>
-            </Form.Label>
+            <div className="d-flex justify-content-between">
+                <Form.Label>
+                    Password
+                    <span style={{ color: "red" }}>&nbsp;*</span>
+                </Form.Label>
+                <Form.Text
+                    className={`password-strength-text ${strength.text.toLowerCase()}`}
+                >
+                    {strength.text}
+                </Form.Text>
+            </div>
             <InputGroup>
                 <InputGroup.Text>
                     <FaLock />
@@ -80,7 +109,7 @@ const PasswordInput = ({
                     type={showPassword1 ? "text" : "password"}
                     placeholder="Password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handlePasswordChange}
                     required
                 />
                 <InputGroup.Text
@@ -166,7 +195,22 @@ const SignupForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (password !== confirmPassword) {
+
+        if (password.length < 8) {
+            toast.error(
+                "Your password should have a minimum of 8 characters.",
+                {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                }
+            );
+        } else if (password !== confirmPassword) {
             toast.error("Passwords do not match.", {
                 position: "top-center",
                 autoClose: 5000,
@@ -192,7 +236,8 @@ const SignupForm = () => {
                 });
                 navigate("/auth/login"); // Redirect to login after successful registration
             } catch (err) {
-                toast.error("Email already exists!", {
+                console.log(err)
+                toast.error("An user account with this email already exists!", {
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
