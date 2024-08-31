@@ -8,6 +8,18 @@ const apiClient = axios.create({
     },
 });
 
+// Request interceptor to include the Authorization header
+apiClient.interceptors.request.use(
+    (config) => {
+        const accessToken = localStorage.getItem("accessToken");
+        if (accessToken) {
+            config.headers["Authorization"] = `Bearer ${accessToken}`;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
+
 // Refresh access token
 const refreshAccessToken = async () => {
     const refreshToken = localStorage.getItem("refreshToken");
@@ -23,18 +35,6 @@ const refreshAccessToken = async () => {
     }
 };
 
-// Request interceptor to include the Authorization header
-apiClient.interceptors.request.use(
-    (config) => {
-        const accessToken = localStorage.getItem("accessToken");
-        if (accessToken) {
-            config.headers["Authorization"] = `Bearer ${accessToken}`;
-        }
-        return config;
-    },
-    (error) => Promise.reject(error)
-);
-
 // Response interceptor for token refresh and error handling
 apiClient.interceptors.response.use(
     (response) => response,
@@ -48,14 +48,22 @@ apiClient.interceptors.response.use(
         ) {
             originalRequest._retry = true;
             try {
-                const newAccessToken = await refreshAccessToken();
-                apiClient.defaults.headers.common[
-                    "Authorization"
-                ] = `Bearer ${newAccessToken}`;
-                originalRequest.headers[
-                    "Authorization"
-                ] = `Bearer ${newAccessToken}`;
-                return apiClient(originalRequest);
+                const refreshToken = localStorage.getItem("refreshToken");
+                if (refreshToken) {
+                    const newAccessToken = await refreshAccessToken();
+                    apiClient.defaults.headers.common[
+                        "Authorization"
+                    ] = `Bearer ${newAccessToken}`;
+                    originalRequest.headers[
+                        "Authorization"
+                    ] = `Bearer ${newAccessToken}`;
+                    return apiClient(originalRequest);
+                } else {
+                    // Handle case where refresh token is not available
+                    return Promise.reject(
+                        new Error("Refresh token is missing")
+                    );
+                }
             } catch (e) {
                 return Promise.reject(e);
             }

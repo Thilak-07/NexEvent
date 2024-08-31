@@ -114,9 +114,9 @@ const LoginForm = ({ handleLogin }) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            await loginUser(email, password);
+            const user = await loginUser(email, password);
             handleLogin();
-            toast.success("Login Successful!", {
+            toast.success(`🦄 Welcome ${user.username}!`, {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,

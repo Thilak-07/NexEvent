@@ -22,7 +22,6 @@ export const loginUser = async (email, password) => {
         // Store tokens
         localStorage.setItem("accessToken", access);
         localStorage.setItem("refreshToken", refresh);
-        localStorage.setItem("user", user);
 
         return user;
     } catch (error) {
@@ -31,8 +30,14 @@ export const loginUser = async (email, password) => {
 };
 
 // Logout a user
-export const logoutUser = async (refreshToken) => {
+export const logoutUser = async () => {
     try {
+        const refreshToken = localStorage.getItem("refreshToken");
+
+        if (!refreshToken) {
+            throw new Error("No refresh token found in local storage.");
+        }
+
         const response = await apiClient.post("/auth/logout/", {
             refresh_token: refreshToken,
         });
