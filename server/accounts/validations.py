@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
+
 UserModel = get_user_model()
 
 
@@ -25,15 +26,10 @@ def validate_email(data):
     return True
 
 
-def validate_username(data):
-    username = data['username'].strip()
-    if not username:
-        raise ValidationError('choose another username')
-    return True
-
-
 def validate_password(data):
     password = data['password'].strip()
     if not password:
         raise ValidationError('a password is needed')
+    if len(password) < 8:
+        raise ValidationError('choose another password, min 8 characters')
     return True
