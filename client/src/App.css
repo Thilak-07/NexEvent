@@ -165,7 +165,7 @@ body {
 }
 
 .arrows path {
-    stroke: #ffffff;
+    stroke: #f5a623;
     fill: transparent;
     stroke-width: 1px;
     animation: arrow 1s infinite;

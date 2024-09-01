@@ -17,7 +17,15 @@ const ScrollArrow = () => {
 
 const WelcomeSection = () => {
     return (
-        <div className="bg-dark min-vh-100 text-light text-center py-5 d-flex align-items-center">
+        <div
+            className="bg-dark min-vh-100 text-light text-center py-5 d-flex align-items-center"
+            style={{
+                backgroundImage: "url('./landing_imgs/bullseye-gradient.svg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+            }}
+        >
             <Container>
                 <h1
                     className="display-3"
