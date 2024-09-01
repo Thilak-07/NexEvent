@@ -6,6 +6,8 @@ export const getUserDetails = async () => {
         const response = await apiClient.get("/auth/user/");
         return response.data.user;
     } catch (error) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         throw error;
     }
 };

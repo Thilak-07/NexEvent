@@ -223,7 +223,7 @@ const SignupForm = () => {
             });
         } else {
             try {
-                await registerUser({ email, username, password });
+                await registerUser({ username, email, password });
                 toast.success("Registration Successful!", {
                     position: "top-center",
                     autoClose: 5000,
@@ -236,8 +236,7 @@ const SignupForm = () => {
                 });
                 navigate("/auth/login"); // Redirect to login after successful registration
             } catch (err) {
-                console.log(err)
-                toast.error("An user account with this email already exists!", {
+                toast.error(err.response.data.error, {
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,

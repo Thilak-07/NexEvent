@@ -55,7 +55,7 @@ export const logoutUser = async () => {
 // Request a password reset
 export const requestPasswordReset = async (email) => {
     try {
-        const response = await apiClient.post("/auth/request-reset/", {
+        const response = await apiClient.post("/auth/reset-request/", {
             email,
         });
         return response.data;
@@ -67,9 +67,7 @@ export const requestPasswordReset = async (email) => {
 // Check if the reset token is valid
 export const checkTokenValidity = async (token) => {
     try {
-        const response = await apiClient.post("/auth/token-validity/", {
-            token,
-        });
+        const response = await apiClient.get(`/auth/reset-password/${token}`);
         return response.data;
     } catch (error) {
         throw error;

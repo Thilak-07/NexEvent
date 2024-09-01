@@ -10,6 +10,7 @@ import { checkTokenValidity, resetPassword } from "../api";
 const PasswordResetComponent = ({ client }) => {
     const navigate = useNavigate();
     const { token } = useParams();
+    const [verified, setVerified] = useState(false);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -17,18 +18,9 @@ const PasswordResetComponent = ({ client }) => {
         const verifyToken = async () => {
             try {
                 await checkTokenValidity(token);
+                setVerified(true);
             } catch {
-                toast.error("Invalid token.", {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-                navigate("/");
+                setVerified(false);
             }
         };
 
@@ -54,7 +46,7 @@ const PasswordResetComponent = ({ client }) => {
 
         try {
             await resetPassword(token, password);
-            toast.success("Password successfully updated!", {
+            toast.success("Password updated successfully!", {
                 position: "top-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -65,24 +57,25 @@ const PasswordResetComponent = ({ client }) => {
                 theme: "colored",
             });
             navigate("/auth/login");
-        } catch {
-            toast.error(
-                "Failed to reset password. The token may be invalid or expired.",
-                {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                }
-            );
+        } catch (err) {
+            const error_message = err.response.data.error
+                ? err.response.data.error
+                : "Password field may not be blank.";
+
+            toast.error(error_message, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
     };
 
-    return (
+    return verified ? (
         <>
             <Container className="py-5 flex-fill mt-5">
                 <h2 className="mb-4 text-center">Reset Your Password</h2>
@@ -135,6 +128,13 @@ const PasswordResetComponent = ({ client }) => {
                         </Link>
                     </div>
                 </Form>
+            </Container>
+            <FooterComponent />
+        </>
+    ) : (
+        <>
+            <Container className="flex-fill d-flex flex-column align-items-center justify-content-center">
+                <h1>ERROR 404 | PAGE NOT FOUND</h1>
             </Container>
             <FooterComponent />
         </>

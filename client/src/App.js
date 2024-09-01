@@ -17,8 +17,6 @@ function App() {
                 await getUserDetails();
                 setLoggedIn(true);
             } catch (err) {
-                localStorage.removeItem("accessToken");
-                localStorage.removeItem("refreshToken");
                 setLoggedIn(false);
             }
         };

@@ -1,5 +1,6 @@
 
 from django.contrib.auth import login, logout
+from django.core.exceptions import ValidationError
 
 from rest_framework import generics, status
 from rest_framework.views import APIView
@@ -28,8 +29,8 @@ class UserRegister(APIView):
                     filtered_data = {
                         'username': serializer.data['username'], 'email': serializer.data['email']}
                     return Response(filtered_data, status=status.HTTP_201_CREATED)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except ValidationError as e:
+            return Response({'error': e.message}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLogin(TokenObtainPairView):
@@ -40,15 +41,16 @@ class UserLogin(TokenObtainPairView):
         try:
             validate_email(data)
             validate_password(data)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = UserLoginSerializer(data=data)
-        if serializer.is_valid(raise_exception=True):
-            user = serializer.check_user(data)
-            refresh = RefreshToken.for_user(user)
-            login(request, user)
-            return Response({'refresh': str(refresh), 'access': str(refresh.access_token), 'user': UserSerializer(user).data}, status=status.HTTP_200_OK)
+            serializer = UserLoginSerializer(data=data)
+            if serializer.is_valid(raise_exception=True):
+                user = serializer.check_user(data)
+                refresh = RefreshToken.for_user(user)
+                login(request, user)
+                return Response({'refresh': str(refresh), 'access': str(refresh.access_token), 'user': UserSerializer(user).data}, status=status.HTTP_200_OK)
+
+        except ValidationError as e:
+            return Response({'error': e.message}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLogout(APIView):
@@ -117,5 +119,5 @@ class ResetPassword(generics.GenericAPIView):
                 else:
                     return Response({'error': 'No user found'}, status=status.HTTP_404_NOT_FOUND)
 
-            except Exception as e:
-                return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            except ValidationError as e:
+                return Response({'error': e.message}, status=status.HTTP_400_BAD_REQUEST)

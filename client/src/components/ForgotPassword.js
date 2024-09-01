@@ -21,7 +21,7 @@ const ForgotPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage(
-            "If an account with this email exists, a password reset link will be sent."
+            "If an account with this email exists, a link to reset your password will be sent."
         );
 
         try {
