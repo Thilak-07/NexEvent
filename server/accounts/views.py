@@ -1,5 +1,3 @@
-
-from django.contrib.auth import login, logout
 from django.core.exceptions import ValidationError
 
 from rest_framework import generics, status
@@ -46,7 +44,6 @@ class UserLogin(TokenObtainPairView):
             if serializer.is_valid(raise_exception=True):
                 user = serializer.check_user(data)
                 refresh = RefreshToken.for_user(user)
-                login(request, user)
                 return Response({'refresh': str(refresh), 'access': str(refresh.access_token), 'user': UserSerializer(user).data}, status=status.HTTP_200_OK)
 
         except ValidationError as e:
@@ -67,7 +64,6 @@ class UserLogout(APIView):
             except Exception as e:
                 return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-        logout(request)
         return Response(status=status.HTTP_200_OK)
 
 
