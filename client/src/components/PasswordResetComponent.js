@@ -7,12 +7,13 @@ import { toast } from "react-toastify";
 import FooterComponent from "./FooterComponent";
 import { checkTokenValidity, resetPassword } from "../api";
 
-const PasswordResetComponent = ({ client }) => {
+const PasswordResetComponent = () => {
     const navigate = useNavigate();
     const { token } = useParams();
     const [verified, setVerified] = useState(false);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         const verifyToken = async () => {
@@ -91,7 +92,7 @@ const PasswordResetComponent = ({ client }) => {
                                 <FaLock />
                             </InputGroup.Text>
                             <Form.Control
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 placeholder="Enter new password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -109,7 +110,7 @@ const PasswordResetComponent = ({ client }) => {
                                 <FaLock />
                             </InputGroup.Text>
                             <Form.Control
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 placeholder="Confirm new password"
                                 value={confirmPassword}
                                 onChange={(e) =>
@@ -118,6 +119,14 @@ const PasswordResetComponent = ({ client }) => {
                                 required
                             />
                         </InputGroup>
+                    </Form.Group>
+                    <Form.Group controlId="formShowPassword" className="mb-3">
+                        <Form.Check
+                            type="checkbox"
+                            label="Show Password"
+                            checked={showPassword}
+                            onChange={() => setShowPassword(!showPassword)}
+                        />
                     </Form.Group>
                     <Button variant="primary" type="submit" className="w-100">
                         Reset Password
