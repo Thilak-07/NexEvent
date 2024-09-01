@@ -64,6 +64,7 @@ body {
 .swiper-wrapper-container {
     position: relative;
     margin: auto;
+    max-width: 100%;
 }
 
 /* Custom Swiper styles */
@@ -73,8 +74,9 @@ body {
 
 /* Styling for each card */
 .card-custom {
-    width: 400px; /* Increased width */
-    height: 280px; /* Increased height */
+    width: 100%; /* Responsive width */
+    max-width: 400px; /* Maximum width */
+    height: auto; /* Auto height for responsiveness */
     background-color: #ffffff; /* Dark card background */
     color: #000000; /* Light text color */
     border: 1px solid #333; /* Card border */
@@ -83,6 +85,7 @@ body {
     flex-direction: row; /* Horizontal alignment */
     align-items: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 0 auto; /* Center cards horizontally */
 }
 
 .card-custom:hover {

@@ -28,7 +28,7 @@ const data = [
     {
         title: "Realtime Notifications",
         description:
-            "Stay updated on event activities with our realtime notification feature. Receive notifications on event updates, attendee responses, and more. Never miss out on important event details with our notification feature.",
+            "Stay updated on event activities with our realtime notification feature. Receive instant notifications on event updates, attendee responses, and more. Never miss out on important event details and announcements with our advanced notification feature.",
         icon: <IoNotificationsOutline />,
     },
     {
@@ -76,30 +76,51 @@ const FeatureCard = ({ item }) => {
 };
 
 const CardSwiper = () => {
+    const breakpoints = {
+        320: {
+            // Very small screens
+            slidesPerView: 1.1,
+            slidesOffsetBefore: 10,
+            slidesOffsetAfter: 10,
+            spaceBetween: 10,
+        },
+        480: {
+            // Small screens
+            slidesPerView: 1.5,
+            slidesOffsetBefore: 20,
+            slidesOffsetAfter: 20,
+            spaceBetween: 15,
+        },
+        640: {
+            // Medium screens
+            slidesPerView: 1.75,
+            slidesOffsetBefore: 30,
+            slidesOffsetAfter: 30,
+        },
+        768: {
+            // Larger medium screens
+            slidesPerView: 2.5,
+            slidesOffsetBefore: 40,
+            slidesOffsetAfter: 40,
+        },
+        1024: {
+            // Large screens
+            slidesPerView: 3.5,
+            slidesOffsetBefore: 110,
+            slidesOffsetAfter: 110,
+        },
+    };
+
     return (
         <div className="swiper-wrapper-container mt-2 py-4 no-select">
             <Swiper
-                spaceBetween={30}
-                slidesPerView={3.5}
+                spaceBetween={16}
+                slidesPerView={1.2}
                 navigation
                 pagination={{ clickable: true }}
-                slidesOffsetBefore={110}
-                slidesOffsetAfter={110}
-                breakpoints={{
-                    640: {
-                        slidesPerView: 1,
-                    },
-                    768: {
-                        slidesPerView: 1.5,
-                        slidesOffsetBefore: 50,
-                        slidesOffsetAfter: 50,
-                    },
-                    1024: {
-                        slidesPerView: 3.5,
-                        slidesOffsetBefore: 110,
-                        slidesOffsetAfter: 110,
-                    },
-                }}
+                slidesOffsetBefore={20}
+                slidesOffsetAfter={20}
+                breakpoints={breakpoints}
                 className="swiper-custom py-3"
             >
                 {data.map((item, index) => (
