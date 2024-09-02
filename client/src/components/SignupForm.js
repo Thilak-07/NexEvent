@@ -262,7 +262,7 @@ const SignupForm = () => {
             </Navbar>
 
             <Container className="py-5 position-relative">
-                <h2 className="mb-4 text-center">Sign Up</h2>
+                <h2 className="mb-4 text-center">Register</h2>
                 <Form
                     onSubmit={handleSubmit}
                     className="mx-auto"

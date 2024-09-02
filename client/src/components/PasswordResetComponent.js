@@ -7,26 +7,98 @@ import { toast } from "react-toastify";
 import FooterComponent from "./FooterComponent";
 import { checkTokenValidity, resetPassword } from "../api";
 
+const PasswordInput = ({ password, setPassword, showPassword }) => {
+    return (
+        <Form.Group controlId="formPassword" className="mb-3">
+            <Form.Label>New Password</Form.Label>
+            <InputGroup>
+                <InputGroup.Text>
+                    <FaLock />
+                </InputGroup.Text>
+                <Form.Control
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter new password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+            </InputGroup>
+        </Form.Group>
+    );
+};
+
+const ConfirmPasswordInput = ({
+    confirmPassword,
+    setConfirmPassword,
+    showPassword,
+}) => {
+    return (
+        <Form.Group controlId="formConfirmPassword" className="mb-3">
+            <Form.Label>Confirm New Password</Form.Label>
+            <InputGroup>
+                <InputGroup.Text>
+                    <FaLock />
+                </InputGroup.Text>
+                <Form.Control
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Confirm new password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                />
+            </InputGroup>
+        </Form.Group>
+    );
+};
+
+const ShowPasswordCheckBox = ({ showPassword, setShowPassword }) => {
+    return (
+        <Form.Group controlId="formShowPassword" className="mb-3">
+            <Form.Check
+                type="checkbox"
+                label="Show Password"
+                checked={showPassword}
+                onChange={() => setShowPassword(!showPassword)}
+            />
+        </Form.Group>
+    );
+};
+
+const ResetPasswordButton = () => {
+    return (
+        <Button variant="primary" type="submit" className="w-100">
+            Reset Password
+        </Button>
+    );
+};
+
+const RedirectionLink = () => {
+    return (
+        <div className="text-center mt-3">
+            <Link to="/" className="text-decoration-none">
+                Back to Home
+            </Link>
+        </div>
+    );
+};
+
+const Error404Page = () => {
+    return (
+        <>
+            <Container className="flex-fill d-flex flex-column align-items-center justify-content-center">
+                <h1>ERROR 404 | PAGE NOT FOUND</h1>
+            </Container>
+            <FooterComponent />
+        </>
+    );
+};
+
 const PasswordResetComponent = () => {
     const navigate = useNavigate();
     const { token } = useParams();
-    const [verified, setVerified] = useState(false);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-
-    useEffect(() => {
-        const verifyToken = async () => {
-            try {
-                await checkTokenValidity(token);
-                setVerified(true);
-            } catch {
-                setVerified(false);
-            }
-        };
-
-        verifyToken();
-    }, [token, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -76,7 +148,7 @@ const PasswordResetComponent = () => {
         }
     };
 
-    return verified ? (
+    return (
         <>
             <Container className="py-5 flex-fill mt-5">
                 <h2 className="mb-4 text-center">Reset Your Password</h2>
@@ -85,69 +157,48 @@ const PasswordResetComponent = () => {
                     className="mx-auto"
                     style={{ maxWidth: "400px" }}
                 >
-                    <Form.Group controlId="formPassword" className="mb-3">
-                        <Form.Label>New Password</Form.Label>
-                        <InputGroup>
-                            <InputGroup.Text>
-                                <FaLock />
-                            </InputGroup.Text>
-                            <Form.Control
-                                type={showPassword ? "text" : "password"}
-                                placeholder="Enter new password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </InputGroup>
-                    </Form.Group>
-                    <Form.Group
-                        controlId="formConfirmPassword"
-                        className="mb-3"
-                    >
-                        <Form.Label>Confirm New Password</Form.Label>
-                        <InputGroup>
-                            <InputGroup.Text>
-                                <FaLock />
-                            </InputGroup.Text>
-                            <Form.Control
-                                type={showPassword ? "text" : "password"}
-                                placeholder="Confirm new password"
-                                value={confirmPassword}
-                                onChange={(e) =>
-                                    setConfirmPassword(e.target.value)
-                                }
-                                required
-                            />
-                        </InputGroup>
-                    </Form.Group>
-                    <Form.Group controlId="formShowPassword" className="mb-3">
-                        <Form.Check
-                            type="checkbox"
-                            label="Show Password"
-                            checked={showPassword}
-                            onChange={() => setShowPassword(!showPassword)}
-                        />
-                    </Form.Group>
-                    <Button variant="primary" type="submit" className="w-100">
-                        Reset Password
-                    </Button>
-                    <div className="text-center mt-3">
-                        <Link to="/" className="text-decoration-none">
-                            Back to Home
-                        </Link>
-                    </div>
+                    <PasswordInput
+                        password={password}
+                        setPassword={setPassword}
+                        showPassword={showPassword}
+                    />
+                    <ConfirmPasswordInput
+                        confirmPassword={confirmPassword}
+                        setConfirmPassword={setConfirmPassword}
+                        showPassword={showPassword}
+                    />
+                    <ShowPasswordCheckBox
+                        showPassword={showPassword}
+                        setShowPassword={setShowPassword}
+                    />
+                    <ResetPasswordButton />
+                    <RedirectionLink />
                 </Form>
-            </Container>
-            <FooterComponent />
-        </>
-    ) : (
-        <>
-            <Container className="flex-fill d-flex flex-column align-items-center justify-content-center">
-                <h1>ERROR 404 | PAGE NOT FOUND</h1>
             </Container>
             <FooterComponent />
         </>
     );
 };
 
-export default PasswordResetComponent;
+const PasswordResetWrapper = () => {
+    const navigate = useNavigate();
+    const { token } = useParams();
+    const [verified, setVerified] = useState(false);
+
+    useEffect(() => {
+        const verifyToken = async () => {
+            try {
+                await checkTokenValidity(token);
+                setVerified(true);
+            } catch {
+                setVerified(false);
+            }
+        };
+
+        verifyToken();
+    }, [token, navigate]);
+
+    return verified ? <PasswordResetComponent /> : <Error404Page />;
+};
+
+export default PasswordResetWrapper;
