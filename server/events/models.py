@@ -4,11 +4,19 @@ import os
 
 class Event(models.Model):
     CATEGORY_CHOICES = [
-        ('conference', 'Conference'),
-        ('workshop', 'Workshop'),
-        ('webinar', 'Webinar'),
-        ('meetup', 'Meetup'),
-        ('seminar', 'Seminar'),
+        ('music', 'Music'),
+        ('games', 'Games'),
+        ('sports', 'Sports'),
+        ('arts', 'Arts'),
+        ('film', 'Film'),
+        ('literature', 'Literature'),
+        ('technology', 'Technology'),
+        ('culture', 'Culture'),
+        ('lifestyle', 'Lifestyle'),
+        ('charity', 'Charity'),
+        ('fashion', 'Fashion'),
+        ('kids', 'Kids'),
+        ('other', 'Other'),
     ]
 
     title = models.CharField(max_length=200)
