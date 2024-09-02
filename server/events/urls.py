@@ -1,10 +1,19 @@
-from django.urls import path
-from .views import EventCreateAPIView, EventUpdateAPIView, EventDeleteAPIView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import EventViewSet
+
+
+router = DefaultRouter()
+router.register(r'events', EventViewSet)
 
 urlpatterns = [
-    path('create/', EventCreateAPIView.as_view(), name='event-create'),
-    path('update/<int:pk>/',
-         EventUpdateAPIView.as_view(), name='event-update'),
-    path('delete/<int:pk>/',
-         EventDeleteAPIView.as_view(), name='event-delete'),
+    path('', include(router.urls)),
 ]
+
+
+# GET /books/ -> List all books
+# GET /books/{id}/ -> Retrieve a specific book by ID
+# POST /books/ -> Create a new book
+# PUT /books/{id}/ -> Update an existing book
+# PATCH /books/{id}/ -> Partially update an existing book
+# DELETE /books/{id}/ -> Delete a book by ID

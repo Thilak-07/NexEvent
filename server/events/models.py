@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Event(models.Model):
     CATEGORY_CHOICES = [
         ('conference', 'Conference'),
@@ -8,7 +9,7 @@ class Event(models.Model):
         ('meetup', 'Meetup'),
         ('seminar', 'Seminar'),
     ]
-    
+
     title = models.CharField(max_length=200)
     description = models.TextField()
     date_time = models.DateTimeField()
