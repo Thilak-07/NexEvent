@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,10 +6,12 @@ import "react-toastify/dist/ReactToastify.css";
 import AuthLayout from "./layouts/AuthLayout";
 import LandingLayout from "./layouts/LandingLayout";
 import { getUserDetails } from "./api";
+import AuthProvider from "./contexts/AuthContext";
+import { useAuth } from "./contexts/AuthContext";
 
 function App() {
-    const [loggedIn, setLoggedIn] = useState(false);
     const location = useLocation();
+    const { setLoggedIn } = useAuth();
 
     useEffect(() => {
         const checkAuthentication = async () => {
@@ -22,32 +24,22 @@ function App() {
         };
 
         checkAuthentication();
-    }, []);
-
-    const handleLogout = () => {
-        setLoggedIn(false);
-    };
-
-    const handleLogin = () => {
-        setLoggedIn(true);
-    };
+    }, [setLoggedIn]);
 
     const isAuthRoute = location.pathname.startsWith("/auth");
 
-    return isAuthRoute ? (
-        <AuthLayout handleLogin={handleLogin} />
-    ) : (
-        <LandingLayout loggedIn={loggedIn} handleLogout={handleLogout} />
-    );
+    return isAuthRoute ? <AuthLayout /> : <LandingLayout />;
 }
 
-function AppWrapper() {
+const AppWrapper = () => {
     return (
         <Router>
-            <App />
+            <AuthProvider>
+                <App />
+            </AuthProvider>
             <ToastContainer />
         </Router>
     );
-}
+};
 
 export default AppWrapper;

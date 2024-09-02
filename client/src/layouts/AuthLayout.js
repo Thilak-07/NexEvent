@@ -5,7 +5,11 @@ import SignupForm from "../components/SignupForm";
 import ForgotPassword from "../components/ForgotPassword";
 import PasswordResetComponent from "../components/PasswordResetComponent";
 
-const AuthLayout = ({ handleLogin }) => {
+import { useAuth } from "../contexts/AuthContext";
+
+const AuthLayout = () => {
+    const { handleLogin } = useAuth();
+
     return (
         <div className="d-flex flex-column min-vh-100 bg-dark text-light">
             <Routes>

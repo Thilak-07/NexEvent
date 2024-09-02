@@ -6,7 +6,11 @@ import HomePage from "../components/HomePage";
 import ExplorePage from "../components/ExplorePage";
 import Dashboard from "../components/Dashboard";
 
-const LandingLayout = ({ loggedIn, handleLogout }) => {
+import { useAuth } from "../contexts/AuthContext";
+
+const LandingLayout = () => {
+    const { loggedIn, handleLogout } = useAuth();
+
     return (
         <div className="d-flex flex-column min-vh-100">
             <NavbarComponent loggedIn={loggedIn} handleLogout={handleLogout} />

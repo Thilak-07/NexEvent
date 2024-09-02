@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Form, Button, Container, InputGroup } from "react-bootstrap";
 import { FaLock } from "react-icons/fa";
@@ -7,7 +7,12 @@ import { toast } from "react-toastify";
 import FooterComponent from "./FooterComponent";
 import { checkTokenValidity, resetPassword } from "../api";
 
-const PasswordInput = ({ password, setPassword, showPassword }) => {
+export const PasswordResetContext = createContext();
+
+const PasswordInput = () => {
+    const { password, showPassword, setPassword } =
+        useContext(PasswordResetContext);
+
     return (
         <Form.Group controlId="formPassword" className="mb-3">
             <Form.Label>New Password</Form.Label>
@@ -27,11 +32,10 @@ const PasswordInput = ({ password, setPassword, showPassword }) => {
     );
 };
 
-const ConfirmPasswordInput = ({
-    confirmPassword,
-    setConfirmPassword,
-    showPassword,
-}) => {
+const ConfirmPasswordInput = () => {
+    const { confirmPassword, showPassword, setConfirmPassword } =
+        useContext(PasswordResetContext);
+
     return (
         <Form.Group controlId="formConfirmPassword" className="mb-3">
             <Form.Label>Confirm New Password</Form.Label>
@@ -51,7 +55,9 @@ const ConfirmPasswordInput = ({
     );
 };
 
-const ShowPasswordCheckBox = ({ showPassword, setShowPassword }) => {
+const ShowPasswordCheckBox = () => {
+    const { showPassword, setShowPassword } = useContext(PasswordResetContext);
+
     return (
         <Form.Group controlId="formShowPassword" className="mb-3">
             <Form.Check
@@ -148,6 +154,15 @@ const PasswordResetComponent = () => {
         }
     };
 
+    const contextValue = {
+        password,
+        setPassword,
+        confirmPassword,
+        setConfirmPassword,
+        showPassword,
+        setShowPassword,
+    };
+
     return (
         <>
             <Container className="py-5 flex-fill mt-5">
@@ -157,20 +172,12 @@ const PasswordResetComponent = () => {
                     className="mx-auto"
                     style={{ maxWidth: "400px" }}
                 >
-                    <PasswordInput
-                        password={password}
-                        setPassword={setPassword}
-                        showPassword={showPassword}
-                    />
-                    <ConfirmPasswordInput
-                        confirmPassword={confirmPassword}
-                        setConfirmPassword={setConfirmPassword}
-                        showPassword={showPassword}
-                    />
-                    <ShowPasswordCheckBox
-                        showPassword={showPassword}
-                        setShowPassword={setShowPassword}
-                    />
+                    <PasswordResetContext.Provider value={contextValue}>
+                        <PasswordInput />
+                        <ConfirmPasswordInput />
+                        <ShowPasswordCheckBox />
+                    </PasswordResetContext.Provider>
+
                     <ResetPasswordButton />
                     <RedirectionLink />
                 </Form>
@@ -183,7 +190,7 @@ const PasswordResetComponent = () => {
 const PasswordResetWrapper = () => {
     const navigate = useNavigate();
     const { token } = useParams();
-    const [verified, setVerified] = useState(false);
+    const [verified, setVerified] = useState(true);
 
     useEffect(() => {
         const verifyToken = async () => {
