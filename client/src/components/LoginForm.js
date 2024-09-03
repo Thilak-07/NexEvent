@@ -1,4 +1,5 @@
-import React, { useState, createContext, useContext } from "react";
+import { Link } from "react-router-dom";
+import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import {
     Container,
     Form,
@@ -7,14 +8,9 @@ import {
     Nav,
     InputGroup,
 } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
-import { toast } from "react-toastify";
 
 import BackBtn from "./BackBtn";
-import { loginUser } from "../api";
-
-const LoginContext = createContext();
+import LoginProvider, { useLogin } from "../contexts/LoginContext";
 
 const Navigation = () => {
     return (
@@ -41,7 +37,7 @@ const LogoUnit = () => {
 };
 
 const EmailInput = () => {
-    const { email, setEmail } = useContext(LoginContext);
+    const { email, setEmail } = useLogin();
 
     return (
         <Form.Group controlId="formBasicEmail" className="mb-3">
@@ -64,7 +60,7 @@ const EmailInput = () => {
 
 const PasswordInput = () => {
     const { password, setPassword, showPassword, togglePasswordVisibility } =
-        useContext(LoginContext);
+        useLogin();
 
     return (
         <Form.Group controlId="formBasicPassword" className="mb-3">
@@ -115,54 +111,8 @@ const RedirectionLinks = () => {
     );
 };
 
-const LoginForm = ({ handleLogin }) => {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
-
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const user = await loginUser(email, password);
-            handleLogin();
-            toast.success(`🦄 Welcome ${user.username}!`, {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-            navigate("/explore");
-        } catch (err) {
-            toast.error("Invalid Credentials", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-        }
-    };
-
-    const contextValue = {
-        email,
-        setEmail,
-        password,
-        setPassword,
-        showPassword,
-        togglePasswordVisibility,
-    };
+const LoginForm = () => {
+    const { onSubmit } = useLogin();
 
     return (
         <main className="flex-fill">
@@ -176,11 +126,9 @@ const LoginForm = ({ handleLogin }) => {
                     style={{ maxWidth: "400px" }}
                 >
                     <div className="my-4 glowy-box">
-                        <LoginContext.Provider value={contextValue}>
-                            <EmailInput />
-                            <PasswordInput />
-                            <LoginButton />
-                        </LoginContext.Provider>
+                        <EmailInput />
+                        <PasswordInput />
+                        <LoginButton />
                     </div>
 
                     <RedirectionLinks />
@@ -190,4 +138,12 @@ const LoginForm = ({ handleLogin }) => {
     );
 };
 
-export default LoginForm;
+const LoginFormWrapper = () => {
+    return (
+        <LoginProvider>
+            <LoginForm />
+        </LoginProvider>
+    );
+};
+
+export default LoginFormWrapper;

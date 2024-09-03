@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 import { registerUser } from "../api";
+import { loginUser } from "../api";
+import { useAuth } from "./AuthContext";
 
 const SignupContext = createContext();
 
@@ -14,6 +16,7 @@ const SignupProvider = ({ children }) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword1, setShowPassword1] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
+    const { handleLogin } = useAuth();
 
     const togglePassword1Visibility = () => {
         setShowPassword1(!showPassword1);
@@ -54,6 +57,7 @@ const SignupProvider = ({ children }) => {
         } else {
             try {
                 await registerUser({ username, email, password });
+                await loginUser(email, password);
                 toast.success("Registration Successful!", {
                     position: "bottom-right",
                     autoClose: 5000,
@@ -64,7 +68,8 @@ const SignupProvider = ({ children }) => {
                     progress: undefined,
                     theme: "colored",
                 });
-                navigate("/auth/login"); // Redirect to login after successful registration
+                handleLogin();
+                navigate("/explore");
             } catch (err) {
                 toast.error(err.response.data.error, {
                     position: "bottom-right",
