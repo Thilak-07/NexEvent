@@ -151,7 +151,7 @@ SIMPLE_JWT = {
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST_USER = 'NexEvent'
-PASSWORD_RESET_BASE_URL = 'http://127.0.0.1:3000/auth/reset-password'
+PASSWORD_RESET_BASE_URL = os.getenv('PASSWORD_RESET_BASE_URL')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

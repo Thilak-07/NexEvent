@@ -35,9 +35,8 @@ class AppUserAdmin(BaseUserAdmin):
 # Register the custom admin class
 admin.site.register(AppUser, AppUserAdmin)
 
+
 # Custom Admin for PasswordReset
-
-
 class PasswordResetAdmin(admin.ModelAdmin):
     list_display = ('email', 'token', 'created_at')
     search_fields = ('email', 'token')
