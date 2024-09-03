@@ -3,7 +3,7 @@ import { Container, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import FooterComponent from "../components/FooterComponent";
 
-const Error404Page = () => {
+const Error401Page = () => {
     const navigate = useNavigate();
 
     const handleGoHome = () => {
@@ -24,4 +24,4 @@ const Error404Page = () => {
     );
 };
 
-export default Error404Page;
+export default Error401Page;

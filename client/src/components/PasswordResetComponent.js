@@ -4,7 +4,7 @@ import { Form, Button, Container, InputGroup } from "react-bootstrap";
 import { FaLock } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-import Error404Page from "../pages/Error404Page";
+import Error401Page from "../pages/Error401Page";
 import FooterComponent from "./FooterComponent";
 import { checkTokenValidity, resetPassword } from "../api";
 
@@ -180,7 +180,7 @@ const PasswordResetWrapper = () => {
         verifyToken();
     }, [token, navigate]);
 
-    return verified ? <PasswordResetComponent /> : <Error404Page />;
+    return verified ? <PasswordResetComponent /> : <Error401Page />;
 };
 
 export default PasswordResetWrapper;
