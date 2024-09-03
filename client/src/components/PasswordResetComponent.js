@@ -4,50 +4,32 @@ import { Form, Button, Container, InputGroup } from "react-bootstrap";
 import { FaLock } from "react-icons/fa";
 import { toast } from "react-toastify";
 
+import Error404Page from "../pages/Error404Page";
 import FooterComponent from "./FooterComponent";
 import { checkTokenValidity, resetPassword } from "../api";
 
 export const PasswordResetContext = createContext();
 
-const PasswordInput = () => {
-    const { password, showPassword, setPassword } =
-        useContext(PasswordResetContext);
+const PasswordInput = ({ label, password, setPassword }) => {
+    const { showPassword } = useContext(PasswordResetContext);
+
+    const placeholder =
+        label === "New Password"
+            ? "Enter new password"
+            : "Confirm new password";
 
     return (
         <Form.Group controlId="formPassword" className="mb-3">
-            <Form.Label>New Password</Form.Label>
+            <Form.Label>{label}</Form.Label>
             <InputGroup>
                 <InputGroup.Text>
                     <FaLock />
                 </InputGroup.Text>
                 <Form.Control
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter new password"
+                    placeholder={placeholder}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-            </InputGroup>
-        </Form.Group>
-    );
-};
-
-const ConfirmPasswordInput = () => {
-    const { confirmPassword, showPassword, setConfirmPassword } =
-        useContext(PasswordResetContext);
-
-    return (
-        <Form.Group controlId="formConfirmPassword" className="mb-3">
-            <Form.Label>Confirm New Password</Form.Label>
-            <InputGroup>
-                <InputGroup.Text>
-                    <FaLock />
-                </InputGroup.Text>
-                <Form.Control
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Confirm new password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                 />
             </InputGroup>
@@ -88,17 +70,6 @@ const RedirectionLink = () => {
     );
 };
 
-const Error404Page = () => {
-    return (
-        <>
-            <Container className="flex-fill d-flex flex-column align-items-center justify-content-center">
-                <h1>ERROR 404 | PAGE NOT FOUND</h1>
-            </Container>
-            <FooterComponent />
-        </>
-    );
-};
-
 const PasswordResetComponent = () => {
     const navigate = useNavigate();
     const { token } = useParams();
@@ -111,7 +82,7 @@ const PasswordResetComponent = () => {
 
         if (password !== confirmPassword) {
             toast.error("Passwords do not match.", {
-                position: "top-center",
+                position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -126,7 +97,7 @@ const PasswordResetComponent = () => {
         try {
             await resetPassword(token, password);
             toast.success("Password updated successfully!", {
-                position: "top-center",
+                position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -142,7 +113,7 @@ const PasswordResetComponent = () => {
                 : "Password field may not be blank.";
 
             toast.error(error_message, {
-                position: "top-center",
+                position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -155,10 +126,6 @@ const PasswordResetComponent = () => {
     };
 
     const contextValue = {
-        password,
-        setPassword,
-        confirmPassword,
-        setConfirmPassword,
         showPassword,
         setShowPassword,
     };
@@ -173,8 +140,16 @@ const PasswordResetComponent = () => {
                     style={{ maxWidth: "400px" }}
                 >
                     <PasswordResetContext.Provider value={contextValue}>
-                        <PasswordInput />
-                        <ConfirmPasswordInput />
+                        <PasswordInput
+                            label={"New Password"}
+                            password={password}
+                            setPassword={setPassword}
+                        />
+                        <PasswordInput
+                            label={"Confirm New Password"}
+                            password={confirmPassword}
+                            setPassword={setConfirmPassword}
+                        />
                         <ShowPasswordCheckBox />
                     </PasswordResetContext.Provider>
 
@@ -190,7 +165,7 @@ const PasswordResetComponent = () => {
 const PasswordResetWrapper = () => {
     const navigate = useNavigate();
     const { token } = useParams();
-    const [verified, setVerified] = useState(true);
+    const [verified, setVerified] = useState(false);
 
     useEffect(() => {
         const verifyToken = async () => {

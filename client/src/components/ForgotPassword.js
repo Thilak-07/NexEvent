@@ -18,7 +18,6 @@ const Navigation = () => {
     return (
         <Navbar variant="dark" expand="lg" className="py-3">
             <Container>
-                {/* Go Back Button */}
                 <Nav className="me-auto">
                     <BackBtn to={"/auth/login"} />
                 </Nav>

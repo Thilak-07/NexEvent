@@ -4,7 +4,6 @@ import NavbarComponent from "../components/NavbarComponent";
 import FooterComponent from "../components/FooterComponent";
 import HomePage from "../components/HomePage";
 import ExplorePage from "../components/ExplorePage";
-import Dashboard from "../components/Dashboard";
 
 import { useAuth } from "../contexts/AuthContext";
 
@@ -18,7 +17,6 @@ const LandingLayout = () => {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/explore" element={<ExplorePage />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
                 </Routes>
             </main>
             <FooterComponent />

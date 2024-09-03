@@ -74,29 +74,29 @@ body {
 
 /* Styling for each card */
 .card-custom {
-    width: 100%; /* Responsive width */
-    max-width: 400px; /* Maximum width */
-    height: auto; /* Auto height for responsiveness */
-    background-color: #ffffff; /* Dark card background */
-    color: #000000; /* Light text color */
-    border: 1px solid #333; /* Card border */
-    border-radius: 10px; /* Rounded corners */
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #333;
+    border-radius: 10px;
     display: flex;
-    flex-direction: row; /* Horizontal alignment */
+    flex-direction: row;
     align-items: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin: 0 auto; /* Center cards horizontally */
+    margin: 0 auto;
 }
 
 .card-custom:hover {
-    transform: translateY(-10px); /* Slight lift on hover */
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    transform: translateY(-10px);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
 }
 
 /* Icon styling */
 .icon-container {
-    font-size: 3rem; /* Larger icon size */
-    color: #000000; /* Accent color for icons */
+    font-size: 3rem;
+    color: #000000;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
@@ -105,55 +105,55 @@ body {
 /* Card body styling */
 .card-body-custom {
     display: flex;
-    flex-direction: column; /* Align text next to icon */
+    flex-direction: column;
     padding: 20px;
-    text-align: left; /* Align text to the left */
-    width: 100%; /* Full width to accommodate content */
-    height: 100%; /* Full height */
+    text-align: left;
+    width: 100%;
+    height: 100%;
 }
 
 .text-content {
-    flex: 1; /* Allow text content to take available space */
+    flex: 1;
 }
 
 /* Card title and text styling */
 .card-title-custom {
-    font-size: 1.25rem; /* Slightly larger title font size */
+    font-size: 1.25rem;
     font-weight: 800;
 }
 
 .card-text-custom {
-    font-size: 1rem; /* Adjust text size */
-    color: #475569; /* Lighter text color */
+    font-size: 1rem;
+    color: #475569;
 }
 
 /* Navigation arrows styling */
 .swiper-button-next-custom,
 .swiper-button-prev-custom {
     position: absolute;
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%); /* Adjust for centering */
-    color: #f5a623; /* Arrow color */
-    background-color: transparent; /* Dark background for arrows */
-    border-radius: 50%; /* Circular buttons */
+    top: 50%;
+    transform: translateY(-50%);
+    color: #f5a623;
+    background-color: transparent;
+    border-radius: 50%;
     width: 40px;
     height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: none; /* Shadow for arrows */
+    box-shadow: none;
 }
 
 .swiper-button-prev-custom {
-    left: 10px; /* Position on the left side */
+    left: 10px;
 }
 
 .swiper-button-next-custom {
-    right: 10px; /* Position on the right side */
+    right: 10px;
 }
 
 .no-select {
-    user-select: none; /* Non-prefixed version, supported by modern browsers */
+    user-select: none;
 }
 
 /*--------------ArrowIcon---------------------------------------------------------------------------------------------------*/
@@ -242,7 +242,6 @@ body {
     backdrop-filter: blur(10px);
 }
 
-/* Ensure the text color for password strength is visible */
 .password-strength-text {
     font-size: 0.9rem;
 }

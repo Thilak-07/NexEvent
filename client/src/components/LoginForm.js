@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext, useContext } from "react";
 import {
     Container,
     Form,
@@ -14,6 +14,20 @@ import { toast } from "react-toastify";
 import BackBtn from "./BackBtn";
 import { loginUser } from "../api";
 
+const LoginContext = createContext();
+
+const Navigation = () => {
+    return (
+        <Navbar variant="dark" expand="lg" className="pt-3">
+            <Container>
+                <Nav className="me-auto">
+                    <BackBtn to={"/"} />
+                </Nav>
+            </Container>
+        </Navbar>
+    );
+};
+
 const LogoUnit = () => {
     return (
         <div className="text-center mb-2">
@@ -26,7 +40,9 @@ const LogoUnit = () => {
     );
 };
 
-const EmailInput = ({ email, setEmail }) => {
+const EmailInput = () => {
+    const { email, setEmail } = useContext(LoginContext);
+
     return (
         <Form.Group controlId="formBasicEmail" className="mb-3">
             <Form.Label>Email address</Form.Label>
@@ -46,12 +62,10 @@ const EmailInput = ({ email, setEmail }) => {
     );
 };
 
-const PasswordInput = ({
-    password,
-    setPassword,
-    showPassword,
-    togglePasswordVisibility,
-}) => {
+const PasswordInput = () => {
+    const { password, setPassword, showPassword, togglePasswordVisibility } =
+        useContext(LoginContext);
+
     return (
         <Form.Group controlId="formBasicPassword" className="mb-3">
             <Form.Label>Password</Form.Label>
@@ -117,19 +131,19 @@ const LoginForm = ({ handleLogin }) => {
             const user = await loginUser(email, password);
             handleLogin();
             toast.success(`🦄 Welcome ${user.username}!`, {
-                position: "top-center",
+                position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "light",
+                theme: "colored",
             });
             navigate("/explore");
         } catch (err) {
             toast.error("Invalid Credentials", {
-                position: "top-center",
+                position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -141,17 +155,18 @@ const LoginForm = ({ handleLogin }) => {
         }
     };
 
+    const contextValue = {
+        email,
+        setEmail,
+        password,
+        setPassword,
+        showPassword,
+        togglePasswordVisibility,
+    };
+
     return (
         <main className="flex-fill">
-            <Navbar variant="dark" expand="lg" className="pt-3">
-                <Container>
-                    {/* Go Back Button */}
-                    <Nav className="me-auto">
-                        <BackBtn to={"/"} />
-                    </Nav>
-                </Container>
-            </Navbar>
-
+            <Navigation />
             <Container className="py-5 position-relative">
                 <LogoUnit />
                 <h3 className="mb-4 text-center">Login to NexEvent</h3>
@@ -160,16 +175,12 @@ const LoginForm = ({ handleLogin }) => {
                     className="flex-fill mx-auto"
                     style={{ maxWidth: "400px" }}
                 >
-                    {/* Glowy Box */}
                     <div className="my-4 glowy-box">
-                        <EmailInput email={email} setEmail={setEmail} />
-                        <PasswordInput
-                            password={password}
-                            setPassword={setPassword}
-                            showPassword={showPassword}
-                            togglePasswordVisibility={togglePasswordVisibility}
-                        />
-                        <LoginButton />
+                        <LoginContext.Provider value={contextValue}>
+                            <EmailInput />
+                            <PasswordInput />
+                            <LoginButton />
+                        </LoginContext.Provider>
                     </div>
 
                     <RedirectionLinks />

@@ -104,7 +104,7 @@ const NavbarComponent = ({ loggedIn, handleLogout }) => {
             await logoutUser();
             handleLogout();
             toast.info("Logout successful!", {
-                position: "top-center",
+                position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -116,7 +116,7 @@ const NavbarComponent = ({ loggedIn, handleLogout }) => {
             navigate("/auth/login");
         } catch (err) {
             toast.error("Logout failed. Please try again.", {
-                position: "top-center",
+                position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
