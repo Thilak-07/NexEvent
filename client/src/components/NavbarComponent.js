@@ -3,6 +3,7 @@ import { Link, useNavigate, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { logoutUser } from "../api";
+import { useAuth } from "../contexts/AuthContext";
 
 const NexEventLogo = () => {
     return (
@@ -95,8 +96,9 @@ const LogoutButton = ({ onLogoutClick }) => {
     );
 };
 
-const NavbarComponent = ({ loggedIn, handleLogout }) => {
+const NavbarComponent = () => {
     const navigate = useNavigate();
+    const { loggedIn, handleLogout } = useAuth();
 
     const onLogoutClick = async (e) => {
         e.preventDefault();
