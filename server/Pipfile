@@ -11,6 +11,7 @@ python-dotenv = "*"
 djangorestframework-simplejwt = "*"
 pillow = "*"
 boto3 = "*"
+drf-api-logger = "*"
 
 [dev-packages]
 
