@@ -20,7 +20,7 @@ const WelcomeSection = () => {
         <div
             className="bg-dark min-vh-100 text-light text-center py-5 d-flex align-items-center"
             style={{
-                backgroundImage: "url('./landing_imgs/bullseye-gradient.svg')",
+                backgroundImage: "url('assets/bullseye-gradient.svg')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
@@ -28,12 +28,12 @@ const WelcomeSection = () => {
         >
             <Container>
                 <h1
-                    className="display-3"
-                    style={{ fontSize: "4rem", color: "#f5a623" }}
+                    className="display-2"
+                    style={{ color: "#f5a623", fontWeight: "400" }}
                 >
                     Welcome to NexEvent
                 </h1>
-                <p>
+                <p className="lead" style={{ fontSize: "1.25rem" }}>
                     Discover and explore events happening around you and beyond.
                 </p>
                 <Button variant="light" as={Link} to="/explore">
@@ -51,7 +51,7 @@ const DescriptionSection = () => {
             <Container className="py-5 d-flex align-items-center">
                 <Row className="w-100">
                     <Col xs={12} md={6}>
-                        <Image src="./landing_imgs/vector.jpg" fluid />
+                        <Image src="assets/vector.jpg" fluid />
                     </Col>
                     <Col
                         xs={12}
@@ -108,7 +108,7 @@ const EventSection = () => {
             <h2 className="text-center mb-4">The Best of Live Events</h2>
             <Row>
                 <EventCard
-                    src={"landing_imgs/concert_img.jpg"}
+                    src={"assets/concert_img.jpg"}
                     title={"Music Concert"}
                     text={
                         "Enjoy a night of live music featuring top artists from around the world."

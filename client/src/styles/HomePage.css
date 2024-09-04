@@ -1,0 +1,74 @@
+/*--------------ArrowIcon-----------------------------------------------------------------*/
+
+.arrows {
+    width: 60px;
+    height: 72px;
+    position: absolute;
+    left: 50%;
+    margin-left: -30px;
+    bottom: 40px;
+}
+
+.arrows path {
+    stroke: #f5a623;
+    fill: transparent;
+    stroke-width: 1px;
+    animation: arrow 1s infinite;
+    -webkit-animation: arrow 2s infinite;
+}
+
+@keyframes arrow {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes arrow {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.arrows path.a1 {
+    animation-delay: -0.5s;
+    -webkit-animation-delay: -0.5s;
+}
+
+.arrows path.a2 {
+    animation-delay: -0.25s;
+    -webkit-animation-delay: -0.25s;
+}
+
+.arrows path.a3 {
+    animation-delay: 0s;
+    -webkit-animation-delay: 0s;
+}
+
+/*--------------The Best of Live Events----------------------------------------------------*/
+
+.custom-card {
+    transition: all 0.3s ease;
+}
+
+.custom-card:hover {
+    box-shadow: 0 0 10px 4px rgba(0, 123, 255, 0.9);
+    border-color: rgba(0, 123, 255, 0.8);
+}

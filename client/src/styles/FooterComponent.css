@@ -1,0 +1,8 @@
+.footer-custom,
+.social {
+    color: #949ca8; /* Lighter text color */
+}
+
+.social:hover {
+    color: #f5a623;
+}

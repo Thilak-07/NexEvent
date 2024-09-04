@@ -1,0 +1,16 @@
+.hero-section {
+    background-color: #0d1117;
+    background: linear-gradient(#0d1117 0%, rgb(3, 30, 59) 100%);
+    color: #f5a623;
+    padding: 60px 0;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.hero-description {
+    font-size: 1rem;
+    color: #b2c2da;
+}

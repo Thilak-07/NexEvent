@@ -70,7 +70,7 @@ const RedirectionLink = () => {
     );
 };
 
-const PasswordResetComponent = () => {
+const PasswordReset = () => {
     const navigate = useNavigate();
     const { token } = useParams();
     const [password, setPassword] = useState("");
@@ -180,7 +180,7 @@ const PasswordResetWrapper = () => {
         verifyToken();
     }, [token, navigate]);
 
-    return verified ? <PasswordResetComponent /> : <Error401Page />;
+    return verified ? <PasswordReset /> : <Error401Page />;
 };
 
 export default PasswordResetWrapper;

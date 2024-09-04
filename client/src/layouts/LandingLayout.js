@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import NavbarComponent from "../components/NavbarComponent";
 import FooterComponent from "../components/FooterComponent";
 import HomePage from "../components/HomePage";
-import ExplorePage from "../components/ExplorePage";
+import ExplorePage from "../pages/ExplorePage";
 
 const LandingLayout = () => {
     return (
