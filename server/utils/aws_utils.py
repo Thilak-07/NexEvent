@@ -1,15 +1,26 @@
-import boto3
 import os
+import boto3
 import base64
 from botocore.exceptions import ClientError
 from dotenv import load_dotenv
 load_dotenv()
 
 
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_REGION = os.getenv('AWS_REGION')
+
+
+# Create a session using the credentials and region
+session = boto3.Session(
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    region_name=AWS_REGION
+)
+
+
 def get_secret(secret_name):
-    # Create a Secrets Manager client
-    client = boto3.client(
-        'secretsmanager', region_name=os.getenv('AWS_REGION'))
+    client = session.client('secretsmanager')
 
     try:
         # Fetch the secret value
@@ -26,13 +37,11 @@ def get_secret(secret_name):
         return secret
 
     except ClientError as e:
-        # Handle specific exceptions as needed
         raise e
 
 
 def get_parameter(parameter_name):
-    # Create an SSM client
-    client = boto3.client('ssm', region_name=os.getenv('AWS_REGION'))
+    client = session.client('ssm')
 
     try:
         # Fetch the parameter value
