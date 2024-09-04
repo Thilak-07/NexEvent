@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import {
     FaCalendarAlt,
@@ -6,6 +6,8 @@ import {
     FaLocationArrow,
     FaListAlt,
 } from "react-icons/fa";
+import toast from "react-hot-toast";
+
 import { createEvent } from "../api";
 
 const CreateEvent = () => {
@@ -19,8 +21,7 @@ const CreateEvent = () => {
         feature_image: null,
     });
 
-    const [errorMessage, setErrorMessage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
+    const fileInputRef = useRef(null);
 
     const CATEGORY_CHOICES = [
         { value: "music", label: "Music" },
@@ -40,11 +41,22 @@ const CreateEvent = () => {
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
+
         if (name === "feature_image") {
-            setFormData({
-                ...formData,
-                feature_image: files[0],
-            });
+            const file = files[0];
+            const allowedTypes = ["image/jpeg", "image/png"];
+
+            if (file) {
+                if (allowedTypes.includes(file.type)) {
+                    setFormData({
+                        ...formData,
+                        feature_image: file,
+                    });
+                } else {
+                    toast.error("Please select a JPEG or PNG image.");
+                    e.target.value = "";
+                }
+            }
         } else {
             setFormData({
                 ...formData,
@@ -55,8 +67,6 @@ const CreateEvent = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrorMessage("");
-        setSuccessMessage("");
 
         const eventData = new FormData();
         for (const key in formData) {
@@ -64,12 +74,25 @@ const CreateEvent = () => {
         }
 
         try {
-            const response = await createEvent(eventData);
-            setSuccessMessage("Event created successfully!");
-            console.log("Event created:", response);
-            // Optionally, you can redirect the user to another page or clear the form
+            await createEvent(eventData);
+            toast.success("Event created successfully!");
+            // Reset the form fields
+            setFormData({
+                title: "",
+                description: "",
+                date_time: "",
+                category: "",
+                location: "",
+                terms_and_conditions: "",
+                feature_image: null,
+            });
+
+            // Clear the file input field
+            if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+            }
         } catch (error) {
-            setErrorMessage("Failed to create event. Please try again.");
+            toast.error("Failed to create event. Please try again.");
             console.error("Error creating event:", error);
         }
     };
@@ -77,12 +100,6 @@ const CreateEvent = () => {
     return (
         <Container>
             <h1 className="my-4">Create New Event</h1>
-            {errorMessage && (
-                <div className="alert alert-danger">{errorMessage}</div>
-            )}
-            {successMessage && (
-                <div className="alert alert-success">{successMessage}</div>
-            )}
             <Form onSubmit={handleSubmit} encType="multipart/form-data">
                 <Form.Group as={Row} className="mb-3" controlId="formTitle">
                     <Form.Label column sm={2}>
@@ -209,6 +226,8 @@ const CreateEvent = () => {
                             name="feature_image"
                             onChange={handleChange}
                             accept="image/*"
+                            ref={fileInputRef}
+                            required
                         />
                     </Col>
                 </Form.Group>

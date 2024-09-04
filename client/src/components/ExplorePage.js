@@ -1,79 +1,79 @@
-import React from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
-const eventData = [
-    {
-        id: 1,
-        title: "Music Concert",
-        venue: "Chennai",
-        time: "2024-08-25 19:00",
-        image: "https://placehold.co/400x200",
-    },
-    {
-        id: 2,
-        title: "Art Exhibition",
-        venue: "Bangalore",
-        time: "2024-08-25 19:00",
-        image: "https://placehold.co/400x200",
-    },
-    {
-        id: 3,
-        title: "Tech Conference",
-        venue: "Mumbai",
-        time: "2024-08-25 19:00",
-        image: "https://placehold.co/400x200",
-    },
-    {
-        id: 4,
-        title: "Music Concert",
-        venue: "Chennai",
-        time: "2024-08-25 19:00",
-        image: "https://placehold.co/400x200",
-    },
-    {
-        id: 5,
-        title: "Art Exhibition",
-        venue: "Bangalore",
-        time: "2024-08-25 19:00",
-        image: "https://placehold.co/400x200",
-    },
-    {
-        id: 6,
-        title: "Tech Conference",
-        venue: "Mumbai",
-        time: "2024-08-25 19:00",
-        image: "https://placehold.co/400x200",
-    },
-];
+import { fetchAllEvents } from "../api";
 
 const EventCard = ({ event }) => {
+    const { title, location, date_time, feature_image, category } = event;
+    const date = new Date(date_time);
+    const formattedDate = {
+        day: date.toLocaleDateString("en-US", { day: "2-digit" }),
+        month: date
+            .toLocaleDateString("en-US", { month: "short" })
+            .toUpperCase(),
+    };
+
     return (
-        <Card className="mb-4 shadow-sm">
-            <Card.Img variant="top" src={event.image} />
-            <Card.Body>
-                <Card.Title>{event.title}</Card.Title>
-                <Card.Text>
-                    <strong>Venue:</strong> {event.venue} <br />
-                    <strong>Time:</strong> {event.time}
-                </Card.Text>
-                <Button variant="primary">View Details</Button>
+        <Card className="event-card mb-4 shadow-sm">
+            {feature_image ? (
+                <Card.Img
+                    variant="top"
+                    src={feature_image}
+                    className="event-image"
+                />
+            ) : (
+                <div className="event-image-placeholder">No Image</div>
+            )}
+            <div className="tags-container">
+                <div className="category-tag">{category}</div>
+                <div className="date-tag">
+                    <span>{formattedDate.day}</span>
+                    <span>{formattedDate.month}</span>
+                </div>
+            </div>
+            <Card.Body className="event-body">
+                <Card.Title className="event-title">{title}</Card.Title>
+                <Card.Text className="event-location">{location}</Card.Text>
             </Card.Body>
         </Card>
     );
 };
 
 const ExplorePage = () => {
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const data = await fetchAllEvents();
+                setEvents(data);
+            } catch (error) {
+                console.error("Error fetching events:", error);
+            }
+        };
+
+        fetchEvents();
+    }, []);
+
     return (
-        <Container className="py-5 mt-5">
-            <h2 className="mb-4 text-center">Explore Events</h2>
-            <Row>
-                {eventData.map((event) => (
-                    <Col md={4} sm={6} xs={12} key={event.id}>
-                        <EventCard event={event} />
-                    </Col>
-                ))}
-            </Row>
-        </Container>
+        <div className="bg-light min-vh-100 text-dark text-center py-5 d-flex align-items-center">
+            <Container className="py-5 mt-5">
+                <h2 className="mb-4 text-center">Explore Events</h2>
+                <Row>
+                    {events.map((event) => (
+                        <Col
+                            md={4}
+                            sm={6}
+                            xs={12}
+                            key={event.id}
+                            className="d-flex flex-column justify-content-center align-items-center"
+                        >
+                            <EventCard event={event} />
+                        </Col>
+                    ))}
+                </Row>
+            </Container>
+        </div>
     );
 };
 
