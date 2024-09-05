@@ -46,3 +46,20 @@ class RegistrationViewSet(viewsets.ModelViewSet):
         self.perform_update(serializer)
 
         return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        event_id = kwargs.get('pk')
+
+        try:
+            event_id = int(event_id)
+        except (ValueError, TypeError):
+            return Response({'detail': 'Invalid event ID. Must be a valid integer.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            registration = Registration.objects.get(
+                user=request.user, event_id=event_id)
+        except Registration.DoesNotExist:
+            return Response({'detail': 'Registration not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = self.get_serializer(registration)
+        return Response(serializer.data)
