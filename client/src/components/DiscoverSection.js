@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 
 const DiscoverSection = () => {
@@ -36,6 +37,8 @@ const DiscoverSection = () => {
                                 variant="outline-light"
                                 size="lg"
                                 className="custom-button browse-button"
+                                as={Link}
+                                to="/events"
                             >
                                 Browse <FaArrowRight className="ms-2" />
                             </Button>

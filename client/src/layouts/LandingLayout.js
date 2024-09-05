@@ -4,6 +4,7 @@ import NavbarComponent from "../components/NavbarComponent";
 import FooterComponent from "../components/FooterComponent";
 import HomePage from "../components/HomePage";
 import ExplorePage from "../pages/ExplorePage";
+import Events from "../pages/Events";
 
 const LandingLayout = () => {
     return (
@@ -13,6 +14,7 @@ const LandingLayout = () => {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/explore" element={<ExplorePage />} />
+                    <Route path="/events" element={<Events />} />
                 </Routes>
             </main>
             <FooterComponent />
