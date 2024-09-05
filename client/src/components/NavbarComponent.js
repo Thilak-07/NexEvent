@@ -10,8 +10,8 @@ const NexEventLogo = () => {
         <Navbar.Brand href="/" className="d-flex align-items-center">
             <>
                 <img
-                    src="favicon.svg"
-                    alt="Brand Logo"
+                    src="/favicon.svg"
+                    alt="Logo"
                     width="55"
                     height="55"
                     className="position-absolute"

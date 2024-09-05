@@ -5,6 +5,7 @@ import FooterComponent from "../components/FooterComponent";
 import HomePage from "../components/HomePage";
 import ExplorePage from "../pages/ExplorePage";
 import Events from "../pages/Events";
+import ViewEvent from "../components/ViewEvent";
 
 const LandingLayout = () => {
     return (
@@ -15,6 +16,7 @@ const LandingLayout = () => {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/explore" element={<ExplorePage />} />
                     <Route path="/events" element={<Events />} />
+                    <Route path="/events/:id" element={<ViewEvent />} />
                 </Routes>
             </main>
             <FooterComponent />

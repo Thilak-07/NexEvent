@@ -1,0 +1,34 @@
+.view-event-image-container {
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+}
+
+.view-event-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.view-event-details-container {
+    border-radius: 10px;
+    border: 2px solid #ddd;
+}
+
+.pt-5 {
+    padding-top: 5rem;
+}
+
+.view-event-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.view-event-subtitle {
+    font-size: 0.9rem;
+}
