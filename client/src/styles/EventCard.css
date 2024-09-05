@@ -8,6 +8,10 @@
     flex-direction: column;
 }
 
+.event-card:hover {
+    border: 1.5px solid rgb(89, 89, 89);
+}
+
 .event-image {
     width: 100%;
     height: 70%;

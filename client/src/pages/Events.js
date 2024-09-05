@@ -55,19 +55,21 @@ const Events = () => {
     };
 
     return (
-        <Container className="min-vh-100" style={{ paddingTop: "70px" }}>
-            <h2 className="text-center my-4">Browse by Category</h2>
+        <>
+            <div className="bg-dark" style={{ paddingTop: "60px" }}>
+                <h2 className="display-5 text-center text-white my-4">
+                    Browse by Category
+                </h2>
 
-            {/* Filter Row */}
-            <Row className="justify-content-center mb-4">
-                <Col xs="auto">
+                {/* Filter Row */}
+                <div className="d-flex flex-wrap justify-content-center pb-4 mb-5">
                     {categories.map((category) => (
                         <Button
                             key={category}
                             variant={
                                 selectedCategory === category
                                     ? "primary"
-                                    : "outline-primary"
+                                    : "outline-light"
                             }
                             className="m-2"
                             onClick={() => handleCategoryChange(category)}
@@ -75,31 +77,33 @@ const Events = () => {
                             {category}
                         </Button>
                     ))}
-                </Col>
-            </Row>
+                </div>
+            </div>
 
-            {/* Event Cards Grid */}
-            <Row>
-                {filteredEvents.length > 0 ? (
-                    filteredEvents.map((event) => (
-                        <Col
-                            key={event.id}
-                            xs={12}
-                            sm={6}
-                            md={4}
-                            lg={3}
-                            className="mb-4"
-                        >
-                            <EventCard event={event} />
-                        </Col>
-                    ))
-                ) : (
-                    <p className="text-center">
-                        No events available for this category.
-                    </p>
-                )}
-            </Row>
-        </Container>
+            <Container className="min-vh-100">
+                {/* Event Cards Grid */}
+                <Row>
+                    {filteredEvents.length > 0 ? (
+                        filteredEvents.map((event) => (
+                            <Col
+                                key={event.id}
+                                xs={12}
+                                sm={6}
+                                md={4}
+                                lg={3}
+                                className="d-flex justify-content-center mb-4"
+                            >
+                                <EventCard event={event} />
+                            </Col>
+                        ))
+                    ) : (
+                        <p className="text-center">
+                            No events available for this category.
+                        </p>
+                    )}
+                </Row>
+            </Container>
+        </>
     );
 };
 

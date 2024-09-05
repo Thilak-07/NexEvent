@@ -20,6 +20,10 @@
     border: 2px solid #ddd;
 }
 
+.capitalize::first-letter {
+    text-transform: capitalize;
+}
+
 .pt-5 {
     padding-top: 5rem;
 }
