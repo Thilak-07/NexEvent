@@ -28,6 +28,7 @@ const DiscoverSection = () => {
                                 variant="primary"
                                 size="lg"
                                 className="custom-button upcoming-button mb-2 mb-md-0 me-md-2"
+                                href="#upcoming-events"
                             >
                                 Upcoming Events
                             </Button>
