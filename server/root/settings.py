@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "accounts",
     "events",
+    "rsvp",
     'drf_api_logger',
 ]
 

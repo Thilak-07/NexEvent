@@ -7,6 +7,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('auth/', include('accounts.urls')),
     path('', include('events.urls')),
+    path('', include('rsvp.urls')),
 ]
 
 

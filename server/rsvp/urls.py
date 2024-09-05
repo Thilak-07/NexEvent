@@ -1,9 +1,8 @@
 from rest_framework.routers import DefaultRouter
-from .views import EventViewSet
-
+from .views import RegistrationViewSet
 
 router = DefaultRouter()
-router.register(r'events', EventViewSet)
+router.register(r'rsvp', RegistrationViewSet)
 
 urlpatterns = []
 urlpatterns += router.urls
