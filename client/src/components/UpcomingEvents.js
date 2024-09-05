@@ -44,7 +44,7 @@ const UpcomingEvents = () => {
                         Stay updated with the latest happenings near you.
                     </p>
                     <Link
-                        to="/events"
+                        to="/explore/events"
                         className="lead mb-4"
                         style={{
                             fontSize: "14px",

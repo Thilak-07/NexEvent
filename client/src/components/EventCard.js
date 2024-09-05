@@ -13,7 +13,7 @@ const EventCard = ({ event }) => {
     };
 
     return (
-        <Link to={`/events/${id}`} className="event-card-link">
+        <Link to={`/explore/events/${id}`} className="event-card-link">
             <Card className="event-card shadow-sm">
                 {feature_image ? (
                     <Card.Img

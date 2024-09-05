@@ -15,8 +15,8 @@ const LandingLayout = () => {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/explore" element={<ExplorePage />} />
-                    <Route path="/events" element={<Events />} />
-                    <Route path="/events/:id" element={<ViewEvent />} />
+                    <Route path="/explore/events" element={<Events />} />
+                    <Route path="/explore/events/:id" element={<ViewEvent />} />
                 </Routes>
             </main>
             <FooterComponent />

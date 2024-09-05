@@ -38,7 +38,7 @@ const DiscoverSection = () => {
                                 size="lg"
                                 className="custom-button browse-button"
                                 as={Link}
-                                to="/events"
+                                to="/explore/events"
                             >
                                 Browse <FaArrowRight className="ms-2" />
                             </Button>
