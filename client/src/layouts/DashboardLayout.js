@@ -30,26 +30,11 @@ const DashboardLayout = () => {
                     </Col>
                     <Col md={9}>
                         <Routes>
-                            <Route
-                                path="/dashboard"
-                                element={<DashboardHome />}
-                            />
-                            <Route
-                                path="/dashboard/create"
-                                element={<CreateEvent />}
-                            />
-                            <Route
-                                path="/dashboard/events"
-                                element={<YourEvents />}
-                            />
-                            <Route
-                                path="/dashboard/manage"
-                                element={<ManageEvents />}
-                            />
-                            <Route
-                                path="/dashboard/notifications"
-                                element={<Notifications />}
-                            />
+                            <Route path="/dashboard" element={<DashboardHome />} />
+                            <Route path="/dashboard/create" element={<CreateEvent />} />
+                            <Route path="/dashboard/events" element={<YourEvents />} />
+                            <Route path="/dashboard/manage" element={<ManageEvents />} />
+                            <Route path="/dashboard/notifications" element={<Notifications />} />
                         </Routes>
                     </Col>
                 </Row>

@@ -11,7 +11,7 @@ class RegistrationAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         # Make the 'user' field read-only in the admin interface
-        if obj:  # Editing an existing object
+        if obj:
             return self.readonly_fields + ('user',)
         return self.readonly_fields
 
