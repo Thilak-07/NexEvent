@@ -1,11 +1,124 @@
-import React from "react";
-import { Container } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { fetchAllRsvps, fetchEventById, updateRsvp } from "../api";
+import toast from "react-hot-toast"; // Import toast for notifications
 
 const YourEvents = () => {
+    const [rsvps, setRsvps] = useState([]);
+    const [events, setEvents] = useState({});
+    const [loading, setLoading] = useState(true);
+
+    // Fetch all RSVPs and events
+    useEffect(() => {
+        const fetchRsvpData = async () => {
+            try {
+                const rsvpData = await fetchAllRsvps();
+                setRsvps(rsvpData);
+
+                const eventDetails = await Promise.all(
+                    rsvpData.map(async (rsvp) => {
+                        const event = await fetchEventById(rsvp.event);
+                        return { ...event, rsvp_status: rsvp.rsvp_status };
+                    })
+                );
+
+                const eventMap = eventDetails.reduce((acc, event) => {
+                    acc[event.id] = event;
+                    return acc;
+                }, {});
+
+                setEvents(eventMap);
+                setLoading(false);
+            } catch (error) {
+                toast.error("Failed to load your events.");
+                console.error("Error fetching RSVPs or events:", error);
+            }
+        };
+
+        fetchRsvpData();
+    }, []);
+
+    // Function to handle RSVP status change
+    const handleRsvpChange = async (eventId, newStatus) => {
+        try {
+            const updatedRsvpData = {
+                event: eventId,
+                rsvp_status: newStatus,
+            };
+            await updateRsvp(updatedRsvpData); // Call the update API
+            setRsvps((prevRsvps) =>
+                prevRsvps.map((rsvp) =>
+                    rsvp.event === eventId
+                        ? { ...rsvp, rsvp_status: newStatus }
+                        : rsvp
+                )
+            );
+            toast.success("RSVP status updated successfully!");
+        } catch (error) {
+            toast.error("Failed to update RSVP status.");
+            console.error("Error updating RSVP status:", error);
+        }
+    };
+
+    if (loading) {
+        return <div>Loading your events...</div>;
+    }
+
     return (
-        <Container>
-            <h1 className="my-4">Your Events</h1>
-        </Container>
+        <div className="your-events-wrapper">
+            <h1 className="your-events-page-title mb-5">
+                Your Registered Events
+            </h1>
+            <div className="your-events-container">
+                {rsvps.map((rsvp) => {
+                    const event = events[rsvp.event];
+                    return (
+                        <div key={event.id} className="your-events-row">
+                            <div className="your-events-image-container">
+                                <img
+                                    className="your-events-image"
+                                    src={event.feature_image}
+                                    alt={event.title}
+                                />
+                            </div>
+                            <div className="your-events-details">
+                                <h2 className="your-events-title">
+                                    {event.title}
+                                </h2>
+                                <p className="your-events-datetime">
+                                    <strong>Date & Time:</strong>{" "}
+                                    {new Date(event.date_time).toLocaleString()}
+                                </p>
+                                <p className="your-events-location">
+                                    <strong>Location:</strong> {event.location}
+                                </p>
+                                <div className="your-events-rsvp-status">
+                                    <label>
+                                        <strong>RSVP Status:</strong>
+                                        <select
+                                            value={rsvp.rsvp_status}
+                                            onChange={(e) =>
+                                                handleRsvpChange(
+                                                    event.id,
+                                                    e.target.value
+                                                )
+                                            }
+                                        >
+                                            <option value="ATTENDING">
+                                                Attending
+                                            </option>
+                                            <option value="NOT_ATTENDING">
+                                                Not Attending
+                                            </option>
+                                            <option value="MAYBE">Maybe</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
     );
 };
 

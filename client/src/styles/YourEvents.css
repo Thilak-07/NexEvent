@@ -1,0 +1,57 @@
+.your-events-wrapper {
+    margin: 20px;
+}
+
+.your-events-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.your-events-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.your-events-row {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    width: 100%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+.your-events-image-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-right: 15px;
+}
+
+.your-events-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.your-events-details {
+    flex-grow: 1;
+}
+
+.your-events-datetime,
+.your-events-location {
+    margin-bottom: 5px;
+}
+
+.your-events-rsvp-status {
+    margin-top: 10px;
+}
+
+.your-events-rsvp-status select {
+    padding: 5px;
+    margin-left: 10px;
+}

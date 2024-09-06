@@ -34,7 +34,7 @@ export const createRsvp = async (rsvpData) => {
 // Update an existing RSVP
 export const updateRsvp = async (rsvpData) => {
     try {
-        const response = await apiClient.patch(`/rsvp/`, rsvpData);
+        const response = await apiClient.patch(`/rsvp/update/`, rsvpData);
         return response.data;
     } catch (error) {
         throw error;

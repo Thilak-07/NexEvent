@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import {
     Drawer,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
     Button,
     Box,
     Typography,
@@ -13,14 +9,15 @@ import {
     CssBaseline,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import MenuIcon from "@mui/icons-material/Menu"; // Hamburger icon
+import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import EventIcon from "@mui/icons-material/Event";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // User icon
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Link, useNavigate } from "react-router-dom";
 
 const darkTheme = createTheme({
     palette: {
@@ -41,48 +38,58 @@ const darkTheme = createTheme({
 
 const SidePanel = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const isMobile = useMediaQuery("(max-width: 600px)"); // Media query for mobile view
+    const isMobile = useMediaQuery("(max-width: 600px)");
+    const navigate = useNavigate();
 
     const toggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
     };
 
+    const handleNavigation = (path) => {
+        navigate(path);
+        if (isMobile) {
+            toggleDrawer();
+        }
+    };
+
     const menuItems = [
-        { text: "Home", icon: <HomeIcon /> },
-        { text: "Events", icon: <EventIcon /> },
-        { text: "Notifications", icon: <NotificationsIcon /> },
-        { text: "Manage", icon: <SettingsIcon /> },
-        { text: "Create", icon: <AddCircleIcon /> },
+        { text: "Home", icon: <HomeIcon />, path: "/dashboard" },
+        { text: "Events", icon: <EventIcon />, path: "/dashboard/events" },
+        {
+            text: "Notifications",
+            icon: <NotificationsIcon />,
+            path: "/dashboard/notifications",
+        },
+        { text: "Manage", icon: <SettingsIcon />, path: "/dashboard/manage" },
+        { text: "Create", icon: <AddCircleIcon />, path: "/dashboard/create" },
     ];
 
     return (
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
 
-            {/* Hamburger Menu Icon for Mobile View */}
             {isMobile && (
                 <IconButton
                     edge="start"
                     color="inherit"
                     aria-label="menu"
                     onClick={toggleDrawer}
-                    sx={{ position: "absolute", left: 10, top: 10 }} // Align to the left
+                    sx={{ position: "absolute", left: 10, top: 10 }}
                 >
-                    <MenuIcon /> {/* Reverted to Hamburger Icon */}
+                    <MenuIcon />
                 </IconButton>
             )}
 
-            {/* Drawer (side panel) */}
             <Drawer
-                variant={isMobile ? "temporary" : "permanent"} // Permanent for large screens, temporary for mobile
+                variant={isMobile ? "temporary" : "permanent"}
                 anchor="left"
-                open={isMobile ? isDrawerOpen : true} // Open based on screen size
+                open={isMobile ? isDrawerOpen : true}
                 onClose={toggleDrawer}
                 sx={{
                     "& .MuiDrawer-paper": {
                         width: 250,
                         boxSizing: "border-box",
-                        overflowX: "hidden", // Prevent horizontal scroll
+                        overflowX: "hidden",
                         bgcolor: "background.paper",
                     },
                 }}
@@ -98,8 +105,15 @@ const SidePanel = () => {
                     role="presentation"
                 >
                     <div>
-                        {/* NexEvent Name */}
-                        <Box sx={{ textAlign: "center", padding: 2 }}>
+                        <Box
+                            as={Link}
+                            to={"/explore"}
+                            sx={{
+                                textAlign: "center",
+                                padding: 2,
+                                textDecoration: "None",
+                            }}
+                        >
                             <Typography
                                 variant="h6"
                                 sx={{ color: "primary.main" }}
@@ -108,25 +122,30 @@ const SidePanel = () => {
                             </Typography>
                         </Box>
 
-                        {/* List of buttons */}
-                        <List>
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
                             {menuItems.map((item) => (
-                                <ListItem button key={item.text}>
-                                    <ListItemIcon
-                                        sx={{ color: "primary.main" }}
-                                    >
-                                        {item.icon}
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        primary={item.text}
-                                        sx={{ color: "text.primary" }}
-                                    />
-                                </ListItem>
+                                <Button
+                                    key={item.text}
+                                    variant="text"
+                                    startIcon={item.icon}
+                                    sx={{
+                                        justifyContent: "flex-start",
+                                        textAlign: "left",
+                                        color: "text.primary",
+                                        padding: 2,
+                                        "&:hover": {
+                                            backgroundColor:
+                                                "background.default",
+                                        },
+                                    }}
+                                    onClick={() => handleNavigation(item.path)}
+                                >
+                                    {item.text}
+                                </Button>
                             ))}
-                        </List>
+                        </Box>
                     </div>
 
-                    {/* Bottom section with Username and Logout button */}
                     <div>
                         <Box sx={{ textAlign: "center", paddingBottom: 2 }}>
                             <Box
@@ -149,6 +168,10 @@ const SidePanel = () => {
                                 variant="contained"
                                 color="error"
                                 startIcon={<LogoutIcon />}
+                                onClick={() => {
+                                    // Dummy logout function
+                                    console.log("Logging out...");
+                                }}
                             >
                                 Logout
                             </Button>
