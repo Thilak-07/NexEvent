@@ -9,7 +9,7 @@ import {
 
 const Socials = () => {
     return (
-        <Col md={6} className="text-md-end">
+        <Col md={6} className="text-md-end text-center">
             <a href="/" className="social me-3" aria-label="Facebook">
                 <FaFacebookF />
             </a>
@@ -30,7 +30,7 @@ const FooterComponent = () => {
     return (
         <footer className="bg-dark py-3 footer-custom">
             <Container>
-                <Row>
+                <Row className="text-md-start text-center ">
                     <Col md={6}>
                         <p className="mb-0">
                             &copy; 2024 NexEvent Inc. All Rights Reserved.

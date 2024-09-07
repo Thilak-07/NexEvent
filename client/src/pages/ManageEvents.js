@@ -82,100 +82,99 @@ const ManageEvents = () => {
             <h1 className="my-4">Manage Events</h1>
 
             {/* Filter Row */}
-            <Row className="mb-4">
-                <Col md={6}>
-                    <Form.Control
-                        type="text"
-                        placeholder="Search by title or location"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </Col>
-                <Col md={3}>
-                    <Form.Control
-                        type="date"
-                        placeholder="Filter by Date"
-                        value={
-                            filterDate
-                                ? new Date(filterDate)
-                                      .toISOString()
-                                      .substr(0, 10)
-                                : ""
-                        }
-                        onChange={(e) =>
-                            setFilterDate(
-                                e.target.value
-                                    ? new Date(
-                                          e.target.value
-                                      ).toLocaleDateString("en-GB")
-                                    : ""
-                            )
-                        }
-                    />
-                </Col>
-                <Col md={3}>
-                    <Form.Control
-                        type="text"
-                        placeholder="Filter by Location"
-                        value={filterLocation}
-                        onChange={(e) => setFilterLocation(e.target.value)}
-                    />
-                </Col>
-            </Row>
+            <Container className="mb-2">
+                <Row>
+                    <Col md={6} className="mb-2">
+                        <Form.Control
+                            type="text"
+                            placeholder="Search by title or location"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </Col>
+                    <Col md={3} className="mb-2">
+                        <Form.Control
+                            type="date"
+                            placeholder="Filter by Date"
+                            onChange={(e) =>
+                                setFilterDate(
+                                    e.target.value
+                                        ? new Date(
+                                              e.target.value
+                                          ).toLocaleDateString("en-GB")
+                                        : ""
+                                )
+                            }
+                        />
+                    </Col>
+                    <Col md={3} className="mb-2">
+                        <Form.Control
+                            type="text"
+                            placeholder="Filter by Location"
+                            value={filterLocation}
+                            onChange={(e) => setFilterLocation(e.target.value)}
+                        />
+                    </Col>
+                </Row>
+            </Container>
 
             {/* Event table */}
-            <Table responsive bordered hover>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Event Title</th>
-                        <th>Date and Time</th>
-                        <th>Location</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredEvents.length > 0 ? (
-                        filteredEvents.map((event) => (
-                            <tr key={event.id}>
-                                <td>{event.id}</td>
-                                <td>{event.title}</td>
-                                <td>{formatDateTime(event.date_time)}</td>
-                                <td>{event.location}</td>
-                                <td>
-                                    <Button
-                                        variant="primary"
-                                        size="sm"
-                                        className="me-2"
-                                        onClick={() =>
-                                            alert(`Edit event ID: ${event.id}`)
-                                        }
-                                    >
-                                        Edit
-                                    </Button>
-                                    <Button
-                                        variant="danger"
-                                        size="sm"
-                                        onClick={() =>
-                                            alert(
-                                                `Delete event ID: ${event.id}`
-                                            )
-                                        }
-                                    >
-                                        Delete
-                                    </Button>
+            <Container>
+                <Table responsive bordered hover>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Event Title</th>
+                            <th>Date and Time</th>
+                            <th>Location</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredEvents.length > 0 ? (
+                            filteredEvents.map((event) => (
+                                <tr key={event.id}>
+                                    <td>{event.id}</td>
+                                    <td>{event.title}</td>
+                                    <td>{formatDateTime(event.date_time)}</td>
+                                    <td>{event.location}</td>
+                                    <td>
+                                        <Button
+                                            variant="primary"
+                                            size="sm"
+                                            className="me-2"
+                                            onClick={() =>
+                                                alert(
+                                                    `Edit event ID: ${event.id}`
+                                                )
+                                            }
+                                        >
+                                            Edit
+                                        </Button>
+                                        <Button
+                                            variant="danger"
+                                            size="sm"
+                                            onClick={() =>
+                                                alert(
+                                                    `Delete event ID: ${event.id}`
+                                                )
+                                            }
+                                        >
+                                            Delete
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="5" className="text-center">
+                                    No events available
                                 </td>
                             </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="5" className="text-center">
-                                No events available
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </Table>
+                        )}
+                    </tbody>
+                </Table>
+            </Container>
         </Container>
     );
 };
