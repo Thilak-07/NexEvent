@@ -1,0 +1,24 @@
+.custom-login-button {
+    color: #f5a623;
+    border-color: #f5a623;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-login-button:hover {
+    background-color: #f5a623;
+    color: #000;
+    border-color: #f5a623;
+}
+
+.custom-register-button {
+    background-color: #f5a623;
+    color: #000;
+    border: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-register-button:hover {
+    background-color: #ca8721;
+    color: #000;
+}

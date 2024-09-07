@@ -85,7 +85,14 @@ const UpcomingEvents = () => {
         const fetchEvents = async () => {
             try {
                 const data = await fetchAllEvents();
-                setEvents(data);
+
+                const upcomingEvents = data
+                    .sort(
+                        (a, b) => new Date(a.date_time) - new Date(b.date_time)
+                    )
+                    .slice(0, 10);
+
+                setEvents(upcomingEvents);
             } catch (error) {
                 console.error("Error fetching events:", error);
             }

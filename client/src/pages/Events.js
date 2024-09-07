@@ -31,8 +31,12 @@ const Events = () => {
         const fetchEvents = async () => {
             try {
                 const data = await fetchAllEvents();
-                setEvents(data);
-                setFilteredEvents(data); // Set initially to all events
+                const sortedData = data.sort(
+                    (a, b) => new Date(a.date_time) - new Date(b.date_time)
+                );
+
+                setEvents(sortedData);
+                setFilteredEvents(sortedData);
             } catch (error) {
                 console.error("Error fetching events:", error);
             }

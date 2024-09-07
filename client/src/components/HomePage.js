@@ -36,7 +36,15 @@ const WelcomeSection = () => {
                 <p className="lead" style={{ fontSize: "1.25rem" }}>
                     Discover and explore events happening around you and beyond.
                 </p>
-                <Button variant="light" as={Link} to="/explore">
+                <Button
+                    variant="light"
+                    as={Link}
+                    to="/explore/events"
+                    style={{
+                        borderRadius: "50px",
+                        padding: "10px 20px",
+                    }}
+                >
                     Explore Events
                 </Button>
                 <ScrollArrow />
@@ -89,9 +97,11 @@ const EventCard = ({ src, title, text }) => {
     return (
         <Col md={4}>
             <Card className="mb-4 custom-card">
-                <Card.Img variant="top" src={src} />
+                <Link to="/explore">
+                    <Card.Img variant="top" src={src} className="custom-img" />
+                </Link>
                 <Card.Body>
-                    <Card.Title>{title}</Card.Title>
+                    <Card.Title className="card-title">{title}</Card.Title>
                     <Card.Text>{text}</Card.Text>
                     <Button variant="dark" as={Link} to="/explore">
                         Learn More

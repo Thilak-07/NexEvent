@@ -34,7 +34,7 @@
 /* Icon styling */
 .icon-container {
     font-size: 3rem;
-    color: #000000;
+    color: rgb(3, 30, 59);
     display: flex;
     align-items: center;
     margin-bottom: 10px;
@@ -58,36 +58,12 @@
 .card-title-custom {
     font-size: 1.25rem;
     font-weight: 800;
+    color: rgb(3, 30, 59);
 }
 
 .card-text-custom {
     font-size: 1rem;
     color: #475569;
-}
-
-/* Navigation arrows styling */
-.swiper-button-next-custom,
-.swiper-button-prev-custom {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #f5a623;
-    background-color: transparent;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: none;
-}
-
-.swiper-button-prev-custom {
-    left: 10px;
-}
-
-.swiper-button-next-custom {
-    right: 10px;
 }
 
 .no-select {

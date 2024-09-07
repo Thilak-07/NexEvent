@@ -129,8 +129,6 @@ const CardSwiper = () => {
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <div className="swiper-button-next-custom"></div>
-            <div className="swiper-button-prev-custom"></div>
         </div>
     );
 };

@@ -6,6 +6,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    transition: all 0.3s ease;
 }
 
 .event-card:hover {
@@ -89,6 +90,11 @@
 .event-title {
     font-size: 1.1em;
     font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.event-card:hover .event-title {
+    color: rgb(1, 1, 194);
 }
 
 .event-location {

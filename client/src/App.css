@@ -28,6 +28,7 @@ body {
     background-color: #0d1117 !important;
 }
 
+@import "./styles/NavbarComponent.css";
 @import "./styles/HomePage.css";
 @import "./styles/HeroSection.css";
 @import "./styles/CardSwiper.css";

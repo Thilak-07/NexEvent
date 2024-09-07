@@ -66,15 +66,7 @@ const DashboardLink = () => {
 
 const LoginButton = () => {
     return (
-        <Button
-            variant="outline-light"
-            className="me-2"
-            as={Link}
-            to="/auth/login"
-            style={{
-                transition: "background-color 0.3s",
-            }}
-        >
+        <Button className="custom-login-button me-2" as={Link} to="/auth/login">
             Login
         </Button>
     );
@@ -82,7 +74,7 @@ const LoginButton = () => {
 
 const RegisterButton = () => {
     return (
-        <Button variant="light" as={Link} to="/auth/signup">
+        <Button className="custom-register-button" as={Link} to="/auth/signup">
             Register
         </Button>
     );
