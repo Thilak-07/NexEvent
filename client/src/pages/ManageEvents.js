@@ -1,124 +1,61 @@
-import React, { useState, useEffect } from "react";
-import { Container, Table, Button, Row, Col, Form } from "react-bootstrap";
-import { fetchAllEvents } from "../api";
+import React, { useState } from "react";
+import { Container, Table, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
-const ManageEvents = () => {
-    const [events, setEvents] = useState([]);
-    const [filteredEvents, setFilteredEvents] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [filterDate, setFilterDate] = useState("");
-    const [filterLocation, setFilterLocation] = useState("");
+import EventFilters from "../components/EventFilters";
+import ConfirmationModal from "../components/ConfirmationModal";
+import { deleteEvent } from "../api";
+import FiltersProvider, { useFilters } from "../contexts/FiltersContext";
 
-    // Fetch all events when component mounts
-    useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const data = await fetchAllEvents();
-                setEvents(data);
-                setFilteredEvents(data); // Initialize filteredEvents with all events
-            } catch (error) {
-                console.error("Error fetching events:", error);
-            }
-        };
-        fetchEvents();
-    }, []);
+const EventTable = () => {
+    const navigate = useNavigate();
+    const { events, setEvents, filteredEvents, setFilteredEvents } =
+        useFilters();
+    const [showModal, setShowModal] = useState(false);
+    const [eventToDelete, setEventToDelete] = useState(null);
 
-    // Format date to dd/mm/yy and time to HH:MM
     const formatDateTime = (dateString) => {
         const date = new Date(dateString);
-        const formattedDate = date.toLocaleDateString("en-GB"); // dd/mm/yyyy
+        const formattedDate = date.toLocaleDateString("en-GB");
         const formattedTime = date.toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
-        }); // HH:MM
+        });
         return `${formattedDate}, ${formattedTime}`;
     };
 
-    // Handle search and filters
-    useEffect(() => {
-        const filterEvents = () => {
-            let filtered = events;
+    const handleTitleClick = (eventId) => {
+        navigate(`/explore/events/${eventId}`);
+    };
 
-            // Filter by search term (title and location)
-            if (searchTerm) {
-                filtered = filtered.filter(
-                    (event) =>
-                        event.title
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()) ||
-                        event.location
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase())
+    const handleDelete = async () => {
+        if (eventToDelete) {
+            try {
+                await deleteEvent(eventToDelete.id);
+                setEvents(
+                    events.filter((event) => event.id !== eventToDelete.id)
                 );
-            }
-
-            // Filter by date (if selected)
-            if (filterDate) {
-                filtered = filtered.filter(
-                    (event) =>
-                        new Date(event.date_time).toLocaleDateString(
-                            "en-GB"
-                        ) === filterDate
+                setFilteredEvents(
+                    filteredEvents.filter(
+                        (event) => event.id !== eventToDelete.id
+                    )
                 );
-            }
-
-            // Filter by location (if selected)
-            if (filterLocation) {
-                filtered = filtered.filter((event) =>
-                    event.location
-                        .toLowerCase()
-                        .includes(filterLocation.toLowerCase())
+                toast.success(
+                    `Event "${eventToDelete.title}" deleted successfully!`
                 );
+            } catch (error) {
+                console.error("Error deleting event:", error);
+                toast.error("Failed to delete the event.");
+            } finally {
+                setShowModal(false);
+                setEventToDelete(null);
             }
-
-            setFilteredEvents(filtered);
-        };
-
-        filterEvents();
-    }, [searchTerm, filterDate, filterLocation, events]);
+        }
+    };
 
     return (
-        <Container>
-            <h1 className="my-4">Manage Events</h1>
-
-            {/* Filter Row */}
-            <Container className="mb-2">
-                <Row>
-                    <Col md={6} className="mb-2">
-                        <Form.Control
-                            type="text"
-                            placeholder="Search by title or location"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </Col>
-                    <Col md={3} className="mb-2">
-                        <Form.Control
-                            type="date"
-                            placeholder="Filter by Date"
-                            onChange={(e) =>
-                                setFilterDate(
-                                    e.target.value
-                                        ? new Date(
-                                              e.target.value
-                                          ).toLocaleDateString("en-GB")
-                                        : ""
-                                )
-                            }
-                        />
-                    </Col>
-                    <Col md={3} className="mb-2">
-                        <Form.Control
-                            type="text"
-                            placeholder="Filter by Location"
-                            value={filterLocation}
-                            onChange={(e) => setFilterLocation(e.target.value)}
-                        />
-                    </Col>
-                </Row>
-            </Container>
-
-            {/* Event table */}
+        <>
             <Container>
                 <Table responsive bordered hover>
                     <thead>
@@ -135,7 +72,25 @@ const ManageEvents = () => {
                             filteredEvents.map((event) => (
                                 <tr key={event.id}>
                                     <td>{event.id}</td>
-                                    <td>{event.title}</td>
+                                    <td
+                                        style={{
+                                            color: "black",
+                                            cursor: "pointer",
+                                        }}
+                                        onClick={() =>
+                                            handleTitleClick(event.id)
+                                        }
+                                        onMouseEnter={(e) =>
+                                            (e.currentTarget.style.color =
+                                                "rgb(1, 1, 194)")
+                                        }
+                                        onMouseLeave={(e) =>
+                                            (e.currentTarget.style.color =
+                                                "black")
+                                        }
+                                    >
+                                        {event.title}
+                                    </td>
                                     <td>{formatDateTime(event.date_time)}</td>
                                     <td>{event.location}</td>
                                     <td>
@@ -154,11 +109,10 @@ const ManageEvents = () => {
                                         <Button
                                             variant="danger"
                                             size="sm"
-                                            onClick={() =>
-                                                alert(
-                                                    `Delete event ID: ${event.id}`
-                                                )
-                                            }
+                                            onClick={() => {
+                                                setEventToDelete(event);
+                                                setShowModal(true);
+                                            }}
                                         >
                                             Delete
                                         </Button>
@@ -175,6 +129,25 @@ const ManageEvents = () => {
                     </tbody>
                 </Table>
             </Container>
+
+            <ConfirmationModal
+                showModal={showModal}
+                setShowModal={setShowModal}
+                eventToDelete={eventToDelete}
+                handleDelete={handleDelete}
+            />
+        </>
+    );
+};
+
+const ManageEvents = () => {
+    return (
+        <Container>
+            <h1 className="my-4">Manage Events</h1>
+            <FiltersProvider>
+                <EventFilters />
+                <EventTable />
+            </FiltersProvider>
         </Container>
     );
 };
