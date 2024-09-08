@@ -1,6 +1,6 @@
 import { useState, createContext, useContext } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { loginUser } from "../api";
 import { useAuth } from "./AuthContext";
@@ -9,6 +9,7 @@ const LoginContext = createContext();
 
 const LoginProvider = ({ children }) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -33,7 +34,11 @@ const LoginProvider = ({ children }) => {
                 progress: undefined,
                 theme: "colored",
             });
-            navigate("/explore");
+
+            const redirectTo =
+                new URLSearchParams(location.search).get("redirect") ||
+                "/explore";
+            navigate(redirectTo);
         } catch (err) {
             toast.error("Invalid Credentials", {
                 position: "bottom-right",

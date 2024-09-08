@@ -1,12 +1,16 @@
 import { useState, useEffect, createContext, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+
 import { fetchEventById, createRsvp } from "../api";
+import { useAuth } from "./AuthContext";
 
 const ViewEventContext = createContext();
 
 const ViewEventProvider = ({ children }) => {
+    const navigate = useNavigate();
     const { id } = useParams();
+    const { loggedIn } = useAuth();
     const [event, setEvent] = useState(null);
 
     useEffect(() => {
@@ -24,6 +28,12 @@ const ViewEventProvider = ({ children }) => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+
+        if (!loggedIn) {
+            navigate(`/auth/login?redirect=/explore/events/${id}`);
+            return;
+        }
+
         try {
             await createRsvp({ event: id });
             toast.success("Event Registered");

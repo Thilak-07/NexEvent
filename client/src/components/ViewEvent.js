@@ -8,7 +8,6 @@ import {
 } from "react-icons/fa";
 
 import Error404Page from "../pages/Error404Page";
-import { useAuth } from "../contexts/AuthContext";
 import ViewEventProvider, { useViewEvent } from "../contexts/ViewEventContext";
 
 const ImageContainer = () => {
@@ -82,10 +81,9 @@ const EventLocation = () => {
 };
 
 const RegisterButton = () => {
-    const { loggedIn } = useAuth();
     const { handleRegister } = useViewEvent();
     return (
-        <Button variant="primary" onClick={handleRegister} disabled={!loggedIn}>
+        <Button variant="primary" onClick={handleRegister}>
             Register
         </Button>
     );

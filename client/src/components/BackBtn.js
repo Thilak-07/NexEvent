@@ -1,10 +1,18 @@
 import React from "react";
 import { MdOutlineArrowBack } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 function BackBtn({ to }) {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleBackClick = () => {
+        const redirectTo =
+            new URLSearchParams(location.search).get("redirect") || to;
+        navigate(redirectTo);
+    };
+
     return (
         <Button
             variant="link"
@@ -15,7 +23,7 @@ function BackBtn({ to }) {
                 border: "none",
                 backgroundColor: "transparent",
             }}
-            onClick={() => navigate(to)}
+            onClick={handleBackClick}
             onMouseOver={(e) => {
                 const spanElement = e.currentTarget.querySelector("span");
                 const arrElement = e.currentTarget.querySelector("#ArrowBack");
