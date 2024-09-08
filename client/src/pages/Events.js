@@ -119,7 +119,7 @@ const Events = () => {
                         <Button
                             key={category}
                             variant="dark" // Assuming variant="none" is a default or neutral state
-                            className="m-2"
+                            className="mx-2 my-1"
                             onClick={() => handleCategoryChange(category)}
                             style={{
                                 color:
@@ -136,7 +136,7 @@ const Events = () => {
                 </div>
 
                 {/* Filter Row */}
-                <Container className="mb-3">
+                <Container className="my-3">
                     <Row>
                         <Col md={8} className="mb-2">
                             <Form.Control

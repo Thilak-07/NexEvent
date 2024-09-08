@@ -81,10 +81,14 @@ const EventLocation = () => {
 };
 
 const RegisterButton = () => {
-    const { handleRegister } = useViewEvent();
+    const { handleRegister, isRegistered } = useViewEvent();
     return (
-        <Button variant="primary" onClick={handleRegister}>
-            Register
+        <Button
+            variant="primary"
+            onClick={handleRegister}
+            disabled={isRegistered}
+        >
+            {isRegistered ? "Registered" : "Register"}
         </Button>
     );
 };
