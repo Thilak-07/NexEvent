@@ -95,12 +95,16 @@ const RegisterButton = () => {
 
 const AboutSection = () => {
     const { event } = useViewEvent();
+    const formattedDescription = event.description
+        ? event.description.replace(/\n/g, "<br />")
+        : "";
+
     return (
         <Row className="mt-4">
             <Col>
                 <h4 style={{ fontWeight: "bold" }}>About</h4>
                 <hr className="mt-0 mb-2" />
-                <p>{event.description}</p>
+                <p dangerouslySetInnerHTML={{ __html: formattedDescription }} />
             </Col>
         </Row>
     );
@@ -108,12 +112,16 @@ const AboutSection = () => {
 
 const TermsSection = () => {
     const { event } = useViewEvent();
+    const formattedTerms = event.terms_and_conditions
+        ? event.terms_and_conditions.replace(/\n/g, "<br />")
+        : "";
+
     return (
         <Row className="mt-4">
             <Col>
                 <h4 style={{ fontWeight: "bold" }}>Terms and Conditions</h4>
                 <hr className="mt-0 mb-2" />
-                <p>{event.terms_and_conditions}</p>
+                <p dangerouslySetInnerHTML={{ __html: formattedTerms }} />
             </Col>
         </Row>
     );

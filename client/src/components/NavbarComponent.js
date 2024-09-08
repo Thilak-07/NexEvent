@@ -1,8 +1,5 @@
 import { Container, Navbar, Button, Nav } from "react-bootstrap";
-import { Link, useNavigate, NavLink } from "react-router-dom";
-import { toast } from "react-toastify";
-
-import { logoutUser } from "../api";
+import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const NexEventLogo = () => {
@@ -80,7 +77,9 @@ const RegisterButton = () => {
     );
 };
 
-const LogoutButton = ({ onLogoutClick }) => {
+const LogoutButton = () => {
+    const { onLogoutClick } = useAuth();
+
     return (
         <Button as={Nav.Link} onClick={onLogoutClick}>
             Logout
@@ -89,38 +88,7 @@ const LogoutButton = ({ onLogoutClick }) => {
 };
 
 const NavbarComponent = () => {
-    const navigate = useNavigate();
-    const { loggedIn, handleLogout } = useAuth();
-
-    const onLogoutClick = async (e) => {
-        e.preventDefault();
-        try {
-            await logoutUser();
-            handleLogout();
-            toast.info("Logout successful!", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-            navigate("/auth/login");
-        } catch (err) {
-            toast.error("Logout failed. Please try again.", {
-                position: "bottom-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            });
-        }
-    };
+    const { loggedIn } = useAuth();
 
     return (
         <Navbar variant="dark" expand="lg" className="bg-dark py-2 fixed-top">
@@ -135,7 +103,7 @@ const NavbarComponent = () => {
                     </Nav>
                     <Nav className="ms-auto">
                         {loggedIn ? (
-                            <LogoutButton onLogoutClick={onLogoutClick} />
+                            <LogoutButton />
                         ) : (
                             <>
                                 <LoginButton />

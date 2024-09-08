@@ -22,6 +22,7 @@ import {
 } from "@mui/icons-material";
 
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const darkTheme = createTheme({
     palette: {
@@ -60,15 +61,15 @@ const NexEventLogo = () => {
     return (
         <Box
             as={Link}
-            to={"/explore"}
+            to={"/explore/events"}
             sx={{
                 textAlign: "center",
                 padding: 2,
                 textDecoration: "None",
             }}
         >
-            <Typography variant="h6" sx={{ color: "primary.main" }}>
-                NexEvent
+            <Typography variant="h6" sx={{ color: "#f5a623" }}>
+                <strong>NexEvent</strong>
             </Typography>
         </Box>
     );
@@ -113,6 +114,8 @@ const MenuItems = ({ handleNavigation }) => {
 };
 
 const UserName = () => {
+    const { userName } = useAuth();
+
     return (
         <Box
             display="flex"
@@ -122,22 +125,21 @@ const UserName = () => {
         >
             <AccountCircleIcon sx={{ color: "primary.main", mr: 1 }} />
             <Typography variant="body1" sx={{ color: "text.primary" }}>
-                Alderson
+                {userName || "Guest"}
             </Typography>
         </Box>
     );
 };
 
 const LogoutButton = () => {
+    const { onLogoutClick } = useAuth();
+
     return (
         <Button
             variant="contained"
             color="error"
             startIcon={<LogoutIcon />}
-            onClick={() => {
-                // Dummy logout function
-                console.log("Logging out...");
-            }}
+            onClick={onLogoutClick}
         >
             Logout
         </Button>
