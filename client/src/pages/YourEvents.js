@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchAllRsvps, fetchEventById, updateRsvp } from "../api";
-import toast from "react-hot-toast"; // Import toast for notifications
+import toast from "react-hot-toast";
 
 const YourEvents = () => {
     const [rsvps, setRsvps] = useState([]);
@@ -37,14 +37,12 @@ const YourEvents = () => {
         fetchRsvpData();
     }, []);
 
-    // Function to handle RSVP status change
     const handleRsvpChange = async (eventId, newStatus) => {
         try {
             const updatedRsvpData = {
-                event: eventId,
                 rsvp_status: newStatus,
             };
-            await updateRsvp(updatedRsvpData); // Call the update API
+            await updateRsvp(eventId, updatedRsvpData);
             setRsvps((prevRsvps) =>
                 prevRsvps.map((rsvp) =>
                     rsvp.event === eventId
