@@ -7,7 +7,7 @@ from .models import AppUser, PasswordReset
 class AppUserAdmin(BaseUserAdmin):
     model = AppUser
     ordering = ('date_joined',)
-    list_display = ('email', 'username', 'is_staff',
+    list_display = ('email', 'username', 'is_superuser',
                     'is_active', 'date_joined')
     search_fields = ('email', 'username')
     readonly_fields = ('date_joined',)
