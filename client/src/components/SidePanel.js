@@ -76,6 +76,8 @@ const NexEventLogo = () => {
 };
 
 const MenuItems = ({ handleNavigation }) => {
+    const { isSuperUser } = useAuth();
+
     const menuItems = [
         { text: "Home", icon: <HomeIcon />, path: "/dashboard" },
         { text: "Events", icon: <EventIcon />, path: "/dashboard/events" },
@@ -84,9 +86,17 @@ const MenuItems = ({ handleNavigation }) => {
             icon: <NotificationsIcon />,
             path: "/dashboard/notifications",
         },
-        { text: "Manage", icon: <SettingsIcon />, path: "/dashboard/manage" },
-        { text: "Create", icon: <AddCircleIcon />, path: "/dashboard/create" },
-    ];
+        isSuperUser && {
+            text: "Manage",
+            icon: <SettingsIcon />,
+            path: "/dashboard/manage",
+        },
+        isSuperUser && {
+            text: "Create",
+            icon: <AddCircleIcon />,
+            path: "/dashboard/create",
+        },
+    ].filter(Boolean);
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column" }}>

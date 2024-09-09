@@ -37,7 +37,7 @@ class UserLoginSerializer(TokenObtainPairSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'is_superuser')
 
 
 class RequestPasswordResetSerializer(serializers.Serializer):

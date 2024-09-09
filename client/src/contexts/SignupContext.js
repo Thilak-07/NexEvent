@@ -58,6 +58,7 @@ const SignupProvider = ({ children }) => {
             try {
                 await registerUser({ username, email, password });
                 await loginUser(email, password);
+                handleLogin();
                 toast.success("Registration Successful!", {
                     position: "bottom-right",
                     autoClose: 5000,
@@ -68,7 +69,6 @@ const SignupProvider = ({ children }) => {
                     progress: undefined,
                     theme: "colored",
                 });
-                handleLogin();
                 navigate("/explore");
             } catch (err) {
                 toast.error(err.response.data.error, {
