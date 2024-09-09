@@ -15,7 +15,11 @@ const ImageContainer = () => {
     return (
         <Col md={8} className="view-event-image-container">
             <img
-                src={event.feature_image}
+                src={
+                    event.feature_image
+                        ? event.feature_image
+                        : "/assets/pattern.jpg"
+                }
                 alt={event.title}
                 className="view-event-image"
             />

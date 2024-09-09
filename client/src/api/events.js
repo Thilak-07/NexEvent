@@ -25,7 +25,7 @@ export const createEvent = async (eventData) => {
     try {
         const response = await apiClient.post("/events/", eventData, {
             headers: {
-                "Content-Type": "multipart/form-data", // Setting the header specifically for FormData
+                "Content-Type": "multipart/form-data",
             },
         });
         return response.data;
@@ -37,7 +37,11 @@ export const createEvent = async (eventData) => {
 // Update an existing event
 export const updateEvent = async (id, eventData) => {
     try {
-        const response = await apiClient.patch(`/events/${id}/`, eventData);
+        const response = await apiClient.patch(`/events/${id}/`, eventData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
         return response.data;
     } catch (error) {
         throw error;

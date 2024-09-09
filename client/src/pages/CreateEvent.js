@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import {
     FaCalendarAlt,
@@ -7,8 +7,8 @@ import {
     FaListAlt,
 } from "react-icons/fa";
 import toast from "react-hot-toast";
-
-import { createEvent } from "../api";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { createEvent, updateEvent, fetchEventById } from "../api";
 
 const CreateEvent = () => {
     const [formData, setFormData] = useState({
@@ -21,7 +21,37 @@ const CreateEvent = () => {
         feature_image: null,
     });
 
+    const [searchParams] = useSearchParams();
+    const isUpdateMode = searchParams.get("update") === "true";
+    const eventId = searchParams.get("id");
+    const navigate = useNavigate();
     const fileInputRef = useRef(null);
+
+    const formatDateForInput = (dateString) => {
+        const date = new Date(dateString);
+        const offset = date.getTimezoneOffset();
+        const localDate = new Date(date.getTime() - offset * 60000);
+        return localDate.toISOString().slice(0, 16);
+    };
+
+    useEffect(() => {
+        if (isUpdateMode && eventId) {
+            const fetchEvent = async () => {
+                try {
+                    const event = await fetchEventById(eventId);
+                    setFormData({
+                        ...event,
+                        date_time: formatDateForInput(event.date_time),
+                        feature_image: null,
+                    });
+                } catch (error) {
+                    toast.error("Failed to fetch event details.");
+                }
+            };
+
+            fetchEvent();
+        }
+    }, [isUpdateMode, eventId]);
 
     const CATEGORY_CHOICES = [
         { value: "music", label: "Music" },
@@ -70,12 +100,21 @@ const CreateEvent = () => {
 
         const eventData = new FormData();
         for (const key in formData) {
-            eventData.append(key, formData[key]);
+            if (formData[key] !== null && formData[key] !== undefined) {
+                eventData.append(key, formData[key]);
+            }
         }
 
         try {
-            await createEvent(eventData);
-            toast.success("Event created successfully!");
+            if (isUpdateMode && eventId) {
+                await updateEvent(eventId, eventData);
+                toast.success("Event updated successfully!");
+                navigate("/dashboard/manage");
+            } else {
+                await createEvent(eventData);
+                toast.success("Event created successfully!");
+            }
+
             // Reset the form fields
             setFormData({
                 title: "",
@@ -92,14 +131,16 @@ const CreateEvent = () => {
                 fileInputRef.current.value = "";
             }
         } catch (error) {
-            toast.error("Failed to create event. Please try again.");
-            console.error("Error creating event:", error);
+            toast.error("Failed to save the event. Please try again.");
+            console.error("Error saving event:", error);
         }
     };
 
     return (
         <Container>
-            <h1 className="my-4">Create New Event</h1>
+            <h1 className="my-4">
+                {isUpdateMode ? "Edit Event" : "Create New Event"}
+            </h1>
             <Form onSubmit={handleSubmit} encType="multipart/form-data">
                 <Form.Group as={Row} className="mb-3" controlId="formTitle">
                     <Form.Label column sm={2}>
@@ -227,13 +268,12 @@ const CreateEvent = () => {
                             onChange={handleChange}
                             accept="image/*"
                             ref={fileInputRef}
-                            required
                         />
                     </Col>
                 </Form.Group>
 
                 <Button variant="primary" type="submit">
-                    Create Event
+                    {isUpdateMode ? "Update Event" : "Create Event"}
                 </Button>
             </Form>
         </Container>

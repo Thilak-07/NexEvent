@@ -29,6 +29,10 @@ const EventTable = () => {
         navigate(`/explore/events/${eventId}`);
     };
 
+    const handleEdit = (eventId) => {
+        navigate(`/dashboard/create?update=true&id=${eventId}`);
+    };
+
     const handleDelete = async () => {
         if (eventToDelete) {
             try {
@@ -98,11 +102,7 @@ const EventTable = () => {
                                             variant="primary"
                                             size="sm"
                                             className="me-2"
-                                            onClick={() =>
-                                                alert(
-                                                    `Edit event ID: ${event.id}`
-                                                )
-                                            }
+                                            onClick={() => handleEdit(event.id)}
                                         >
                                             Edit
                                         </Button>
