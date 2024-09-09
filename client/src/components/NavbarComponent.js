@@ -24,6 +24,7 @@ const HomeLink = () => {
         <Nav.Link
             as={NavLink}
             to="/"
+            className="d-flex justify-content-center"
             style={({ isActive }) => ({
                 color: isActive ? "#f5a623" : "grey",
             })}
@@ -38,6 +39,7 @@ const ExploreLink = () => {
         <Nav.Link
             as={NavLink}
             to="/explore"
+            className="d-flex justify-content-center"
             style={({ isActive }) => ({
                 color: isActive ? "#f5a623" : "grey",
             })}
@@ -52,6 +54,7 @@ const DashboardLink = () => {
         <Nav.Link
             as={NavLink}
             to="/dashboard"
+            className="d-flex justify-content-center"
             style={({ isActive }) => ({
                 color: isActive ? "#f5a623" : "grey",
             })}
@@ -63,7 +66,11 @@ const DashboardLink = () => {
 
 const LoginButton = () => {
     return (
-        <Button className="custom-login-button me-2" as={Link} to="/auth/login">
+        <Button
+            className="custom-login-button me-lg-2 my-lg-0 my-2 d-flex justify-content-center"
+            as={Link}
+            to="/auth/login"
+        >
             Login
         </Button>
     );
@@ -71,7 +78,11 @@ const LoginButton = () => {
 
 const RegisterButton = () => {
     return (
-        <Button className="custom-register-button" as={Link} to="/auth/signup">
+        <Button
+            className="custom-register-button d-flex justify-content-center"
+            as={Link}
+            to="/auth/signup"
+        >
             Register
         </Button>
     );

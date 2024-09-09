@@ -42,7 +42,10 @@ const EventCard = ({ event }) => {
     };
 
     return (
-        <Link to={`/explore/events/${id}`} className="event-card-link">
+        <Link
+            to={`/explore/events/${id}`}
+            className="event-card-link d-flex justify-content-center justify-content-md-start"
+        >
             <Card className="event-card shadow-sm">
                 <FeatureImage feature_image={feature_image} />
                 <EventTags category={category} formattedDate={formattedDate} />

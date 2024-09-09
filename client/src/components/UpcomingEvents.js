@@ -5,7 +5,7 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/autoplay";
+import "swiper/css/navigation";
 
 import { fetchAllEvents } from "../api";
 import EventCard from "./EventCard";
@@ -13,8 +13,8 @@ import EventCard from "./EventCard";
 const HeadText = () => {
     return (
         <h2
-            className="mt-4 mb-0"
-            style={{ textAlign: "left", fontWeight: "bold" }}
+            className="mt-4 mb-0 d-flex justify-content-center justify-content-sm-start text-center"
+            style={{ fontWeight: "bold" }}
         >
             Discover Exciting Upcoming Events
         </h2>
@@ -40,8 +40,11 @@ const LinkToAllEvents = () => {
 
 const LeadText = () => {
     return (
-        <div className="d-flex justify-content-between align-items-end">
-            <p className="lead mb-4" style={{ textAlign: "left" }}>
+        <div className="d-flex flex-sm-row justify-content-sm-between align-items-sm-end flex-column align-items-center">
+            <p
+                className="lead mb-sm-4 mb-2 text-center"
+                style={{ textAlign: "left" }}
+            >
                 Stay updated with the latest happenings near you.
             </p>
             <LinkToAllEvents />
@@ -50,22 +53,41 @@ const LeadText = () => {
 };
 
 const SwiperContainer = ({ events }) => {
+    const breakpoints = {
+        675: {
+            slidesPerView: 1.5,
+            spaceBetween: 10,
+        },
+        825: {
+            slidesPerView: 2,
+            spaceBetween: 15,
+        },
+        995: {
+            slidesPerView: 2.5,
+            spaceBetween: 20,
+        },
+        1100: {
+            slidesPerView: 3,
+            spaceBetween: 25,
+        },
+        1400: {
+            slidesPerView: 4,
+            spaceBetween: 30,
+        },
+    };
+
     return (
         <div className="swiper-container no-select">
             <Swiper
-                spaceBetween={20}
-                slidesPerView={4}
+                spaceBetween={30}
+                slidesPerView={1}
+                breakpoints={breakpoints}
                 loop={true}
                 autoplay={{
                     delay: 1500,
                     disableOnInteraction: false,
                 }}
                 modules={[Autoplay]}
-                breakpoints={{
-                    640: { slidesPerView: 1 },
-                    768: { slidesPerView: 2 },
-                    1024: { slidesPerView: 4 },
-                }}
                 speed={1500}
             >
                 {events.map((event) => (
@@ -105,7 +127,7 @@ const UpcomingEvents = () => {
         <section
             id="upcoming-events"
             className="swiper-section bg-light pt-5"
-            style={{ padding: "100px" }}
+            style={{ padding: "100px 0px" }}
         >
             <Container className="swiper-container-wrapper">
                 <HeadText />

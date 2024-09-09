@@ -1,6 +1,77 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import { fetchAllRsvps, fetchEventById, updateRsvp } from "../api";
 import toast from "react-hot-toast";
+import { Container } from "react-bootstrap";
+
+const ImageContainer = ({ event }) => {
+    return (
+        <Link
+            to={`/explore/events/${event.id}`}
+            className="your-events-image-container"
+        >
+            <img
+                className="your-events-image"
+                src={event.feature_image}
+                alt={event.title}
+            />
+        </Link>
+    );
+};
+
+const DateTime = ({ event }) => {
+    return (
+        <p className="your-events-datetime">
+            <strong>Date & Time: </strong>
+            {new Date(event.date_time).toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+            })}{" "}
+            {new Date(event.date_time).toLocaleTimeString("en-GB", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+            })}
+        </p>
+    );
+};
+
+const RsvpStatus = ({ event, rsvp, handleRsvpChange }) => {
+    return (
+        <div className="your-events-rsvp-status">
+            <label>
+                <strong>RSVP Status:</strong>
+                <select
+                    value={rsvp.rsvp_status}
+                    onChange={(e) => handleRsvpChange(event.id, e.target.value)}
+                >
+                    <option value="ATTENDING">Attending</option>
+                    <option value="NOT_ATTENDING">Not Attending</option>
+                    <option value="MAYBE">Maybe</option>
+                </select>
+            </label>
+        </div>
+    );
+};
+
+const DetailsContainer = ({ event, rsvp, handleRsvpChange }) => {
+    return (
+        <div className="your-events-details">
+            <h2 className="your-events-title">{event.title}</h2>
+            <DateTime event={event} />
+            <p className="your-events-location">
+                <strong>Location:</strong> {event.location}
+            </p>
+            <RsvpStatus
+                event={event}
+                rsvp={rsvp}
+                handleRsvpChange={handleRsvpChange}
+            />
+        </div>
+    );
+};
 
 const YourEvents = () => {
     const [rsvps, setRsvps] = useState([]);
@@ -62,61 +133,26 @@ const YourEvents = () => {
     }
 
     return (
-        <div className="your-events-wrapper">
-            <h1 className="your-events-page-title mb-5">
+        <Container className="p-3 mb-5">
+            <h1 className="px-2 mb-5 text-center text-sm-start">
                 Your Registered Events
             </h1>
-            <div className="your-events-container">
+            <Container className="d-flex flex-column gap-1">
                 {rsvps.map((rsvp) => {
                     const event = events[rsvp.event];
                     return (
                         <div key={event.id} className="your-events-row">
-                            <div className="your-events-image-container">
-                                <img
-                                    className="your-events-image"
-                                    src={event.feature_image}
-                                    alt={event.title}
-                                />
-                            </div>
-                            <div className="your-events-details">
-                                <h2 className="your-events-title">
-                                    {event.title}
-                                </h2>
-                                <p className="your-events-datetime">
-                                    <strong>Date & Time:</strong>{" "}
-                                    {new Date(event.date_time).toLocaleString()}
-                                </p>
-                                <p className="your-events-location">
-                                    <strong>Location:</strong> {event.location}
-                                </p>
-                                <div className="your-events-rsvp-status">
-                                    <label>
-                                        <strong>RSVP Status:</strong>
-                                        <select
-                                            value={rsvp.rsvp_status}
-                                            onChange={(e) =>
-                                                handleRsvpChange(
-                                                    event.id,
-                                                    e.target.value
-                                                )
-                                            }
-                                        >
-                                            <option value="ATTENDING">
-                                                Attending
-                                            </option>
-                                            <option value="NOT_ATTENDING">
-                                                Not Attending
-                                            </option>
-                                            <option value="MAYBE">Maybe</option>
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
+                            <ImageContainer event={event} />
+                            <DetailsContainer
+                                event={event}
+                                rsvp={rsvp}
+                                handleRsvpChange={handleRsvpChange}
+                            />
                         </div>
                     );
                 })}
-            </div>
-        </div>
+            </Container>
+        </Container>
     );
 };
 
