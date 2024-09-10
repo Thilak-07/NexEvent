@@ -53,12 +53,18 @@ const EditAction = ({ event }) => {
 };
 
 const GuestsListAction = ({ event }) => {
+    const navigate = useNavigate();
+
+    const handleGuests = (eventId) => {
+        navigate(`/dashboard/guests/${eventId}`);
+    };
+
     return (
         <Button
             variant="success"
             size="sm"
             className="me-2 rounded-circle"
-            onClick={() => alert(event.id)}
+            onClick={() => handleGuests(event.id)}
         >
             <FaUsers />
         </Button>
@@ -145,7 +151,7 @@ const EventTable = () => {
     return (
         <Container>
             <Table responsive bordered hover>
-                <thead>
+                <thead style={{ verticalAlign: "middle" }}>
                     <tr>
                         <th className="table-header">ID</th>
                         <th className="table-header">Event Title</th>
