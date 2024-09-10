@@ -1,13 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 
+import SidePanel from "../components/SidePanel";
 import DashboardHome from "../pages/DashboardHome";
-import CreateEvent from "../pages/CreateEvent";
 import YourEvents from "../pages/YourEvents";
 import Notifications from "../pages/Notifications";
+import CreateEvent from "../pages/CreateEvent";
 import ManageEvents from "../pages/ManageEvents";
+import ViewGuests from "../components/ViewGuests";
 import Error401Page from "../pages/Error401Page";
-import SidePanel from "../components/SidePanel";
 import { useAuth } from "../contexts/AuthContext";
 
 const ErrorPage = () => {
@@ -60,6 +61,14 @@ const DashboardLayout = () => {
                                 element={
                                     <ProtectedRoute>
                                         <ManageEvents />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path="/dashboard/guests/:id"
+                                element={
+                                    <ProtectedRoute>
+                                        <ViewGuests />
                                     </ProtectedRoute>
                                 }
                             />

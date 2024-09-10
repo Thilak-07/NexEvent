@@ -31,8 +31,8 @@ const darkTheme = createTheme({
             main: "#90caf9",
         },
         background: {
-            default: "#121212",
-            paper: "#1d1d1d",
+            default: "#1c2027",
+            paper: "#13161b",
         },
         text: {
             primary: "#ffffff",
@@ -68,7 +68,7 @@ const NexEventLogo = () => {
                 textDecoration: "None",
             }}
         >
-            <Typography variant="h6" sx={{ color: "#f5a623" }}>
+            <Typography variant="h6" sx={{ color: "white" }}>
                 <strong>NexEvent</strong>
             </Typography>
         </Box>
