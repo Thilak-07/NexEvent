@@ -33,16 +33,43 @@ const EventTitleCell = ({ event }) => {
     );
 };
 
-const EventActionsCell = ({ event }) => {
+const EditAction = ({ event }) => {
     const navigate = useNavigate();
-    const [showModal, setShowModal] = useState(false);
-    const [eventToDelete, setEventToDelete] = useState(null);
-    const { events, setEvents, filteredEvents, setFilteredEvents } =
-        useFilters();
 
     const handleEdit = (eventId) => {
         navigate(`/dashboard/create?update=true&id=${eventId}`);
     };
+
+    return (
+        <Button
+            variant="primary"
+            size="sm"
+            className="me-2 rounded-circle"
+            onClick={() => handleEdit(event.id)}
+        >
+            <FaEdit />
+        </Button>
+    );
+};
+
+const GuestsListAction = ({ event }) => {
+    return (
+        <Button
+            variant="success"
+            size="sm"
+            className="me-2 rounded-circle"
+            onClick={() => alert(event.id)}
+        >
+            <FaUsers />
+        </Button>
+    );
+};
+
+const DeleteAction = ({ event }) => {
+    const [showModal, setShowModal] = useState(false);
+    const [eventToDelete, setEventToDelete] = useState(null);
+    const { events, setEvents, filteredEvents, setFilteredEvents } =
+        useFilters();
 
     const handleDelete = async () => {
         if (eventToDelete) {
@@ -71,35 +98,17 @@ const EventActionsCell = ({ event }) => {
 
     return (
         <>
-            <td>
-                <Button
-                    variant="primary"
-                    size="sm"
-                    className="me-2 rounded-circle"
-                    onClick={() => handleEdit(event.id)}
-                >
-                    <FaEdit />
-                </Button>
-                <Button
-                    variant="danger"
-                    size="sm"
-                    className="me-2 rounded-circle"
-                    onClick={() => {
-                        setEventToDelete(event);
-                        setShowModal(true);
-                    }}
-                >
-                    <FaTrash />
-                </Button>
-                <Button
-                    variant="success"
-                    size="sm"
-                    className="me-2 rounded-circle"
-                    onClick={() => alert(event.id)}
-                >
-                    <FaUsers />
-                </Button>
-            </td>
+            <Button
+                variant="outline-danger"
+                size="sm"
+                className="me-2 rounded-circle"
+                onClick={() => {
+                    setEventToDelete(event);
+                    setShowModal(true);
+                }}
+            >
+                <FaTrash />
+            </Button>
             <ConfirmationModal
                 showModal={showModal}
                 setShowModal={setShowModal}
@@ -107,6 +116,16 @@ const EventActionsCell = ({ event }) => {
                 handleDelete={handleDelete}
             />
         </>
+    );
+};
+
+const EventActionsCell = ({ event }) => {
+    return (
+        <td>
+            <EditAction event={event} />
+            <GuestsListAction event={event} />
+            <DeleteAction event={event} />
+        </td>
     );
 };
 
@@ -128,14 +147,14 @@ const EventTable = () => {
             <Table responsive bordered hover>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Event Title</th>
-                        <th>Date and Time</th>
-                        <th>Location</th>
-                        <th>Actions</th>
+                        <th className="table-header">ID</th>
+                        <th className="table-header">Event Title</th>
+                        <th className="table-header">Date and Time</th>
+                        <th className="table-header">Location</th>
+                        <th className="table-header">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style={{ verticalAlign: "middle" }}>
                     {filteredEvents.length > 0 ? (
                         filteredEvents.map((event) => (
                             <tr key={event.id}>

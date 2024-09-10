@@ -28,6 +28,17 @@ body {
     background-color: #0d1117 !important;
 }
 
+.table-header {
+    background-color: #e6f3ff !important;
+}
+
+.table {
+    --bs-table-border-color: #b6b6b6 !important;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+}
+
 @import "./styles/NavbarComponent.css";
 @import "./styles/HomePage.css";
 @import "./styles/HeroSection.css";
