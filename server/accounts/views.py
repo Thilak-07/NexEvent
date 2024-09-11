@@ -1,17 +1,19 @@
 from django.core.exceptions import ValidationError
 
-from rest_framework import generics, status
+from rest_framework import generics, viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.decorators import action
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, RequestPasswordResetSerializer, ResetPasswordSerializer
-from .validations import custom_validation, validate_email, validate_password
-from accounts.models import PasswordReset
+from accounts.models import AppUser, PasswordReset
+from accounts.permissions import RoleBasedPermission
+from accounts.serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer, RequestPasswordResetSerializer, ResetPasswordSerializer
+from accounts.validations import custom_validation, validate_email, validate_password
 
 
 class UserRegister(APIView):
@@ -117,3 +119,39 @@ class ResetPassword(generics.GenericAPIView):
 
             except ValidationError as e:
                 return Response({'error': e.message}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AccessControl(viewsets.ViewSet):
+    permission_classes = [RoleBasedPermission]
+
+    def list(self, request):
+        role = request.query_params.get('role')
+
+        if role:
+            if role not in AppUser.RoleChoices.values:
+                return Response({'error': 'Invalid role'}, status=status.HTTP_400_BAD_REQUEST)
+            users = AppUser.objects.filter(role=role)
+        else:
+            users = AppUser.objects.all()
+
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['patch'])
+    def update_role(self, request):
+        email = request.data.get('email')
+        new_role = request.data.get('role')
+
+        if not email or not new_role:
+            return Response({'error': 'Email and role are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if new_role not in AppUser.RoleChoices.values:
+            return Response({'error': 'Invalid role'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = AppUser.objects.get(email=email)
+            user.role = new_role
+            user.save()
+            return Response({'success': 'Role updated'}, status=status.HTTP_200_OK)
+        except AppUser.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
