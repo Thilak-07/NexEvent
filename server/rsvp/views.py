@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from .models import Registration
 from .serializers import RegistrationSerializer, GuestsSerializer
+from .permissions import RoleBasedPermission
 
 
 class RegistrationViewSet(viewsets.ModelViewSet):
@@ -77,7 +78,7 @@ class RegistrationViewSet(viewsets.ModelViewSet):
 
 class GuestViewSet(viewsets.ViewSet):
     serializer_class = GuestsSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [RoleBasedPermission]
 
     def list(self, request, *args, **kwargs):
         event_id = request.query_params.get('event_id')
