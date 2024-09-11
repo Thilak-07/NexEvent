@@ -8,7 +8,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const navigate = useNavigate();
     const [loggedIn, setLoggedIn] = useState(false);
-    const [isSuperUser, setIsSuperUser] = useState(false);
+    const [role, setRole] = useState("ATTENDEE");
     const [userName, setUserName] = useState("Guest");
 
     useEffect(() => {
@@ -17,14 +17,14 @@ const AuthProvider = ({ children }) => {
                 try {
                     const userDetails = await getUserDetails();
                     setUserName(userDetails.username);
-                    setIsSuperUser(userDetails.is_superuser);
+                    setRole(userDetails.role);
                 } catch (error) {}
             };
 
             fetchUserDetails();
         } else {
             setUserName("Guest");
-            setIsSuperUser(false);
+            setRole("ATTENDEE");
         }
     }, [loggedIn]);
 
@@ -68,7 +68,7 @@ const AuthProvider = ({ children }) => {
 
     const contextValue = {
         userName,
-        isSuperUser,
+        role,
         loggedIn,
         setLoggedIn,
         handleLogin,

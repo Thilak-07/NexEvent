@@ -19,6 +19,7 @@ import {
     AddCircle as AddCircleIcon,
     Logout as LogoutIcon,
     AccountCircle as AccountCircleIcon,
+    Security as SecurityIcon,
 } from "@mui/icons-material";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -76,7 +77,9 @@ const NexEventLogo = () => {
 };
 
 const MenuItems = ({ handleNavigation }) => {
-    const { isSuperUser } = useAuth();
+    const { role } = useAuth();
+    const isManager = role === "MANAGER";
+    const isAdmin = role === "ADMIN";
 
     const menuItems = [
         { text: "Home", icon: <HomeIcon />, path: "/dashboard" },
@@ -86,15 +89,20 @@ const MenuItems = ({ handleNavigation }) => {
             icon: <NotificationsIcon />,
             path: "/dashboard/notifications",
         },
-        isSuperUser && {
+        (isManager || isAdmin) && {
             text: "Manage",
             icon: <SettingsIcon />,
             path: "/dashboard/manage",
         },
-        isSuperUser && {
+        isAdmin && {
             text: "Create",
             icon: <AddCircleIcon />,
             path: "/dashboard/create",
+        },
+        isAdmin && {
+            text: "Access Control",
+            icon: <SecurityIcon />,
+            path: "/dashboard/permissions",
         },
     ].filter(Boolean);
 

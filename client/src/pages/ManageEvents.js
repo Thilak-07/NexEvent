@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import EventFilters from "../components/EventFilters";
 import ConfirmationModal from "../components/ConfirmationModal";
 import { deleteEvent } from "../api";
+import { useAuth } from "../contexts/AuthContext";
 import FiltersProvider, { useFilters } from "../contexts/FiltersContext";
 
 const EventTitleCell = ({ event }) => {
@@ -74,6 +75,7 @@ const GuestsListAction = ({ event }) => {
 const DeleteAction = ({ event }) => {
     const [showModal, setShowModal] = useState(false);
     const [eventToDelete, setEventToDelete] = useState(null);
+    const { role } = useAuth();
     const { events, setEvents, filteredEvents, setFilteredEvents } =
         useFilters();
 
@@ -101,6 +103,10 @@ const DeleteAction = ({ event }) => {
             }
         }
     };
+
+    if (role !== "ADMIN") {
+        return;
+    }
 
     return (
         <>
