@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "accounts",
     "events",
     "rsvp",
+    "notifications",
     'drf_api_logger',
 ]
 
@@ -155,9 +156,6 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
 }
 
-
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_HOST_USER = 'NexEvent'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

@@ -12,6 +12,7 @@ djangorestframework-simplejwt = "*"
 pillow = "*"
 boto3 = "*"
 drf-api-logger = "*"
+apscheduler = "*"
 
 [dev-packages]
 
