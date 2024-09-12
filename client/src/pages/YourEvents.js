@@ -152,6 +152,12 @@ const YourEvents = () => {
                     );
                 })}
             </Container>
+
+            {rsvps.length === 0 && (
+                <Container className="text-center">
+                    <p>No events to display.</p>
+                </Container>
+            )}
         </Container>
     );
 };
