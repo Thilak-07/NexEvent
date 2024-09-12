@@ -143,10 +143,11 @@ const YourEvents = () => {
     }
 
     return (
-        <Container className="p-3 mb-5">
+        <Container className="p-3 mt-2 mb-5">
             <h1 className="px-2 mb-5 text-center text-sm-start">
                 Your Registered Events
             </h1>
+
             <Container className="d-flex flex-column gap-1">
                 {rsvps.map((rsvp) => {
                     const event = events[rsvp.event];
@@ -165,7 +166,7 @@ const YourEvents = () => {
 
             {rsvps.length === 0 && (
                 <Container className="text-center">
-                    <p>No events to display.</p>
+                    <p>No events found. Add your first event.</p>
                 </Container>
             )}
         </Container>

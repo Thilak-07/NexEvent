@@ -133,7 +133,7 @@ const AccessControl = () => {
     }, [view, users]);
 
     return (
-        <Container className="p-3 mb-5 min-vh-100">
+        <Container className="p-3 mt-2 mb-5 min-vh-100">
             <h1 className="px-3 mb-5 text-center text-sm-start">
                 Access Control
             </h1>

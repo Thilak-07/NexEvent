@@ -208,7 +208,7 @@ const CreateEvent = () => {
     const { isUpdateMode, handleSubmit } = useCreateEvent();
 
     return (
-        <Container className="p-3 mb-5">
+        <Container className="p-3 mt-2 mb-5">
             <h1 className="px-2 mb-5 text-center text-sm-start">
                 {isUpdateMode ? "Edit Event" : "Create New Event"}
             </h1>

@@ -49,8 +49,8 @@ const Notifications = () => {
     }
 
     return (
-        <Container className="p-3 mb-5">
-            <h1 className="px-3 mb-5 text-center text-sm-start">
+        <Container className="p-3 mt-2 mb-5">
+            <h1 className="px-2 mb-5 text-center text-sm-start">
                 Notifications
             </h1>
 

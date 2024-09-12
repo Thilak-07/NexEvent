@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Container, Table, Button, Modal } from "react-bootstrap";
+import { Container, Table, Button, Modal, Spinner } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { fetchAllGuests, fetchEventById, removeGuest } from "../api";
 
@@ -117,11 +117,16 @@ const ViewGuests = () => {
     }, [id]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <Container className="text-center">
+                <Spinner animation="border" variant="primary" />
+                <p>Loading Events...</p>
+            </Container>
+        );
     }
 
     return (
-        <Container className="p-3 mb-5">
+        <Container className="p-3 mt-2 mb-5">
             <h1 className="px-2 mb-5 text-center text-sm-start">Guests List</h1>
             <Container>
                 <div className="your-events-row">
@@ -131,7 +136,6 @@ const ViewGuests = () => {
                 <Table responsive bordered hover>
                     <thead style={{ verticalAlign: "middle" }}>
                         <tr>
-                            <th className="table-header">Registration ID</th>
                             <th className="table-header">Username</th>
                             <th className="table-header">Email</th>
                             <th className="table-header">RSVP Status</th>
@@ -144,7 +148,6 @@ const ViewGuests = () => {
                         {guests.length > 0 ? (
                             guests.map((guest) => (
                                 <tr key={guest.id}>
-                                    <td>{guest.id}</td>
                                     <td>{guest.user.username}</td>
                                     <td>{guest.user.email}</td>
                                     <td>{guest.rsvp_status}</td>
@@ -167,7 +170,7 @@ const ViewGuests = () => {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="7" className="text-center">
+                                <td colSpan="6" className="text-center">
                                     No registrations available
                                 </td>
                             </tr>
