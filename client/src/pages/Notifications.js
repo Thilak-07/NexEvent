@@ -50,11 +50,11 @@ const Notifications = () => {
 
     return (
         <Container className="p-3 mb-5">
-            <h1 className="px-2 mb-5 text-center text-sm-start">
+            <h1 className="px-3 mb-5 text-center text-sm-start">
                 Notifications
             </h1>
 
-            <Container>
+            <Container className="d-flex flex-column align-items-center">
                 {notifications.map((notification) => (
                     <Row
                         key={notification.id}
@@ -64,8 +64,16 @@ const Notifications = () => {
                         style={{ color: "black" }}
                     >
                         <Col>
-                            <h5 className="mb-1">{notification.subject}</h5>
-                            <p className="mb-1">
+                            <h5
+                                className="mb-1"
+                                style={{
+                                    fontWeight: "bold",
+                                    color: "rgb(1, 1, 194)",
+                                }}
+                            >
+                                {notification.subject}
+                            </h5>
+                            <p className="mb-1" style={{ color: "#212529" }}>
                                 You have an event "
                                 <strong>{notification.event.title}</strong>"
                                 happening at{" "}

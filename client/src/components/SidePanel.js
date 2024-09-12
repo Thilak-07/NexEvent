@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Drawer,
     Button,
@@ -7,6 +7,7 @@ import {
     IconButton,
     useMediaQuery,
     CssBaseline,
+    Badge,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
@@ -23,6 +24,7 @@ import {
 
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { getUnseenNotificationCount } from "../api";
 
 const darkTheme = createTheme({
     palette: {
@@ -115,8 +117,22 @@ const NexEventLogo = () => {
 const MenuItems = ({ handleNavigation }) => {
     const { role } = useAuth();
     const location = useLocation();
+    const [unseenCount, setUnseenCount] = useState(0);
     const isManager = role === "MANAGER";
     const isAdmin = role === "ADMIN";
+
+    useEffect(() => {
+        const fetchUnseenNotifications = async () => {
+            try {
+                const count = await getUnseenNotificationCount();
+                setUnseenCount(count);
+            } catch (error) {
+                setUnseenCount(0);
+            }
+        };
+
+        fetchUnseenNotifications();
+    }, [location.pathname]);
 
     const menuItems = [
         { text: "Home", icon: <HomeIcon />, path: "/dashboard" },
@@ -125,6 +141,7 @@ const MenuItems = ({ handleNavigation }) => {
             text: "Notifications",
             icon: <NotificationsIcon />,
             path: "/dashboard/notifications",
+            badge: unseenCount > 0 ? unseenCount : null,
         },
         (isManager || isAdmin) && {
             text: "Manage",
@@ -166,6 +183,13 @@ const MenuItems = ({ handleNavigation }) => {
                     onClick={() => handleNavigation(item.path)}
                 >
                     {item.text}
+                    {item.badge !== undefined && (
+                        <Badge
+                            color="error"
+                            badgeContent={item.badge}
+                            sx={{ ml: 3 }}
+                        />
+                    )}
                 </Button>
             ))}
         </Box>

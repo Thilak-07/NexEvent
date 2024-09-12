@@ -14,7 +14,7 @@ export const fetchAllNotifications = async () => {
 export const getUnseenNotificationCount = async () => {
     try {
         const response = await apiClient.get("/notifications/unseen/count/");
-        return response.data;
+        return response.data.unseen_count;
     } catch (error) {
         throw error;
     }

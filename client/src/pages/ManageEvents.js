@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Table, Button } from "react-bootstrap";
-import { FaEdit, FaTrash, FaUsers } from "react-icons/fa";
+import { FaPencilAlt, FaTrash, FaUsers } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -48,7 +48,7 @@ const EditAction = ({ event }) => {
             className="me-2 rounded-circle"
             onClick={() => handleEdit(event.id)}
         >
-            <FaEdit />
+            <FaPencilAlt />
         </Button>
     );
 };
@@ -111,7 +111,7 @@ const DeleteAction = ({ event }) => {
     return (
         <>
             <Button
-                variant="outline-danger"
+                variant="danger"
                 size="sm"
                 className="me-2 rounded-circle"
                 onClick={() => {

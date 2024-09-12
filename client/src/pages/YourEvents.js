@@ -44,6 +44,11 @@ const RsvpStatus = ({ event, rsvp, handleRsvpChange }) => {
             <label>
                 <strong>RSVP Status:</strong>
                 <select
+                    style={{
+                        borderRadius: "5px",
+                        padding: "5px",
+                        border: "1px solid #ccc",
+                    }}
                     value={rsvp.rsvp_status}
                     onChange={(e) => handleRsvpChange(event.id, e.target.value)}
                 >
