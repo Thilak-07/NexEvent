@@ -97,13 +97,13 @@ const EventCard = ({ src, title, text }) => {
     return (
         <Col md={4}>
             <Card className="mb-4 custom-card">
-                <Link to="/explore">
+                <Link to="/explore/events">
                     <Card.Img variant="top" src={src} className="custom-img" />
                 </Link>
                 <Card.Body>
                     <Card.Title className="card-title">{title}</Card.Title>
                     <Card.Text>{text}</Card.Text>
-                    <Button variant="dark" as={Link} to="/explore">
+                    <Button variant="dark" as={Link} to="/explore/events">
                         Learn More
                     </Button>
                 </Card.Body>

@@ -8,6 +8,7 @@ urlpatterns = [
     path('auth/', include('accounts.urls')),
     path('', include('events.urls')),
     path('', include('rsvp.urls')),
+    path('', include('notifications.urls')),
 ]
 
 

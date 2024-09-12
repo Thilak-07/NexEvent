@@ -76,5 +76,5 @@ def check_for_event_reminders():
 
 def start_scheduler():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(check_for_event_reminders, 'cron', hour=10, minute=14)
+    scheduler.add_job(check_for_event_reminders, 'cron', hour=10, minute=30)
     scheduler.start()

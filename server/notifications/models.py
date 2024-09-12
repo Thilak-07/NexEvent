@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from events.models import Event
+from django.utils import timezone
 
 
 class Notification(models.Model):
@@ -19,7 +20,7 @@ class Notification(models.Model):
         max_length=10, choices=STATUS_CHOICES, default='PENDING')
     sent_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    seen = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Notification to {self.user.email} for event {self.event.title} ({self.status})"

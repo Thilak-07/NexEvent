@@ -33,18 +33,8 @@
                 border-radius: 10px;
                 margin-bottom: 20px;
             }
-            .button {
-                display: inline-block;
-                padding: 10px 20px;
-                background-color: #2d1862;
-                text-decoration: none;
-                color: rgb(255, 255, 255);
-                border-radius: 5px;
-                font-weight: bold;
-                text-align: center;
-            }
             .button:hover {
-                background-color: #1a0e40;
+                background-color: #462c88 !important;
             }
             .footer {
                 padding: 10px;
@@ -77,8 +67,19 @@
                 <a
                     href="http://127.0.0.1:3000/explore/events/{{ event_id }}"
                     class="button"
-                    >View Event Details</a
+                    style="
+                        display: inline-block;
+                        padding: 10px 20px;
+                        background-color: #2d1862;
+                        color: #ffffff !important;
+                        text-decoration: none !important;
+                        border-radius: 5px;
+                        font-weight: bold;
+                        text-align: center;
+                    "
                 >
+                    View Event Details
+                </a>
             </div>
             <div class="footer">
                 <p>&copy; {{ current_year }} NexEvent. All rights reserved.</p>
