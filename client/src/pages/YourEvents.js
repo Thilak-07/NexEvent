@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { fetchAllRsvps, fetchEventById, updateRsvp } from "../api";
 import toast from "react-hot-toast";
-import { Container } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 
 const ImageContainer = ({ event }) => {
     return (
@@ -129,7 +129,12 @@ const YourEvents = () => {
     };
 
     if (loading) {
-        return <div>Loading your events...</div>;
+        return (
+            <Container className="text-center">
+                <Spinner animation="border" variant="primary" />
+                <p>Loading Events...</p>
+            </Container>
+        );
     }
 
     return (

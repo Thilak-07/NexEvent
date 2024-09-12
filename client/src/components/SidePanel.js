@@ -18,11 +18,10 @@ import {
     Settings as SettingsIcon,
     AddCircle as AddCircleIcon,
     Logout as LogoutIcon,
-    AccountCircle as AccountCircleIcon,
     Security as SecurityIcon,
 } from "@mui/icons-material";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const darkTheme = createTheme({
@@ -36,7 +35,7 @@ const darkTheme = createTheme({
             paper: "#13161b",
         },
         text: {
-            primary: "#ffffff",
+            primary: "rgb(156, 156, 156)",
             secondary: "#aaaaaa",
         },
     },
@@ -59,18 +58,55 @@ const BurgerMenu = ({ isMobile, toggleDrawer }) => {
 };
 
 const NexEventLogo = () => {
+    const { userName } = useAuth();
+
     return (
         <Box
-            as={Link}
-            to={"/explore/events"}
             sx={{
                 textAlign: "center",
-                padding: 2,
-                textDecoration: "None",
+                padding: 3,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                mb: 1,
             }}
         >
-            <Typography variant="h6" sx={{ color: "white" }}>
-                <strong>NexEvent</strong>
+            <Box
+                sx={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: "50%",
+                    border: "2px solid rgba(245, 166, 35, 0.8)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    mb: 1,
+                    overflow: "hidden",
+                }}
+            >
+                <Box
+                    as={Link}
+                    to={"/explore/events"}
+                    sx={{
+                        width: 80,
+                        height: 80,
+                        borderRadius: "50%",
+                        overflow: "hidden",
+                    }}
+                >
+                    <img
+                        src={"/assets/profile.png"}
+                        alt="Profile"
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                        }}
+                    />
+                </Box>
+            </Box>
+            <Typography sx={{ color: "white" }}>
+                {userName || "Guest"}
             </Typography>
         </Box>
     );
@@ -78,6 +114,7 @@ const NexEventLogo = () => {
 
 const MenuItems = ({ handleNavigation }) => {
     const { role } = useAuth();
+    const location = useLocation();
     const isManager = role === "MANAGER";
     const isAdmin = role === "ADMIN";
 
@@ -116,8 +153,12 @@ const MenuItems = ({ handleNavigation }) => {
                     sx={{
                         justifyContent: "flex-start",
                         textAlign: "left",
-                        color: "text.primary",
-                        padding: 2,
+                        color:
+                            location.pathname === item.path
+                                ? "#f5a623"
+                                : "text.primary",
+                        px: 3,
+                        py: 1.5,
                         "&:hover": {
                             backgroundColor: "background.default",
                         },
@@ -131,36 +172,30 @@ const MenuItems = ({ handleNavigation }) => {
     );
 };
 
-const UserName = () => {
-    const { userName } = useAuth();
-
-    return (
-        <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            sx={{ mb: 2 }}
-        >
-            <AccountCircleIcon sx={{ color: "primary.main", mr: 1 }} />
-            <Typography variant="body1" sx={{ color: "text.primary" }}>
-                {userName || "Guest"}
-            </Typography>
-        </Box>
-    );
-};
-
 const LogoutButton = () => {
     const { onLogoutClick } = useAuth();
 
     return (
-        <Button
-            variant="contained"
-            color="error"
-            startIcon={<LogoutIcon />}
-            onClick={onLogoutClick}
-        >
-            Logout
-        </Button>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Button
+                variant="text"
+                startIcon={<LogoutIcon />}
+                onClick={onLogoutClick}
+                sx={{
+                    justifyContent: "flex-start",
+                    textAlign: "left",
+                    color: "text.primary",
+                    px: 3,
+                    py: 1.5,
+                    mb: 1.5,
+                    "&:hover": {
+                        backgroundColor: "background.default",
+                    },
+                }}
+            >
+                Logout
+            </Button>
+        </Box>
     );
 };
 
@@ -215,10 +250,7 @@ const SidePanel = () => {
                     </div>
 
                     <div>
-                        <Box sx={{ textAlign: "center", paddingBottom: 2 }}>
-                            <UserName />
-                            <LogoutButton />
-                        </Box>
+                        <LogoutButton />
                     </div>
                 </Box>
             </Drawer>

@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Badge, Spinner } from "react-bootstrap";
-import { fetchAllNotifications } from "../api";
+import toast from "react-hot-toast";
+import { fetchAllNotifications, markAllNotificationsAsSeen } from "../api";
 
 const Notifications = () => {
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         const loadNotifications = async () => {
             try {
                 const data = await fetchAllNotifications();
-                setNotifications(data);
+                const sortedNotifications = data.sort(
+                    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+                );
+
+                setNotifications(sortedNotifications);
+                await markAllNotificationsAsSeen();
                 setLoading(false);
             } catch (error) {
-                setError("Failed to load notifications");
+                toast.error("Failed to load notifications");
                 setLoading(false);
             }
         };
@@ -39,14 +44,6 @@ const Notifications = () => {
             <Container className="text-center">
                 <Spinner animation="border" variant="primary" />
                 <p>Loading Notifications...</p>
-            </Container>
-        );
-    }
-
-    if (error) {
-        return (
-            <Container className="text-center text-danger">
-                <p>{error}</p>
             </Container>
         );
     }

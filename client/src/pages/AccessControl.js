@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Table, Button, Form, InputGroup } from "react-bootstrap";
-import { FaUser, FaShieldAlt } from "react-icons/fa";
+import { FaUser, FaShieldAlt, FaChevronDown } from "react-icons/fa";
 import toast from "react-hot-toast";
 
 import { getUsersByRole, updateUserRole } from "../api";
@@ -64,6 +64,9 @@ const RoleChangeForm = ({ setUsers }) => {
                             <option value="MANAGER">Manager</option>
                             <option value="ATTENDEE">Attendee</option>
                         </Form.Control>
+                        <InputGroup.Text className="dropdown-icon">
+                            <FaChevronDown />
+                        </InputGroup.Text>
                     </InputGroup>
                 </Form.Group>
 
