@@ -266,7 +266,6 @@ const SidePanel = () => {
                         height: "100%",
                         justifyContent: "space-between",
                     }}
-                    role="presentation"
                 >
                     <div>
                         <NexEventLogo />
