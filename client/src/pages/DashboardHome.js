@@ -8,10 +8,8 @@ const Dashboard = () => {
     const firstName = userName.split(" ")[0];
 
     return (
-        <Container className="p-3 mt-2 mb-5">
-            <h1 className="px-2 mb-4 text-center text-md-start">
-                Manage Events
-            </h1>
+        <Container className="p-3 mt-2 mb-5 ">
+            <h1 className="px-2 mb-4 text-center text-md-start">Dashboard</h1>
             <Row className="align-items-center">
                 <Col xs={12} md={6} className="text-center mb-4 mb-md-0">
                     <img
@@ -25,6 +23,7 @@ const Dashboard = () => {
                     xs={12}
                     md={6}
                     className="d-flex flex-column align-items-center align-items-md-start"
+                    style={{ fontFamily: "'Lato', sans-serif" }}
                 >
                     <h1>
                         Welcome,{" "}

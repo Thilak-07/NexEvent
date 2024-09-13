@@ -8,8 +8,7 @@ import AuthLayout from "./layouts/AuthLayout";
 import LandingLayout from "./layouts/LandingLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
 import { getUserDetails } from "./api";
-import AuthProvider from "./contexts/AuthContext";
-import { useAuth } from "./contexts/AuthContext";
+import AuthProvider, { useAuth } from "./contexts/AuthContext";
 
 function App() {
     const location = useLocation();
