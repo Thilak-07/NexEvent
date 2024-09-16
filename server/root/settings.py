@@ -14,14 +14,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_secret('django/SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-CORS_ALLOWED_ORIGINS = get_parameter('/django/ALLOWED_HOSTS').split(',')
+CORS_ALLOWED_ORIGINS = os.getenv('ALLOWED_HOSTS').split(',')
 CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
@@ -159,9 +159,9 @@ SIMPLE_JWT = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = get_parameter('/django/EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = get_parameter('/django/EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-PASSWORD_RESET_BASE_URL = get_parameter('/django/PASSWORD_RESET_BASE_URL')
+PASSWORD_RESET_BASE_URL = os.getenv('PASSWORD_RESET_BASE_URL')
