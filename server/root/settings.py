@@ -14,18 +14,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = get_parameter('/nexevent/SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = get_parameter('/nexevent/ALLOWED_HOSTS').split(',')
 
-CORS_ALLOWED_ORIGINS = os.getenv('ALLOWED_HOSTS').split(',')
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-# Application definition
 
+# Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -159,9 +159,10 @@ SIMPLE_JWT = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = get_parameter('/nexevent/EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = get_parameter('/nexevent/EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-PASSWORD_RESET_BASE_URL = os.getenv('PASSWORD_RESET_BASE_URL')
+PASSWORD_RESET_BASE_URL = get_parameter('/nexevent/PASSWORD_RESET_BASE_URL')
+EVENT_REMINDER_BASE_URL = get_parameter('/nexevent/EVENT_REMINDER_BASE_URL')

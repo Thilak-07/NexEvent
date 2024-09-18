@@ -9,3 +9,5 @@ docker-compose.yml
 *.db
 .gitignore
 Pipfile*
+db.sqlite3
+media

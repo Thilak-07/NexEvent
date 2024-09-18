@@ -26,6 +26,7 @@ def send_event_reminder(event, user):
         'event_description': event.description,
         'current_year': timezone.now().year,
         'cid': 'event_image_cid',
+        'base_url': settings.EVENT_REMINDER_BASE_URL,
         'event_id': event.id
     })
 
