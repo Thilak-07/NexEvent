@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+    pre_build:
+        commands:
+            - echo Logging in to Amazon ECR...
+            - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 120569623227.dkr.ecr.ap-south-1.amazonaws.com
+    build:
+        commands:
+            - echo Build the Django app Docker image...
+            - docker build -t nexevent-backend .
+            - docker tag nexevent-backend:latest 120569623227.dkr.ecr.ap-south-1.amazonaws.com/nexevent/backend:latest
+    post_build:
+        commands:
+            - echo Pushing the Docker image to ECR...
+            - docker push 120569623227.dkr.ecr.ap-south-1.amazonaws.com/nexevent/backend:latest

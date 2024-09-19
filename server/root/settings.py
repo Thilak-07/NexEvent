@@ -19,7 +19,7 @@ SECRET_KEY = get_parameter('/nexevent/SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = get_parameter('/nexevent/ALLOWED_HOSTS').split(',')
+ALLOWED_HOSTS = ['*']
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
