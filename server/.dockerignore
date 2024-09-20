@@ -11,4 +11,3 @@ docker-compose.yml
 Pipfile*
 db.sqlite3
 media
-.env

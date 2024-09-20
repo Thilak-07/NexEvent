@@ -5,10 +5,10 @@ phases:
         commands:
             - echo Logging in to Amazon ECR...
             - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 120569623227.dkr.ecr.ap-south-1.amazonaws.com
-    build:
-        commands:
             - echo "Checking AWS Credentials"
             - aws sts get-caller-identity
+    build:
+        commands:
             - echo Building the Django app Docker image...
             - docker build -t nexevent-backend:latest ./server
             - echo Tagging the Docker image...

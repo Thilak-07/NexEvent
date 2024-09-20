@@ -20,8 +20,5 @@ COPY . /app/
 # Expose the port the Django server will run on (default: 8000)
 EXPOSE 8000
 
-# Run database migrations and collect static files (for production use)
-RUN python manage.py migrate
-
-# Command to run the Django development server (in production, use a proper WSGI server like gunicorn)
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Command to run the Django development server and migrate the database at runtime
+CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
