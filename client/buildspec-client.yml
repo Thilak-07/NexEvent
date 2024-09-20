@@ -5,10 +5,12 @@ phases:
         commands:
             - echo Logging in to Amazon ECR...
             - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 120569623227.dkr.ecr.ap-south-1.amazonaws.com
+            - echo Fetching REACT_APP_API_URL from SSM Parameter Store...
+            - export REACT_APP_API_URL=$(aws ssm get-parameter --name "nexevent/REACT_APP_API_URL" --with-decryption --region ap-south-1 --query Parameter.Value --output text)
     build:
         commands:
             - echo Building the React app Docker image...
-            - docker build --build-arg REACT_APP_API_URL=http://3.109.247.144:8000 -t nexevent-frontend:latest ./client
+            - docker build --build-arg REACT_APP_API_URL=$REACT_APP_API_URL -t nexevent-frontend:latest ./client
             - echo Tagging the Docker image...
             - docker tag nexevent-frontend:latest 120569623227.dkr.ecr.ap-south-1.amazonaws.com/nexevent/frontend:latest
     post_build:
