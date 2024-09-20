@@ -8,7 +8,7 @@ phases:
     build:
         commands:
             - echo Building the Django app Docker image...
-            - docker build -t nexevent-backend:latest .
+            - docker build -t nexevent-backend:latest ./server
             - echo Tagging the Docker image...
             - docker tag nexevent-backend:latest 120569623227.dkr.ecr.ap-south-1.amazonaws.com/nexevent/backend:latest
     post_build:
