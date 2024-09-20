@@ -17,7 +17,9 @@ phases:
         commands:
             - echo Pushing the Docker image to ECR...
             - docker push 120569623227.dkr.ecr.ap-south-1.amazonaws.com/nexevent/backend:latest
+            - echo Creating imagedefinitions.json file...
+            - printf '[{"name":"django-backend","imageUri":"120569623227.dkr.ecr.ap-south-1.amazonaws.com/nexevent/backend:latest"}]' > imagedefinitions.json
 
 artifacts:
     files:
-        - "**/*"
+        - imagedefinitions.json
