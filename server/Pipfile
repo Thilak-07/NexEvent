@@ -13,6 +13,7 @@ pillow = "*"
 boto3 = "*"
 drf-api-logger = "*"
 apscheduler = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
