@@ -6,6 +6,7 @@ import {
     Navbar,
     Nav,
     InputGroup,
+    Spinner,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaUser, FaLock, FaEnvelope, FaEye, FaEyeSlash } from "react-icons/fa";
@@ -173,9 +174,29 @@ const ConfirmPasswordInput = () => {
 };
 
 const SignupButton = () => {
+    const { isLoading } = useSignup();
+
     return (
-        <Button variant="success" type="submit" className="w-100">
-            Sign Up
+        <Button
+            variant="success"
+            type="submit"
+            className="w-100"
+            disabled={isLoading}
+        >
+            {isLoading ? (
+                <>
+                    <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                    />{" "}
+                    Loading...
+                </>
+            ) : (
+                "Sign Up"
+            )}
         </Button>
     );
 };

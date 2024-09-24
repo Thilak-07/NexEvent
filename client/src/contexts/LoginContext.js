@@ -13,6 +13,7 @@ const LoginProvider = ({ children }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const { handleLogin } = useAuth();
 
     const togglePasswordVisibility = () => {
@@ -21,6 +22,8 @@ const LoginProvider = ({ children }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
+
         try {
             const user = await loginUser(email, password);
             handleLogin();
@@ -50,6 +53,8 @@ const LoginProvider = ({ children }) => {
                 progress: undefined,
                 theme: "colored",
             });
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -61,6 +66,7 @@ const LoginProvider = ({ children }) => {
         showPassword,
         togglePasswordVisibility,
         onSubmit,
+        isLoading,
     };
 
     return (

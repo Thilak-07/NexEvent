@@ -16,6 +16,7 @@ const SignupProvider = ({ children }) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword1, setShowPassword1] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const { handleLogin } = useAuth();
 
     const togglePassword1Visibility = () => {
@@ -28,6 +29,7 @@ const SignupProvider = ({ children }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
 
         if (password.length < 8) {
             toast.error(
@@ -71,7 +73,7 @@ const SignupProvider = ({ children }) => {
                 });
                 navigate("/explore");
             } catch (err) {
-                toast.error(err.response.data.error, {
+                toast.error(err?.response?.data?.error, {
                     position: "bottom-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -83,6 +85,8 @@ const SignupProvider = ({ children }) => {
                 });
             }
         }
+
+        setIsLoading(false);
     };
 
     const contextValue = {
@@ -101,6 +105,7 @@ const SignupProvider = ({ children }) => {
         togglePassword1Visibility,
         togglePassword2Visibility,
         handleSubmit,
+        isLoading,
     };
 
     return (

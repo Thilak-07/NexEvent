@@ -7,6 +7,7 @@ import {
     Navbar,
     Nav,
     InputGroup,
+    Spinner,
 } from "react-bootstrap";
 
 import BackBtn from "./BackBtn";
@@ -88,9 +89,29 @@ const PasswordInput = () => {
 };
 
 const LoginButton = () => {
+    const { isLoading } = useLogin();
+
     return (
-        <Button variant="success" type="submit" className="w-100">
-            Login
+        <Button
+            variant="success"
+            type="submit"
+            className="w-100"
+            disabled={isLoading}
+        >
+            {isLoading ? (
+                <>
+                    <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                    />{" "}
+                    Loading...
+                </>
+            ) : (
+                "Login"
+            )}
         </Button>
     );
 };
